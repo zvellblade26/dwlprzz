@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Get the current user's home directory
+user=$(whoami)
+icon_path="/home/$user/.local/share/icons/dunst/"
+
+# Use `sed` to replace the icon_path in dunstrc dynamically
+sed -i "s|^icon_path =.*|icon_path = $icon_path|" ~/.config/dunst/dunstrc

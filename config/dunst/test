@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "   Reload Dunst? [Y/n]"
+read ans
+if [[ "$ans" =~ ^[Yy]$ || "$ans" == "" ]]; then
+	pkill dunst &&
+	dunst &
+	sleep 1;
+	echo "   Done"
+	sleep 1;
+else
+	continue
+fi
+
+dunstify "asdasd" -t 10000 -u low
+dunstify "asdasd" -t 10000 -u normal
+dunstify "asdasd" -t 10000 -u critical
