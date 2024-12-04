@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Ensure the directory exists
+screenshot_dir="/home/asd/Pictures"
+user=$(ls /home/)
+
+# Case for screenshot types
+case $1 in
+	ss)
+		file_name="SS $(date +%d-%m,%I:%M:%S).png"
+		# Run slurp and check if it was canceled
+		grim -g "$(slurp &)" "$screenshot_dir/$file_name"
+		if [[ $? -ne 0 ]]; then
+			dunstify 'Screenshot canceled' -t 1000 -u low
+			exit 0
+		fi
+		dunstify 'Screenshot taken' -t 1000 -u low
+		;;
+	fss)
+		file_name="FSS $(date +%d-%m,%I:%M:%S).png"
+		grim "$screenshot_dir/$file_name" &&
+		dunstify 'Screenshot taken' -t 1000 -u low
+		;;
+	*)
+		exit 1
+		;;
+esac
+
+# Menu for additional actions
+menu=$(echo -e "save\nedit" | wmenu)
+if [[ "$menu" == "edit" ]]; then
+	# Find the most recent screenshot file
+	recent_file=$(ls -t "$screenshot_dir" | grep -E "^(SS|FSS) .*\.png$" | head -n 1)
+	if [[ -n "$recent_file" ]]; then
+		pinta "$screenshot_dir/$recent_file"
+	else
+		dunstify 'No screenshot found to edit' -t 1000 -u low
+	fi
+fi

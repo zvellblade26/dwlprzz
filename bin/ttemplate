@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# user=$(ls /home)
+# faillock --user $user --reset &&
+# dmenu -p "Password for user [$user]" < /dev/null
+# sudo -S

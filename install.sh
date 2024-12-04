@@ -1,0 +1,134 @@
+#!/bin/sh
+
+echo "#####   1. CHECKING USER   #####"
+sleep 2;
+user=$(whoami)
+echo "user is ----->$user<-----??   [Y/n]"
+
+read ans
+if [[ "$ans" =~ ^[Yy]$ || "$ans" == "" ]]; then
+	continue
+else
+	echo "ERROR"
+	echo "ERROR"
+	echo "#####   Script has failed!   #####"
+fi
+
+# Refresh sudo privileges and keep them alive during the script execution
+sudo -v
+while true; do sudo -v; sleep 60; done &
+	# Store the background process ID
+	SUDO_LOOP_PID=$!
+	cd "/home/$user" || { echo "Failed to change directory to HOME"; exit 1; }
+	set -e  # Exit script on any error
+
+# WORKING DIRECTORY
+os="/home/$user/dwlprzz"
+cdir="/home/$user/.config"
+bin="/home/$user/.local/bin"
+# Create directories if they don't exist
+mkdir -p "$bin" "$cdir"
+
+pac() {
+	sudo pacman -S --needed --noconfirm "$@"
+}
+
+echo ""
+echo ""
+echo ""
+echo "#####   2. INSTALLING PACKAGES   #####"
+sleep 2;
+# Installing Packages
+pac brightnessctl dunst fastfetch foot fzf grim slurp || { echo "brightnessctl dunst fastfetch foot fzf grim slurp installation failed!"; exit 1; }
+pac libinput libnotify meson neovim ntfs-3g pinta || { echo "libinput libnotify meson neovim ntfs-3g pinta installation failed!"; exit 1; }
+pac pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber || { echo "pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber installation failed!"; exit 1; }
+pac swaylock thunar tumbler tllist unzip wayland-protocols || { echo "swaylock thunar tumbler tllist unzip wayland-protocols installation failed!"; exit 1; }
+pac wev wl-clipboard wlroots wtype zip zoxide || { echo "wev wl-clipboard wlroots wtype zip zoxide installation failed!"; exit 1; }
+pac firefox libreoffice-fresh || { echo "Firefox and LibreOffice installation failed!"; exit 1; }
+
+echo ""
+echo ""
+echo ""
+echo "#####   5. CONFIGURING SCRIPT   #####"
+sleep 2;
+# Configuring scripts
+chmod +x "$os/bin/"* || { echo "Failed to set executable permissions for scripts"; exit 1; }
+sudo cp -r "$os/bin/"* "$bin" || { echo "Failed to copy scripts to /usr/bin"; exit 1; }
+# Creating Windows mounting Directories
+mkdir -p "/home/$user/DATAd" "/home/$user/WINDOWS" "/home/$user/SamsungGalaxyA50"  || { echo "Failed to create directories"; exit 1; }
+
+echo ""
+echo ""
+echo ""
+echo "#####   6. CHECKING PACKAGES   #####"
+sleep 2;
+# List of packages to check
+packages_to_check=(
+	"brightnessctl" "dunst" "fastfetch" "foot" "fzf" "grim" "slurp"
+	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "pinta"
+	"pipewire" "pipewire-alsa" "pipewire-jack" "pipewire-pulse" "wireplumber"
+	"swaylock" "thunar" "tumbler" "tllist" "unzip" "wayland-protocols"
+	"wev" "wl-clipboard" "wlroots" "wtype" "zip" "zoxide"
+	"firefox" "libreoffice-fresh"
+)
+# Function to check if a package is installed
+check_installed() {
+	uninstalled_packages=()  # Array to hold uninstalled packages
+
+		for pkg in "$@"; do
+			if sudo pacman -Q "$pkg" > /dev/null 2>&1; then
+				continue
+			else
+				uninstalled_packages+=("$pkg")  # Add uninstalled package to the array
+			fi
+		done
+
+	 # Check if there are any uninstalled packages and echo them
+	 if [ ${#uninstalled_packages[@]} -gt 0 ]; then
+		 echo "The following packages are NOT installed:"
+		 for uninstalled in "${uninstalled_packages[@]}"; do
+			 echo "- $uninstalled"
+		 done
+		 echo "	    We need it for the system to work, install it!"
+	 else
+		 echo "All packages have successfully installed."
+	 fi
+ }
+
+# Call the function with the list of packages
+check_installed "${packages_to_check[@]}"
+
+echo "startw" >> "/home/$user/.bash_profile"
+
+echo ""
+echo ""
+echo ""
+echo "#####   10. Killing sudo   #####"
+sleep 2;
+# At the end of the script, kill the background process to stop the loop
+echo "killing sudo -v"
+kill $SUDO_LOOP_PID
+echo "Done"
+
+echo ""
+echo ""
+echo ""
+echo "######   #######   #     #   ######"
+echo "#     #  #     #   ##    #   #     "
+echo "#     #  #     #   #  #  #   ####  "
+echo "#     #  #     #   #    ##   #     "
+echo "######   #######   #     #   ######"
+echo ""
+echo ""
+echo ""
+echo "Do we Reboot? [Y/n]"
+read ans
+if [[ "$ans" =~ ^[Yy]$ || "$ans" == "" ]]; then
+	echo "Rebooting"; sleep 3
+	sudo systemctl reboot
+else
+	echo ""
+	echo ""
+	echo ""
+	echo "#####   Script completed successfully!   #####"
+fi
