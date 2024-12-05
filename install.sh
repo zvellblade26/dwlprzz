@@ -24,10 +24,9 @@ while true; do sudo -v; sleep 60; done &
 
 # WORKING DIRECTORY
 os="/home/$user/dwlprzz"
-cdir="/home/$user/.config"
-bin="/home/$user/.local/bin"
+
 # Create directories if they don't exist
-mkdir -p "$bin" "$cdir"
+mkdir -p "/home/$user/.local/bin"
 
 pac() {
 	sudo pacman -S --needed --noconfirm "$@"
@@ -46,21 +45,13 @@ pac swaylock thunar tumbler tllist unzip wayland-protocols || { echo "swaylock t
 pac wev wl-clipboard wlroots wtype zip zoxide || { echo "wev wl-clipboard wlroots wtype zip zoxide installation failed!"; exit 1; }
 pac firefox libreoffice-fresh || { echo "Firefox and LibreOffice installation failed!"; exit 1; }
 
-echo ""
-echo ""
-echo ""
-echo "#####   5. CONFIGURING SCRIPT   #####"
-sleep 2;
-# Configuring scripts
-chmod +x "$os/bin/"* || { echo "Failed to set executable permissions for scripts"; exit 1; }
-sudo cp -r "$os/bin/"* "$bin" || { echo "Failed to copy scripts to /usr/bin"; exit 1; }
 # Creating Windows mounting Directories
 mkdir -p "/home/$user/DATAd" "/home/$user/WINDOWS" "/home/$user/SamsungGalaxyA50"  || { echo "Failed to create directories"; exit 1; }
 
 echo ""
 echo ""
 echo ""
-echo "#####   6. CHECKING PACKAGES   #####"
+echo "#####   4. CHECKING PACKAGES   #####"
 sleep 2;
 # List of packages to check
 packages_to_check=(
@@ -103,7 +94,7 @@ echo "startw" >> "/home/$user/.bash_profile"
 echo ""
 echo ""
 echo ""
-echo "#####   10. Killing sudo   #####"
+echo "#####   5. Killing sudo   #####"
 sleep 2;
 # At the end of the script, kill the background process to stop the loop
 echo "killing sudo -v"
