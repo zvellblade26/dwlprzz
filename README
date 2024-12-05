@@ -6,3 +6,6 @@ LINKS
 GIT CLONE
 :: wmenu -- https://codeberg.org/adnano/wmenu.git
 :: wbg -- https://codeberg.org/dnkl/wbg.git
+
+run
+sudo sh -c "cat dwlprzz/winpar >> /etc/grub.d/40_custom"
