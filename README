@@ -9,3 +9,14 @@ GIT CLONE
 
 run
 sudo sh -c "cat dwlprzz/winpar >> /etc/grub.d/40_custom"
+
+
+stirling PDF depencencies
+:: gradle
+:: jdk21-openjdk
+:: leptonica
+:: pngquant
+:: python-opencv
+:: qpdf
+:: unoconv
+:: unpaper
