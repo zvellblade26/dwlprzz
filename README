@@ -20,3 +20,11 @@ stirling PDF depencencies
 :: qpdf
 :: unoconv
 :: unpaper
+
+CUPS Printing
+dependencies
+:: cups  - enable and start cups.socket
+:: cups-pdf
+:: epson-inkjet-printer-201401w  -  aur
+:: system-config-printer
+:: usbutils
