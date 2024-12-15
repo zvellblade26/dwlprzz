@@ -9,9 +9,8 @@ origin = top-right
 #offset = 10x30
 offset = 20x17
 gap_size = 3
-#font = NBP Informa FiveSix
-font = JetBrainsMonoNL NFM SemiBold
-#font = SF Pro Rounded
+#font = JetBrainsMonoNL NFM SemiBold
+font = SF Pro Display
 #padding = 8
 padding = 15
 horizontal_padding = 15
@@ -32,7 +31,7 @@ progress_bar_corner_radius = 3
 
 line_height = 0
 markup = full
-format = "<span weight='bold' font='15'>%s</span>\n%b"
+format = "<span weight='regular' font='15'>%s</span>\n%b"
 alignment = left
 vertical_alignment = center
 show_age_threshold = 60
