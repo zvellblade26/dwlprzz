@@ -1,0 +1,16 @@
+{
+  "targets": {
+    "/home/asd/Programs/wmenu/build/wmenu": {
+      "destination": "{bindir}/wmenu",
+      "tag": "runtime",
+      "subproject": null,
+      "install_rpath": null
+    },
+    "/home/asd/Programs/wmenu/build/wmenu-run": {
+      "destination": "{bindir}/wmenu-run",
+      "tag": "runtime",
+      "subproject": null,
+      "install_rpath": null
+    }
+  }
+}
