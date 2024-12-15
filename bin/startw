@@ -1,6 +1,0 @@
-#!/bin/sh
-printf " $(date +"%A, %d %b") " | dbus-run-session dwl -s "dunst <&- & \
-	wbg -s Wallpapers/wallpaperflare.com_wallpaper.jpg & \
-	brightnessctl set 15 <&- & \
-	foot --server <&-
-	"
