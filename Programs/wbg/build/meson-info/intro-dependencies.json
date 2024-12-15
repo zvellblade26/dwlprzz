@@ -1,0 +1,216 @@
+[
+  {
+    "name": "pixman-1",
+    "type": "pkgconfig",
+    "version": "0.44.2",
+    "compile_args": [
+      "-I/usr/include/pixman-1"
+    ],
+    "link_args": [
+      "/usr/lib/libpixman-1.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "pixman"
+    ]
+  },
+  {
+    "name": "libpng",
+    "type": "pkgconfig",
+    "version": "1.6.44",
+    "compile_args": [
+      "-I/usr/include/libpng16"
+    ],
+    "link_args": [
+      "/usr/lib/libpng16.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "png"
+    ]
+  },
+  {
+    "name": "libjpeg",
+    "type": "pkgconfig",
+    "version": "3.0.4",
+    "compile_args": [],
+    "link_args": [
+      "/usr/lib/libjpeg.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "jpg"
+    ]
+  },
+  {
+    "name": "libwebp",
+    "type": "pkgconfig",
+    "version": "1.4.0",
+    "compile_args": [
+      "-I/usr/include/webp"
+    ],
+    "link_args": [
+      "/usr/lib/libwebp.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "webp"
+    ]
+  },
+  {
+    "name": "libjxl",
+    "type": "pkgconfig",
+    "version": "0.11.1",
+    "compile_args": [
+      "-DHWY_SHARED_DEFINE"
+    ],
+    "link_args": [
+      "/usr/lib/libjxl.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "jxl"
+    ]
+  },
+  {
+    "name": "libjxl_threads",
+    "type": "pkgconfig",
+    "version": "0.11.1",
+    "compile_args": [],
+    "link_args": [
+      "/usr/lib/libjxl_threads.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "jxl_threads"
+    ]
+  },
+  {
+    "name": "wayland-protocols",
+    "type": "pkgconfig",
+    "version": "1.38",
+    "compile_args": [],
+    "link_args": [],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "wayland_protocols"
+    ]
+  },
+  {
+    "name": "wayland-client",
+    "type": "pkgconfig",
+    "version": "1.23.1",
+    "compile_args": [],
+    "link_args": [
+      "/usr/lib/libwayland-client.so"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "wayland_client"
+    ]
+  },
+  {
+    "name": "tllist",
+    "type": "pkgconfig",
+    "version": "1.1.0",
+    "compile_args": [],
+    "link_args": [],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "tllist"
+    ]
+  },
+  {
+    "name": "wayland-scanner",
+    "type": "pkgconfig",
+    "version": "1.23.1",
+    "compile_args": [],
+    "link_args": [],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "wscanner"
+    ]
+  },
+  {
+    "name": "m",
+    "type": "library",
+    "version": "unknown",
+    "compile_args": [],
+    "link_args": [
+      "-lm"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "math"
+    ]
+  },
+  {
+    "name": "dep129715742396912",
+    "type": "internal",
+    "version": "1.2.0",
+    "compile_args": [],
+    "link_args": [],
+    "include_directories": [
+      "/home/asd/Programs/wbg/.",
+      "/home/asd/Programs/wbg/build/."
+    ],
+    "sources": [
+      "/home/asd/Programs/wbg/nanosvg.c",
+      "/home/asd/Programs/wbg/3rd-party/nanosvg/src/nanosvg.h",
+      "/home/asd/Programs/wbg/nanosvgrast.c",
+      "/home/asd/Programs/wbg/3rd-party/nanosvg/src/nanosvgrast.h"
+    ],
+    "extra_files": [],
+    "dependencies": [
+      "m"
+    ],
+    "depends": [],
+    "meson_variables": [
+      "svg"
+    ]
+  }
+]

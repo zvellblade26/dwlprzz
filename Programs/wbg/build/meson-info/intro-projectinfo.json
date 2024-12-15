@@ -1,0 +1,10 @@
+{
+  "version": "1.2.0",
+  "descriptive_name": "wbg",
+  "license": [
+    "MIT"
+  ],
+  "license_files": [],
+  "subproject_dir": "subprojects",
+  "subprojects": []
+}

@@ -1,0 +1,10 @@
+{
+  "targets": {
+    "/home/asd/Programs/wbg/build/wbg": {
+      "destination": "{bindir}/wbg",
+      "tag": "runtime",
+      "subproject": null,
+      "install_rpath": null
+    }
+  }
+}
