@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Prompt for the date input on the same line
+echo -n "Date (e.g. 07 Dec): "
+read -r ans
+
+# List explicitly installed packages filtered by date using pacman and awk
+pacman -Qei | awk -v date="$ans" '/^Name/{name=$3} /^Install Date/{if ($0 ~ date) printf "%-40s %-3s Installed on: %s\n", name, "-", $0}'

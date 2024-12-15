@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Constants
+NOTIFY_ARGS="-u low -t 2000 -r 1256"
+Ddsk="/dev/sdb3"
+Wdsk="/dev/sda3"
+Ddir="$HOME/DATAd"
+Wdir="$HOME/WINDOWS"
+Pdir="$HOME/SamsungGalaxyA50"
+
+# Function to display notifications
+notify() {
+	local message=$1
+	local urgency=${2:-low}
+	dunstify "$message" -u "$urgency" -t 2000 -r 1256
+}
+
+# Function to mount a directory
+mount_dir() {
+	local disk=$1
+	local dir=$2
+	local label=$3
+
+	if mountpoint -q "$dir"; then
+		notify "$label already mounted on $dir"
+	else
+		echo "$pass" | sudo -S ntfs-3g "$disk" "$dir" &&
+			notify "$label mounted on $dir" ||
+			notify "Failed to mount $label" critical
+	fi
+}
+
+# Function to unmount directories
+unmount_dirs() {
+	echo "$pass" | sudo -S umount "$@"
+	notify "Unmounted all successfully"
+}
+
+# Function to handle phone mount/unmount
+handle_phone() {
+	local action=$(echo -e "Mount\nUnmount" | wmenu -i -p "Phone Menu:")
+	case $action in
+		Mount)
+			if mountpoint -q "$Pdir"; then
+				notify "Phone already mounted at $Pdir"
+			else
+				echo "$pass" | sudo -S simple-mtpfs --device 1 "$Pdir" &&
+					notify "Phone mounted at $Pdir" ||
+					{ notify "Failed to mount phone. Allow access on the phone!" critical; return 1; }
+			fi
+			;;
+		Unmount)
+			echo "$pass" | sudo -S umount "$Pdir" &&
+				notify "Phone unmounted" ||
+				notify "Failed to unmount phone" critical
+							;;
+						*)
+							notify "No valid action selected"
+							;;
+					esac
+				}
+
+# Main menu selection
+menu=$(echo -e "C: & D:\nC:\nD:\nPhone\nUnmount all" | wmenu -i -p "Mount Menu:")
+[[ -z "$menu" ]] && notify "No option selected" && exit 1
+
+# Prompt for sudo password
+if ! pass=$(pass-sh "Sudo pass:"); then
+    echo "Failed to get password."
+    exit 1
+fi
+#[[ -z "$pass" ]] && notify "Password input was empty" && exit 1
+
+# Ensure directories exist
+echo "$pass" | sudo -S mkdir -p "$Ddir" "$Wdir" "$Pdir" ||
+	{ notify "Failed to create directories" critical; exit 1; }
+
+# Handle user choice
+case $menu in
+	"C: & D:")
+		mount_dir "$Wdsk" "$Wdir" "C:"
+		mount_dir "$Ddsk" "$Ddir" "D:"
+		;;
+	"C:")
+		mount_dir "$Wdsk" "$Wdir" "C:"
+		;;
+	"D:")
+		mount_dir "$Ddsk" "$Ddir" "D:"
+		;;
+	"Phone")
+		while ! handle_phone; do
+			sleep 0.5
+		done
+		;;
+	"Unmount all")
+		unmount_dirs "$Wdir" "$Ddir" "$Pdir"
+		;;
+	*)
+		notify "Invalid option selected"
+		;;
+esac

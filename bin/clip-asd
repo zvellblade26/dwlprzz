@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Lock file to ensure only one instance runs
+LOCK_FILE="$HOME/.clipboard_manager.lock"
+
+# Directory to store clipboard history
+HISTORY_FILE="$HOME/.clipboard_history"
+
+# Ensure the history file exists
+touch "$HISTORY_FILE"
+
+# Command for clipboard management on Wayland
+CLIP_COMMAND="wl-paste"
+COPY_COMMAND="wl-copy"
+
+# Function to save the clipboard to history
+save_clipboard() {
+	$CLIP_COMMAND >> "$HISTORY_FILE"
+}
+
+# Function to show the clipboard history and let the user choose an entry
+select_clipboard() {
+	# Show history using fzf (interactive search)
+	# Use tac to reverse the order so that the most recent entry is on top
+	selected=$(tac "$HISTORY_FILE" | fzf -m --preview "echo {}" --preview-window=up:20%:wrap)
+
+	 # If something is selected, copy it to clipboard
+	 if [ -n "$selected" ]; then
+		 echo "$selected" | $COPY_COMMAND
+	 fi
+ }
+
+# Function to clear clipboard history
+clear_history() {
+	> "$HISTORY_FILE"
+}
+
+# Function to stop clipboard monitoring
+stop_monitoring() {
+	rm -rf $LOCK_FILE; pkill -f clip-asd
+}
+
+# Monitor clipboard in the background
+monitor_clipboard() {
+	# Previous clipboard content (initially empty)
+	prev_clipboard=""
+
+	# Check if the lock file exists. If it does, exit.
+	if [ -f "$LOCK_FILE" ]; then
+		echo "Clipboard manager is already running in the background."
+		exit 1
+	fi
+
+	# Create the lock file to prevent other instances
+	touch "$LOCK_FILE"
+
+	 # Infinite loop to monitor clipboard changes
+	 while true; do
+		 # Get current clipboard content
+		 current_clipboard=$($CLIP_COMMAND)
+
+		  # If clipboard content has changed, save it to history
+		  if [ "$current_clipboard" != "$prev_clipboard" ]; then
+			  save_clipboard
+			  prev_clipboard="$current_clipboard"
+		  fi
+
+		  # Sleep for a short time to prevent high CPU usage
+		  sleep 1
+	  done
+  }
+
+case $1 in
+	sel) select_clipboard && echo "Selected" ;;
+	clear) clear_history && echo "Cleared" ;;
+	stop) stop_monitoring ;;
+	run) monitor_clipboard & echo "Running" ;;
+	*) echo "failed";exit 1 ;;
+esac

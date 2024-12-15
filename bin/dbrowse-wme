@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+NEWLINE="
+"
+
+fullpath() {
+	name="$(sh -c "echo '$1'")"
+	path="$2"
+	c="$(echo "$name" | cut -b1)"
+
+	if [ "$c" = "/" ]; then
+		full="$name"
+	else
+		full="$path/$name"
+	fi
+	realpath "$full"
+}
+
+open_file() {
+	file="$1"
+	case "${file##*.}" in
+		pdf)
+			xdg-open "$file" & disown ;;  # Opens the PDF in the default browser
+		odt|ods|odp|ott|ots|odg|odf|odm|docx|doc|rtf|txt)
+			libreoffice "$file" ;;  # Opens LibreOffice compatible files with LibreOffice
+		jpg|jpeg|png|gif|bmp|tiff|webp|svg)
+			thunar "$file" ;;  # Opens images with feh
+		*)
+			foot -e nvim "$file" ;;
+	esac
+}
+
+main() {
+    target="${1:-$HOME}"  # Default to home directory if no argument is provided
+    prompt="$2"
+
+    while true; do
+        p="${prompt:-$target}"
+        items=$(ls -1a "$target" | grep -v '^\.$' | sort | wmenu -i -l 15 -p "$p")
+        ec=$?
+        [ "$ec" -ne 0 ] && exit $ec
+
+        # Remove duplicates
+        items=$(echo "$items" | sort -u)
+
+        nitems=$(echo "$items" | wc -l)
+        if [ "$nitems" -eq 1 ]; then
+            newt=$(fullpath "$items" "$target")
+            [ ! -e "$newt" ] && continue
+            if [ -d "$newt" ]; then
+                target="$newt"
+                continue
+            fi
+        fi
+
+        IFS="$NEWLINE"
+        for item in $items; do
+            item=$(fullpath "$item" "$target")
+            [ ! -e "$item" ] && continue
+            if [ -f "$item" ]; then
+                open_file "$item"
+            else
+                echo "$item"
+            fi
+        done
+        unset IFS
+    done
+}
+
+main "$@"
