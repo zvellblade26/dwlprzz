@@ -3,14 +3,14 @@
 separator_color = "#11111b"
 separator_height = 2
 width = (0, 800)
-height = 200
+height = 250
 origin = top-right
 #origin = bottom-right
 #offset = 10x30
 offset = 20x17
 gap_size = 3
-#font = JetBrainsMonoNL NFM SemiBold
-font = SF Pro Display
+font = JetBrainsMonoNL NFM SemiBold
+#font = SF Pro Display
 #padding = 8
 padding = 15
 horizontal_padding = 15

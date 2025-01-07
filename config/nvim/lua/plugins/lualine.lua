@@ -5,63 +5,330 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
 	event = "VeryLazy",
 	config = function()
-		-- stylua: ignore
-		local colors = {
-			blue   = '#80a0ff',
-			cyan   = '#79dac8',
-			black  = '#080808',
-			white  = '#c6c6c6',
-			red    = '#ff5189',
-			violet = '#d183e8',
-			grey   = '#303030',
-		}
-
-		local bubbles_theme = {
-			normal = {
-				a = { fg = colors.black, bg = colors.violet },
-				b = { fg = colors.white, bg = colors.grey },
-				c = { fg = colors.white },
-			},
-
-			insert = { a = { fg = colors.black, bg = colors.blue } },
-			visual = { a = { fg = colors.black, bg = colors.cyan } },
-			replace = { a = { fg = colors.black, bg = colors.red } },
-
-			inactive = {
-				a = { fg = colors.white, bg = colors.black },
-				b = { fg = colors.white, bg = colors.black },
-				c = { fg = colors.white },
-			},
-		}
-
-		require('lualine').setup {
+		require("lualine").setup ({
 			options = {
-				theme = bubbles_theme,
+				theme = "solarized_dark" -- "auto" "fluoromachine" "dracula" "gruvbox_dark" "solarized_dark"
+			}
+		})
+		local lualine = require('lualine')
+		local colors = {
+			bg       = '#202328',
+			fg       = '#bbc2cf',
+			yellow   = '#fbff00',
+			cyan     = '#00ffff',
+			darkblue = '#081633',
+			green    = '#00ff00',
+			orange   = '#ff7f00',
+			violet   = '#a9a1e1',
+			magenta  = '#c678dd',
+			blue     = '#00a0ff',
+			red      = '#ff0000',
+		}
+
+		local conditions = {
+			buffer_not_empty = function()
+				return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+			end,
+			hide_in_width = function()
+				return vim.fn.winwidth(0) > 80
+			end,
+			check_git_workspace = function()
+				local filepath = vim.fn.expand('%:p:h')
+				local gitdir = vim.fn.finddir('.git', filepath .. ';')
+				return gitdir and #gitdir > 0 and #gitdir < #filepath
+			end,
+		}
+
+		-- Config
+		local config = {
+			options = {
+				-- Disable sections and component separators
 				component_separators = '',
-				section_separators = { left = '', right = '' },
+				section_separators = '',
+				theme = {
+					normal = { c = { fg = colors.fg, bg = colors.bg } },
+					inactive = { c = { fg = colors.fg, bg = colors.bg } },
+				},
 			},
 			sections = {
-				lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-				lualine_b = { 'filename', 'branch' },
-				lualine_c = {
-					'%=', --[[ add your center compoentnts here in place of this comment ]]
-				},
-				lualine_x = {},
-				lualine_y = { 'filetype', 'progress' },
-				lualine_z = {
-					{ 'location', separator = { right = '' }, left_padding = 2 },
-				},
-			},
-			inactive_sections = {
-				lualine_a = { 'filename' },
+				-- these are to remove the defaults
+				lualine_a = {},
 				lualine_b = {},
+				lualine_y = {},
+				lualine_z = {},
+				-- These will be filled later
 				lualine_c = {},
 				lualine_x = {},
-				lualine_y = {},
-				lualine_z = { 'location' },
 			},
-			tabline = {},
-			extensions = {},
+			inactive_sections = {
+				-- these are to remove the defaults
+				lualine_a = {},
+				lualine_b = {},
+				lualine_y = {},
+				lualine_z = {},
+				lualine_c = {},
+				lualine_x = {},
+			},
 		}
+
+		-- Inserts a component in lualine_c at left section
+		local function ins_left(component)
+			table.insert(config.sections.lualine_c, component)
+		end
+
+		-- Inserts a component in lualine_x at right section
+		local function ins_right(component)
+			table.insert(config.sections.lualine_x, component)
+		end
+
+		ins_left {
+			function()
+				return '███████░░░░░░░░░░     '
+			end,
+			color = function()
+				-- auto change color according to neovims mode
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 1, right = 1 }, -- We don't need space before this
+		}
+
+		ins_left {
+			function()
+				return ""
+			end,
+			color = function()
+				-- auto change color according to neovims mode
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 0, right = 0 }, -- We don't need space before this
+		}
+
+		-- Insert the filename component with a custom background color
+		ins_left {
+			'filename',
+			cond = conditions.buffer_not_empty,
+			color = function()
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 1, right = 1 },
+		}
+
+
+		ins_right {
+			function()
+				return ''
+			end,
+			color = function()
+				-- auto change color according to neovims mode
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 0, right = 2 },
+		}
+		--ins_right { 'location', color = { fg = colors.cyan, gui = 'italic' } }
+		ins_right {
+			'location',
+			color = function()
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()], gui = 'bold,italic' }
+			end,
+		}
+
+		ins_right {
+			'progress',
+			color = function()
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()], gui = 'bold,italic' }
+			end,
+		}
+
+		ins_right {
+			function()
+				return ''
+			end,
+			color = function()
+				-- auto change color according to neovims mode
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 2, right = 0 },
+		}
+		ins_right {
+			function()
+				return '     ░░░░░░░░░░███████'
+			end,
+			color = function()
+				-- auto change color according to neovims mode
+				local mode_color = {
+					n = colors.blue,
+					i = colors.green,
+					v = colors.orange,
+					V = colors.orange,
+					[''] = colors.orange,
+					c = colors.magenta,
+					s = colors.yellow,
+					S = colors.yellow,
+					[''] = colors.yellow,
+					ic = colors.yellow,
+					R = colors.red,
+					Rv = colors.red,
+					cv = colors.red,
+					ce = colors.red,
+					r = colors.red,
+					rm = colors.red,
+					['r?'] = colors.red,
+					['!'] = colors.red,
+					t = colors.red,
+				}
+				return { fg = mode_color[vim.fn.mode()] }
+			end,
+			padding = { left = 1, right = 1 },
+		}
+
+		lualine.setup(config)
+
 	end
 }

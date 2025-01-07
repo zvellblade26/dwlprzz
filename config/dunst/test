@@ -1,13 +1,13 @@
 #!/bin/sh
 
-echo "   Reload Dunst? [Y/n]"
-read ans
+echo -n "   Reload Dunst? [Y/n] "
+read -r ans
 if [[ "$ans" =~ ^[Yy]$ || "$ans" == "" ]]; then
 	pkill dunst &&
-	dunst &
-	sleep 1;
-	echo "   Done"
-	sleep 1;
+	dunst & disown
+	sleep 0.1;
+	echo -n "   Done"
+	sleep 0.1;
 else
 	continue
 fi

@@ -18,7 +18,7 @@ vim.opt.softtabstop = 3
 vim.opt.shiftwidth = 3
 vim.opt.expandtab = false
 
-vim.opt.smartindent = true
+vim.opt.smartindent = false
 
 vim.opt.wrap = false
 
@@ -29,7 +29,7 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 3
+vim.opt.scrolloff = 10
 vim.opt.signcolumn = "yes"
 
 vim.opt.updatetime = 50
@@ -79,14 +79,14 @@ vim.opt.winminwidth = 5
 vim.opt.foldlevel = 99
 
 if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.smoothscroll = true
+	vim.opt.smoothscroll = true
 end
 
 vim.cmd("set wildmenu")
 vim.cmd("filetype plugin on")
 
 if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.foldmethod = "expr"
+	vim.opt.foldmethod = "expr"
 else
-  vim.opt.foldmethod = "indent"
+	vim.opt.foldmethod = "indent"
 end
