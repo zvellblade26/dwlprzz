@@ -1,5 +1,5 @@
 
-menuentry "WINDOWS Fucking 1O" --class windows --class os{
+menuentry "WINDOWS" --class windows --class os{
 	search --fs-uuid --no-floppy --set=root 0C4A-8938
 	chainloader (${root})/EFI/Microsoft/Boot/bootmgfw.efi
 }
