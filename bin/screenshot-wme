@@ -17,12 +17,14 @@ case $1 in
 			dunstify 'Screenshot canceled' -t 1000 -u low
 			exit 0
 		fi
-		dunstify 'Screenshot taken' -t 1000 -u low
+		wl-copy < "$screenshot_dir/$file_name"
+		dunstify 'Screenshot taken and clipped' -t 1000 -u low
 		;;
 	fss)
 		file_name="FSS $(date +%d-%m,%I:%M:%S).png"
 		grim "$screenshot_dir/$file_name" &&
-		dunstify 'Screenshot taken' -t 1000 -u low
+		wl-copy < "$screenshot_dir/$file_name"
+		dunstify 'Screenshot taken and clipped' -t 1000 -u low
 		;;
 	*)
 		exit 1
@@ -30,7 +32,7 @@ case $1 in
 esac
 
 # Menu for additional actions
-menu=$(echo -e "save\nedit\ndelete" | wmenu)
+menu=$(echo -e "DONE\nedit\ndelete" | wmenu)
 if [[ "$menu" == "edit" ]]; then
 	# Find the most recent screenshot file
 	recent_file=$(ls -t "$screenshot_dir" | grep -E "^(SS|FSS) .*\.png$" | head -n 1)

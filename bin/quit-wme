@@ -5,15 +5,11 @@ pkill wmenu; pkill wmenu-run
 
 menu=$(echo -e "Yes\nNo" | wmenu -p "quit dwl?")
 case $menu in
-	"Yes")
-		rm -rf "$HOME/.clipboard_manager.lock"; pkill -f clip-asd;
+	Yes)
+		rm -rf "$HOME/.clipboard_manager.lock"; killall clip-asd; killall battery-asd;
 		pkill dwl
 		;;
-	"No")
-		dunstify "Quit Canceled" -u low -r 1026 -t 1000
-		exit 1
-		;;
-	*)
+	No|*)
 		dunstify "Quit Canceled" -u low -r 1026 -t 1000
 		exit 1
 		;;

@@ -1,13 +1,29 @@
 #!/bin/sh
-printf " $(date +"%A, %d %b") " | dbus-run-session dwl -s "dunst <&- & \
-	wbg -s "$HOME/Wallpapers/wallpaper18.jpg" & \
-	brightnessctl set 15 <&- & \
-	rm -rf "$HOME/.clipboard_manager.lock"<&- & 
-	pkill -f <&- &
-	clip-asd <&- &
-	foot --server <&-
-	"
+
 	#blue#wbg -s "$HOME/Wallpapers/wallpaper16.jpg" & \
-	#orange#wbg -s "$HOME/Wallpapers/wallpaper17.jpg" & \
-	#purple#wbg -s "$HOME/Wallpapers/wallpaper21blur.jpg" & \
+	#green#wbg -s "$HOME/Wallpapers/wallpaper6.jpg" & \
+	#orange#wbg -s "$HOME/Wallpapers/wallpaper1.jpg" & \
+	#purple#wbg -s "$HOME/Wallpapers/wallpaper4.jpg" & \
 	#LightBlue#wbg -s "$HOME/Wallpapers/wallpaper18.jpg" & \
+
+	if [ "$(date +%u)" -eq 7 ]; then
+		printf " $(date +"-->  SUNDAY  <--  [ %d %b ] ") " | dbus-run-session dwl -s "dunst <&- & \
+			wbg -s "$HOME/Wallpapers/wallpaper4.jpg" & \
+			brightnessctl set 15 <&- & \
+			rm -rf "$HOME/.clipboard_manager.lock" <&- & \
+			rm -rf "$HOME/.clipboard_history" <&- & \
+			clip-asd run <&- & \
+			battery-asd <&- & \
+			foot --server <&- & \
+			"
+	else
+		printf " $(date +"%A, %d %b") " | dbus-run-session dwl -s "dunst <&- & \
+			wbg -s "$HOME/Wallpapers/wallpaper4.jpg" & \
+			brightnessctl set 15 <&- & \
+			rm -rf "$HOME/.clipboard_manager.lock" <&- & \
+			rm -rf "$HOME/.clipboard_history" <&- & \
+			clip-asd run <&- & \
+			battery-asd <&- & \
+			foot --server <&- & \
+			"
+	fi

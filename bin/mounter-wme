@@ -61,15 +61,14 @@ handle_phone() {
 				}
 
 # Main menu selection
-menu=$(echo -e "C: & D:\nC:\nD:\nPhone\nUnmount all" | wmenu -i -p "Mount Menu:")
+menu=$(echo -e "C:\nD:\nPhone\nUnmount all" | wmenu -i -p "Mount Menu:")
 [[ -z "$menu" ]] && notify "No option selected" && exit 1
 
 # Prompt for sudo password
-if ! pass=$(pass-sh "Sudo pass:"); then
+if ! pass=$(pass-asd "Sudo pass:"); then
     echo "Failed to get password."
     exit 1
 fi
-#[[ -z "$pass" ]] && notify "Password input was empty" && exit 1
 
 # Ensure directories exist
 echo "$pass" | sudo -S mkdir -p "$Ddir" "$Wdir" "$Pdir" ||
@@ -77,10 +76,6 @@ echo "$pass" | sudo -S mkdir -p "$Ddir" "$Wdir" "$Pdir" ||
 
 # Handle user choice
 case $menu in
-	"C: & D:")
-		mount_dir "$Wdsk" "$Wdir" "C:"
-		mount_dir "$Ddsk" "$Ddir" "D:"
-		;;
 	"C:")
 		mount_dir "$Wdsk" "$Wdir" "C:"
 		;;

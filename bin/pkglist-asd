@@ -8,12 +8,12 @@ refresh_cache() {
     echo "Updating package lists..."
     
     # Repo packages
-#    echo "=== Pacman Packages (repo) ===" > "$CACHE_FILE"
-#    pacman -Qe | awk '{print $1}' | while read -r pkg; do
-#        if pacman -Si "$pkg" >/dev/null 2>&1; then
-#            echo "$pkg" >> "$CACHE_FILE"
-#        fi
-#    done
+    echo "=== Pacman Packages (repo) ===" > "$CACHE_FILE"
+    pacman -Qe | awk '{print $1}' | while read -r pkg; do
+        if pacman -Si "$pkg" >/dev/null 2>&1; then
+            echo "$pkg" >> "$CACHE_FILE"
+        fi
+    done
 
     # AUR packages
     echo "=== AUR Packages ===" > "$AUR_LIST_FILE"
@@ -27,14 +27,14 @@ refresh_cache() {
 }
 
 # Check if cache exists, refresh if outdated or forced
-if [[ ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
-#if [[ ! -f "$CACHE_FILE" || ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
+#if [[ ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
+if [[ ! -f "$CACHE_FILE" || ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
     refresh_cache
 fi
 
 # Display cached lists
-#echo "=== Pacman Packages (repo) ==="
-#grep -v '^===' "$CACHE_FILE"
+echo "=== Pacman Packages (repo) ==="
+grep -v '^===' "$CACHE_FILE"
 
 echo -e "\n=== AUR Packages ==="
 grep -v '^===' "$AUR_LIST_FILE"

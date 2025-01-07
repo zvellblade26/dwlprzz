@@ -20,15 +20,20 @@ save_clipboard() {
 
 # Function to show the clipboard history and let the user choose an entry
 select_clipboard() {
-	# Show history using fzf (interactive search)
-	# Use tac to reverse the order so that the most recent entry is on top
-	selected=$(tac "$HISTORY_FILE" | fzf -m --preview "echo {}" --preview-window=up:20%:wrap)
+    # Show history using fzf (interactive search)
+    # Use tac to reverse the order so that the most recent entry is on top
 
-	 # If something is selected, copy it to clipboard
-	 if [ -n "$selected" ]; then
-		 echo "$selected" | $COPY_COMMAND
+    foot -e bash -c "
+	 # Command for clipboard management on Wayland
+	 CLIP_COMMAND=\"wl-paste\"
+	 COPY_COMMAND=\"wl-copy\"
+    selected=\$(tac \"$HOME/.clipboard_history\" | fzf -m --preview \"echo {}\" --preview-window=up:20%:wrap)
+	 if [ -n \"\$selected\" ]; then
+		 echo \"\$selected\" | \"\$COPY_COMMAND\";
+		 dunstify \"Copied\" -t 1000 -u low
 	 fi
- }
+    " & disown
+}
 
 # Function to clear clipboard history
 clear_history() {
@@ -47,7 +52,7 @@ monitor_clipboard() {
 
 	# Check if the lock file exists. If it does, exit.
 	if [ -f "$LOCK_FILE" ]; then
-		echo "Clipboard manager is already running in the background."
+		dunstify "Clipboard manager is already running in the background."
 		exit 1
 	fi
 
@@ -71,9 +76,9 @@ monitor_clipboard() {
   }
 
 case $1 in
-	sel) select_clipboard && echo "Selected" ;;
-	clear) clear_history && echo "Cleared" ;;
-	stop) stop_monitoring ;;
-	run) monitor_clipboard & echo "Running" ;;
-	*) echo "failed";exit 1 ;;
+	sel) select_clipboard ;;
+	clear) clear_history && dunstify -t 1000 -r 9611 "Clipboard Cleared" ;;
+	#stop) stop_monitoring ;;
+	run) monitor_clipboard & dunstify -t 1000 -r 9611 "Clip-asd Running" ;;
+	*) dunstify "usage: sel, clear, run";exit 1 ;;
 esac

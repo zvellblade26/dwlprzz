@@ -9,7 +9,7 @@ send_notification() {
 	if [ "$1" = "mute" ]; then
 		TEXT="MUTED";
 	else
-		TEXT="Volume : ${VOLUME}%";
+		TEXT="    ${VOLUME}";
 	fi
 	dunstify -a "Volume" -r 9993 -h int:value:"$VOLUME" "$TEXT" -t 2000
 }

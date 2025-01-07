@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Define bookmarks as an associative array
+declare -A bkmarks=(
+["WhatsApp"]="https://web.whatsapp.com/"
+["YouTube"]="https://www.youtube.com/"
+["ClassRoom"]="https://classroom.google.com/u/2/"
+["Keep"]="https://keep.google.com/"
+["ChatGPT"]="https://chat.openai.com/"
+["Grammar"]="https://quillbot.com/grammar-check"
+["Translator"]="https://quillbot.com/translate"
+["LMS UHN"]="https://lms.uhn.ac.id/login/index.php"
+["SISFO UHN"]="https://akademik.uhn.ac.id/?mnux=login&lgn=frm&lid=120&nme=Mahasiswa"
+["Nerd Fonts"]="https://www.nerdfonts.com/cheat-sheet"
+["HTML Color Codes"]="https://htmlcolorcodes.com/"
+["Git Repo"]="https://github.com/zvellblade26?tab=repositories"
+["StirlingPDF"]="http://localhost:8080/"
+["Gmail - zvellblade"]="https://mail.google.com/mail/u/0/#inbox"
+["Gmail - evinkevin"]="https://mail.google.com/mail/u/1/#inbox"
+["Germany Deutsch für dich - Start"]="https://www.goethe.de/prj/dfd/d/dashboard"
+)
+
+# Generate a cleaned list of commands from /usr/bin and $HOME/.local/bin/
+temp_file="/tmp/apptmp"
+[ ! -f "$temp_file" ] &&
+{
+	ls --color=never -1 /usr/share/applications/ | sed -r 's/[@*]+$//g' | grep -vE '^(\./|\.\./)$' | sed 's/\.desktop$//'
+	#ls --color=never -1 /usr/bin/ | sed -r 's/[@*]+$//g' | grep -vE '^(\./|\.\./)$'
+	ls --color=never -1 "$HOME/.local/bin/" | sed -r 's/[@*]+$//g' | grep -vE '^(\./|\.\./)$'
+	echo "rmtmp"
+} > "$temp_file"
+
+# Merge options: Bookmarks and commands
+options=$(printf "%s\n" "${!bkmarks[@]}" && cat "$temp_file")
+selection=$(echo "$options" | sort | wmenu -i)
+
+# If a selection is made
+if [[ -n "$selection" ]]; then
+	if [[ -v bkmarks["$selection"] ]]; then
+		# Open URL from bookmarks and trigger xdotool shortcut
+		firefox --new-tab "${bkmarks[$selection]}" &
+		wtype -M logo 2
+	else
+		# Handle queries for YouTube or general search
+		code=$(echo "$selection" | cut -d' ' -f1)
+		query=$(echo "$selection" | cut -d' ' -f2-)
+		if [[ "$selection" =~ "rmtmp" ]]; then
+			rm -rf "$temp_file"
+		elif [[ "$code" =~ ^[Yy]$ ]]; then
+			firefox --new-tab "https://www.youtube.com/results?search_query=${query// /+}" &
+			wtype -M logo 2
+		elif [[ "$code" =~ ^[Pp]ac ]]; then
+			firefox --new-tab "https://archlinux.org/packages/?sort=&q=${query// /+}&maintainer=&flagged=" &
+			wtype -M logo 2
+		elif [[ "$code" =~ ^[Aa]ur ]]; then
+			firefox --new-tab "https://aur.archlinux.org/packages?O=0&K=${query// /+}" &
+			wtype -M logo 2
+		elif [[ "$code" =~ ^[DdGg]$ ]]; then
+			firefox --new-tab "https://duckduckgo.com/?q=${query// /+}" &
+			wtype -M logo 2
+		elif [[ -z "$code" ]]; then
+			firefox --new-tab "https://duckduckgo.com/?q=${query// /+}" &
+			wtype -M logo 2
+		else
+			bash -c "$selection" & disown
+		fi
+	fi
+else
+	dunstify -t 100 "No selection made."
+fi
+
+# Cleanup temporary file
+#rm -f "$temp_file"
