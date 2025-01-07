@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-user=$(whoami)
-home="/home/$user"
+#user=$(whoami)
 eval "$(zoxide init bash)"
 alias l='ls -aFh --color=always' # add colors and file type extensions
 function _zq() {
@@ -12,9 +11,9 @@ function _zq() {
 }
 alias z='_zq'
 alias zi='function _zy(){ zi "$1" && l; }; _zy'
-alias zs="z $home/.local/bin"
+alias zs="z $HOME/.local/bin"
 
-export PATH=$PATH:"$home/.local/bin"
+export PATH=$PATH:"$HOME/.local/bin"
 iatest=$(expr index "$-" i)
 if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
@@ -22,7 +21,7 @@ if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 export EDITOR=nvim
 export VISUAL=nvim
 
-alias sureset="faillock --user $user --reset"
+alias sureset="faillock --user $USER --reset"
 alias sudo="sureset && sudo $@"
 alias smci="sureset && sudo make clean install"
 alias smcu="sureset && sudo make clean uninstall"
@@ -33,7 +32,7 @@ alias paci="sudo pacman -S"
 alias pac="sudo pacman"
 alias pgg="ping -c 3 8.8.8.8"
 alias v="nvim"
-alias vv="faillock --user $user --reset && sudoedit"
+alias vv="faillock --user $USER --reset && sudoedit"
 alias gc="git clone"
 alias ebrc="v ~/.bashrc"
 alias einitrc="v ~/.xinitrc"
@@ -65,7 +64,8 @@ cd ()
 }
 
 alias ll="ls -Fls"                # long listing format
-alias ls="ls -aFh --color=always" # add colors and file type extensions
+#alias ls="ls -aFh --color=always" # add colors and file type extensions
+alias ls="ls -aFh --color=never" # add colors and file type extensions
 alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
 
@@ -95,5 +95,5 @@ extract() {
 }
 
 zf() {
-	z	"$(find "$home" -type d \( -name "DATA:D" -or -name "DATA:C" \) -prune -o -type d -print | fzf)"
+	z	"$(find "$USER" -type d \( -name "DATA:D" -or -name "DATA:C" \) -prune -o -type d -print | fzf)"
 }
