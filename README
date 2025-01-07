@@ -1,15 +1,15 @@
-LINKS
-:: dwl -- https://codeberg.org/dwl/dwl/releases
-:: wmenu -- https://codeberg.org/adnano/wmenu/
-:: wbg -- https://codeberg.org/dnkl/wbg
-
 GIT CLONE
 :: wmenu -- https://codeberg.org/adnano/wmenu.git
 :: wbg -- https://codeberg.org/dnkl/wbg.git
 
+LINKS
+:: dwl -- https://codeberg.org/dwl/dwl/releases
+:: wmenu -- https://codeberg.org/adnano/wmenu/
+:: wbg -- https://codeberg.org/dnkl/wbg
+:: Stirling PDF -- https://docs.stirlingpdf.com/Installation/Unix%20Installation
+
 run
 sudo sh -c "cat dwlprzz/winpar >> /etc/grub.d/40_custom"
-
 
 stirling PDF depencencies
 :: gradle
