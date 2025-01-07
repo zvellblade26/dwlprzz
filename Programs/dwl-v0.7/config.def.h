@@ -7,9 +7,9 @@
 static const int sloppyfocus               = 0;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
 static const unsigned int borderpx         = 0;  /* border pixel of windows */
-static const int showbar                   = 1; /* 0 means no bar */
-static const int topbar                    = 1; /* 0 means bottom bar */
-static const char *fonts[]                 = {"JetBrainsMonoNL NFP SemiBold:style=SemiBold:size=10"};
+static const int showbar                   = 1;  /* 0 means no bar */
+static const int topbar                    = 1;  /* 0 means bottom bar */
+static const char *fonts[]                 = {"JetBrainsMonoNL Nerd Font Propo:style=Bold:size=10"};
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You can also use glsl colors */
@@ -17,24 +17,24 @@ static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You ca
 static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
 	// Purple
-	//[SchemeNorm] = { 0xffffffff, 0x33035bff, 0x33035bff },
-	//[SchemeSel]  = { 0x000000ff, 0xbe38e7ff, 0xbe38e7ff },
-	//[SchemeUrg]  = { 0xff0000ff, 0xff0000ff, 0xff0000ff },
+	[SchemeNorm] = { 0xffffffff, 0x000000ff, 0x000000ff },
+	[SchemeSel]  = { 0x000000ff, 0xbe38e7ff, 0xbe38e7ff },
+
+	// Green
+	//[SchemeNorm] = { 0xffffffff, 0x000000ff, 0x000000ff },
+	//[SchemeSel]  = { 0x000000ff, 0x54bf00ff, 0x54bf00ff },
 
 	//Orange
-	//[SchemeNorm] = { 0xffffffff, 0x14162fff, 0x14162fff },
-	//[SchemeSel]  = { 0x000000ff, 0xf05749ff, 0xf05749ff },
-	//[SchemeUrg]  = { 0xff0000ff, 0xff0000ff, 0xff0000ff },
+	//[SchemeNorm] = { 0xffffffff, 0x000000ff, 0x000000ff },
+	//[SchemeSel]  = { 0x000000ff, 0xff8378ff, 0xff8378ff },
 
 	//Blue
-	//[SchemeNorm] = { 0xffffffff, 0x191E38ff, 0x191E38ff },
+	//[SchemeNorm] = { 0xffffffff, 0x000000ff, 0x000000ff },
 	//[SchemeSel]  = { 0x000000ff, 0x1CB7EEff, 0x1CB7EEff },
-	//[SchemeUrg]  = { 0xff0000ff, 0xff0000ff, 0xff0000ff },
 
 	//LightBlue
-	[SchemeNorm] = { 0xffffffff, 0x0b4b8bff, 0x0b4b8bff },
-	[SchemeSel]  = { 0x000000ff, 0x9dc2e4ff, 0x9dc2e4ff },
-	[SchemeUrg]  = { 0xff0000ff, 0xff0000ff, 0xff0000ff },
+	//[SchemeNorm] = { 0xffffffff, 0x000000ff, 0x000000ff },
+	//[SchemeSel]  = { 0x000000ff, 0x9dc2e4ff, 0x9dc2e4ff },
 };
 
 /* tagging - TAGCOUNT must be no greater than 31 */
@@ -45,10 +45,12 @@ static int log_level = WLR_ERROR;
 
 /* NOTE: ALWAYS keep a rule declared even if you don't use rules (e.g leave at least one example) */
 static const Rule rules[] = {
-	/* app_id								 title       tags mask     isfloating   monitor */
-	{ "thunar",			 				    NULL,       0,            1,           -1 }, /* Start on ONLY tag "2" */
-	{ "firefox",			 				 NULL,       1 << 1,       0,           -1 }, /* Start on ONLY tag "2" */
-	{ "system-config-printer",			 NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "2" */
+	/* app_id								 title       tags mask     isfloating    monitor */
+	{ "thunar",			 				    NULL,       0,				1,			     -1 },
+	{ "firefox",			 				 NULL,       1 << 1,       0,            -1 },
+	{ "mpv",									 NULL,       1 << 0,       0,            -1 },
+	{ "system-config-printer",			 NULL,       1 << 8,       0,			     -1 },
+	{ "foot",								 NULL,       0,				0,            -1 },
 };
 
 /* layout(s) */
@@ -117,7 +119,7 @@ LIBINPUT_CONFIG_ACCEL_PROFILE_FLAT
 LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE
 */
 static const enum libinput_config_accel_profile accel_profile = LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE;
-static const double accel_speed = 0.0;
+static const double accel_speed = 0.2;
 
 /* You can choose between:
 LIBINPUT_CONFIG_TAP_MAP_LRM -- 1/2/3 finger tap maps to left/right/middle
@@ -127,6 +129,9 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* If you want to use the windows key for MODKEY, use WLR_MODIFIER_LOGO */
 #define MODKEY WLR_MODIFIER_LOGO
+#define AALT WLR_MODIFIER_ALT
+#define SSHIFT WLR_MODIFIER_SHIFT
+#define CCTRL WLR_MODIFIER_CTRL
 
 #define TAGKEYS(KEY,SKEY,TAG) \
 	{ MODKEY,                    KEY,            view,            {.ui = 1 << TAG} }, \
@@ -139,28 +144,36 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* commands */
 static const char *termcmd[] = { "foot", NULL };
+static const char *office[]  = { "libreoffice", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier								key									function					argument */
-	{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_Return,     				spawn,          		{.v = termcmd} },
-	{ MODKEY,                    		XKB_KEY_space,      				spawn,          		SHCMD("pkill wmenu; pkill wmenu-run; wmenu-run & disown") },
+	{ MODKEY|SSHIFT,						XKB_KEY_Return,     				spawn,          		{.v = termcmd} },
+	{ MODKEY|SSHIFT,						XKB_KEY_E,							spawn,          		SHCMD("thunar-asd root") },
+	{ MODKEY|SSHIFT,						XKB_KEY_S,							spawn,					SHCMD("screenshot-wme ss") },
+	{ MODKEY|SSHIFT,						XKB_KEY_M,							spawn,					SHCMD("mounter-wme") },
+	{ MODKEY|SSHIFT,						XKB_KEY_P,							spawn,					SHCMD("pgtest-wme") },
+	{ MODKEY|SSHIFT,                 XKB_KEY_L,          				spawn,					SHCMD("poweropt-wme lock") },
+	{ MODKEY,                    		XKB_KEY_o,							spawn,          		{.v = office} },
+	{ MODKEY,                    		XKB_KEY_space,      				spawn,          		SHCMD("pkill wmenu; pkill wmenu-run; mainwmenu-wme") },
+	{ MODKEY,                    		XKB_KEY_c,							spawn,          		SHCMD("dunstify -u low -t 2500 -r 96311 \"$(cal -3)\"; status-asd time") },
 	{ MODKEY,                    		XKB_KEY_e,							spawn,          		SHCMD("thunar-asd") },
-	{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_E,							spawn,          		SHCMD("thunar-asd root") },
+	{ MODKEY,                    		XKB_KEY_y,							spawn,          		SHCMD("foot -f \"JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=12\" -e bash -c \"yazi\" & disown") },
 	{ MODKEY,                    		XKB_KEY_f,							spawn,          		SHCMD("firefox & disown; wtype -M logo 2") },
-
-	{ MODKEY|WLR_MODIFIER_SHIFT,		XKB_KEY_S,							spawn,					SHCMD("screenshot-wme ss") },
+	{ MODKEY,							   XKB_KEY_s,							spawn,					SHCMD("dbrowse-wme") },
+	{ MODKEY,							   XKB_KEY_x,      					spawn,          		SHCMD("poweropt-wme") },
+	{ MODKEY,							   XKB_KEY_F4,      					spawn,          		SHCMD("poweropt-wme suspend") },
+   { MODKEY,								XKB_KEY_t,							spawn,          		SHCMD("status-asd time; status-asd") },
+	{ MODKEY,								XKB_KEY_Right,						spawn,          		SHCMD("backlight-asd up") },
+	{ MODKEY,				   			XKB_KEY_Left,         			spawn,          		SHCMD("backlight-asd down") },
+	{ MODKEY,								XKB_KEY_Up,							spawn,					SHCMD("volume-asd up") },
+	{ MODKEY,								XKB_KEY_Down,						spawn,					SHCMD("volume-asd down") },
+	{ MODKEY,								XKB_KEY_m,							spawn,					SHCMD("volume-asd mute") },
 	{ 0,										XKB_KEY_Print,  					spawn,					SHCMD("screenshot-wme fss") },
 	{ 0,										XKB_KEY_XF86AudioLowerVolume,	spawn,					SHCMD("volume-asd down") },
 	{ 0,										XKB_KEY_XF86AudioRaiseVolume,	spawn,					SHCMD("volume-asd up") },
-	{ 0,										XKB_KEY_XF86AudioMute,			spawn,					SHCMD("volume-asd mute") },
-	{ WLR_MODIFIER_ALT,					XKB_KEY_space,						spawn,					SHCMD("www-wme") },
-	{ MODKEY|WLR_MODIFIER_SHIFT,		XKB_KEY_M,							spawn,					SHCMD("mounter-wme") },
-	{ MODKEY|WLR_MODIFIER_CTRL,		XKB_KEY_p,							spawn,					SHCMD("pgtest-wme") },
-	{ MODKEY,							   XKB_KEY_s,							spawn,					SHCMD("dbrowse-wme") },
-	{ MODKEY,							   XKB_KEY_x,      					spawn,          		SHCMD("poweropt-wme") },
-   { WLR_MODIFIER_CTRL,				   XKB_KEY_Prior,						spawn,          		SHCMD("backlight-asd up") },
-   { WLR_MODIFIER_CTRL,				   XKB_KEY_Next,         			spawn,          		SHCMD("backlight-asd down") },
+	//{ 0,										XKB_KEY_XF86AudioMute,			spawn,					SHCMD("volume-asd mute") },
 
 	{ MODKEY,                    		XKB_KEY_b,							togglebar,      		{0} },
 	{ MODKEY,                    		XKB_KEY_j,          				focusstack,     		{.i = +1} },
@@ -172,12 +185,12 @@ static const Key keys[] = {
 	{ MODKEY,                    		XKB_KEY_Return,     				zoom,           		{0} },
 	{ MODKEY,                    		XKB_KEY_Tab,        				view,           		{0} },
 	{ MODKEY,						  		XKB_KEY_q,          				killclient,     		{0} },
-	{ MODKEY|WLR_MODIFIER_CTRL,      XKB_KEY_m,          				setlayout,      		{.v = &layouts[0]} },
-	{ MODKEY|WLR_MODIFIER_CTRL,      XKB_KEY_f,          				setlayout,      		{.v = &layouts[2]} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_space,      				togglefloating, 		{0} },
+	{ MODKEY|CCTRL,						XKB_KEY_m,          				setlayout,      		{.v = &layouts[0]} },
+	{ MODKEY|CCTRL,      				XKB_KEY_f,          				setlayout,      		{.v = &layouts[2]} },
+	{ MODKEY|SSHIFT,						XKB_KEY_space,      				togglefloating, 		{0} },
 	{ MODKEY,                    		XKB_KEY_e,          				togglefullscreen,    {0} },
 	{ MODKEY,                    		XKB_KEY_0,          				view,						{.ui = ~0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_parenright, 				tag,            		{.ui = ~0} },
+	{ MODKEY|SSHIFT,						XKB_KEY_parenright, 				tag,            		{.ui = ~0} },
 	TAGKEYS(							  		XKB_KEY_1,							XKB_KEY_exclam,      0),
 	TAGKEYS(          			  		XKB_KEY_2, 			 				XKB_KEY_at,          1),
 	TAGKEYS(          			  		XKB_KEY_3, 			 				XKB_KEY_numbersign,  2),
@@ -187,8 +200,8 @@ static const Key keys[] = {
 	TAGKEYS(          			  		XKB_KEY_7, 			 				XKB_KEY_ampersand,   6),
 	TAGKEYS(          			  		XKB_KEY_8, 			 				XKB_KEY_asterisk,    7),
 	TAGKEYS(          			  		XKB_KEY_9, 			 				XKB_KEY_parenleft,   8),
-	{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_Q,         				spawn,					SHCMD("quit-wme") },
-	//{ MODKEY|WLR_MODIFIER_SHIFT, 		XKB_KEY_Q,         				quit,						{0} },
+	{ MODKEY|SSHIFT,						XKB_KEY_Q,         				spawn,					SHCMD("quit-wme") },
+	//{ MODKEY|SSHIFT,						XKB_KEY_Q,         				quit,						{0} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_Terminate_Server, quit, {0} },
@@ -204,18 +217,19 @@ static const Button buttons[] = {
 	//{ ClkLtSymbol, 0,      BTN_LEFT,   setlayout,      {.v = &layouts[0]} },
 	//{ ClkLtSymbol, 0,      BTN_RIGHT,  setlayout,      {.v = &layouts[2]} },
 
-	{ ClkTitle,    0,      BTN_MIDDLE, zoom,           {0} },
-	{ ClkTitle,    MODKEY, BTN_LEFT,	  spawn,          SHCMD("poweropt-wme") },
+	{ ClkTitle,    0,				BTN_MIDDLE,		 zoom,					{0} },
+	{ ClkTitle,    0,		  		BTN_RIGHT,	 	 spawn,          		SHCMD("poweropt-wme") },
 
-	{ ClkStatus,   0,      BTN_MIDDLE, spawn,          {.v = termcmd} },
-	{ ClkStatus,	0,		  BTN_LEFT,	  spawn,				SHCMD("status-asd") },
+	{ ClkStatus,   0,      		BTN_MIDDLE,		 spawn,          		{.v = termcmd} },
+	{ ClkStatus,	0,		  		BTN_LEFT,	 	 spawn,			  		SHCMD("dunstify -u low -t 2500 -r 96311 \"$(cal -3)\"; status-asd time") },
+	{ ClkStatus,	0,		  		BTN_RIGHT, 		 spawn,			  		SHCMD("status-asd") },
 
-	{ ClkClient,   MODKEY, BTN_LEFT,   moveresize,     {.ui = CurMove} },
-	{ ClkClient,   MODKEY, BTN_MIDDLE, togglefloating, {0} },
-	{ ClkClient,   MODKEY, BTN_RIGHT,  moveresize,     {.ui = CurResize} },
+	{ ClkClient,   MODKEY, 		BTN_LEFT,  		 moveresize,     		{.ui = CurMove} },
+	{ ClkClient,   MODKEY, 		BTN_MIDDLE,		 togglefloating, 		{0} },
+	{ ClkClient,   MODKEY, 		BTN_RIGHT, 		 moveresize,     		{.ui = CurResize} },
 
-	{ ClkTagBar,   0,      BTN_LEFT,   view,           {0} },
-	{ ClkTagBar,   0,      BTN_RIGHT,  toggleview,     {0} },
-	{ ClkTagBar,   MODKEY, BTN_LEFT,   tag,            {0} },
-	{ ClkTagBar,   MODKEY, BTN_RIGHT,  toggletag,      {0} },
+	{ ClkTagBar,   0,      		BTN_LEFT,  		 view,           		{0} },
+	{ ClkTagBar,   0,      		BTN_RIGHT, 		 toggleview,     		{0} },
+	{ ClkTagBar,   MODKEY, 		BTN_LEFT,  		 tag,            		{0} },
+	{ ClkTagBar,   MODKEY, 		BTN_RIGHT, 		 toggletag,      		{0} },
 };

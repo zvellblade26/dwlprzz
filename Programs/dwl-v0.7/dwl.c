@@ -85,7 +85,7 @@
 #define TEXTW(mon, text)        (drwl_font_getwidth(mon->drw, text) + mon->lrpad)
 
 /* enums */
-enum { SchemeNorm, SchemeSel, SchemeUrg }; /* color schemes */
+enum { SchemeNorm, SchemeSel }; /* color schemes */
 enum { CurNormal, CurPressed, CurMove, CurResize }; /* cursor */
 enum { XDGShell, LayerShell, X11 }; /* client types */
 enum { LyrBg, LyrBottom, LyrTile, LyrFloat, LyrTop, LyrFS, LyrOverlay, LyrBlock, NUM_LAYERS }; /* scene layers */
@@ -1551,7 +1551,7 @@ drawbar(Monitor *m)
 	}
 	w = TEXTW(m, m->ltsymbol);
 	drwl_setscheme(m->drw, colors[SchemeNorm]);
-	//x = drwl_text(m->drw, x, 0, w, m->b.height, m->lrpad / 2, m->ltsymbol, 0);
+	x = drwl_text(m->drw, x, 0, w, m->b.height, m->lrpad / 2, m->ltsymbol, 0);
 
 	if ((w = m->b.width - tw - x) > m->b.height) {
 		if (c) {
@@ -1960,8 +1960,7 @@ mapnotify(struct wl_listener *listener, void *data)
 
 	for (i = 0; i < 4; i++) {
 		c->border[i] = wlr_scene_rect_create(c->scene, 0, 0,
-			(float[])COLOR(colors[c->isurgent ? SchemeUrg : SchemeUrg][ColBorder]));
-			//(float[])COLOR(colors[c->isurgent ? SchemeUrg : SchemeNorm][ColBorder]));
+			(float[])COLOR(colors[c->isurgent ? SchemeNorm : SchemeNorm][ColBorder]));
 		c->border[i]->node.data = c;
 	}
 
@@ -2294,6 +2293,7 @@ powermgrsetmode(struct wl_listener *listener, void *data)
 	wlr_output_commit_state(m->wlr_output, &state);
 
 	m->asleep = !event->mode;
+	updatemons(NULL, NULL); 
 }
 
 void
@@ -3214,7 +3214,7 @@ urgent(struct wl_listener *listener, void *data)
 	drawbars();
 
 	if (client_surface(c)->mapped)
-		client_set_border_color(c, (float[])COLOR(colors[SchemeUrg][ColBorder]));
+		client_set_border_color(c, (float[])COLOR(colors[SchemeNorm][ColBorder]));
 }
 
 void
@@ -3424,7 +3424,7 @@ sethints(struct wl_listener *listener, void *data)
 	drawbars();
 
 	if (c->isurgent && surface && surface->mapped)
-		client_set_border_color(c, (float[])COLOR(colors[SchemeUrg][ColBorder]));
+		client_set_border_color(c, (float[])COLOR(colors[SchemeNorm][ColBorder]));
 }
 
 void
