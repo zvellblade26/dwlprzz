@@ -39,7 +39,7 @@ echo "#####   2. INSTALLING PACKAGES   #####"
 sleep 2;
 # Installing Packages
 pac base-devel brightnessctl dunst fastfetch foot fzf grim slurp || { echo "brightnessctl dunst fastfetch foot fzf grim slurp installation failed!"; exit 1; }
-pac libinput libnotify meson neovim ntfs-3g pinta || { echo "libinput libnotify meson neovim ntfs-3g pinta installation failed!"; exit 1; }
+pac libinput libnotify meson neovim ntfs-3g pinta swayimg || { echo "libinput libnotify meson neovim ntfs-3g pinta installation failed!"; exit 1; }
 pac pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber || { echo "pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber installation failed!"; exit 1; }
 pac swaylock thunar tumbler tllist unzip wayland-protocols acpi bat mpv yazi || { echo "swaylock thunar tumbler tllist unzip wayland-protocols installation failed!"; exit 1; }
 pac wev wl-clipboard wlroots wtype zip zoxide || { echo "wev wl-clipboard wlroots wtype zip zoxide installation failed!"; exit 1; }
@@ -56,7 +56,7 @@ sleep 2;
 # List of packages to check
 packages_to_check=(
 	"base-devel" "brightnessctl" "dunst" "fastfetch" "foot" "fzf" "grim" "slurp"
-	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "pinta"
+	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "pinta" "swayimg"
 	"pipewire" "pipewire-alsa" "pipewire-jack" "pipewire-pulse" "wireplumber"
 	"swaylock" "thunar" "tumbler" "tllist" "unzip" "wayland-protocols" "acpi" "bat" "mpv" "yazi"
 	"wev" "wl-clipboard" "wlroots" "wtype" "zip" "zoxide"
