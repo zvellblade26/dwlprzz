@@ -6,10 +6,10 @@ pkill wmenu; pkill wmenu-run
 # Function to check the status of cups.socket and handle enabling and starting it
 handle_cups_socket() {
 	if systemctl is-active --quiet cups.socket; then
-		dunstify "Cups.socket is already running."
+		notify-send "Cups.socket is already running."
 	else
-		dunstify "Starting cups.socket..."
-		pass-asd "Sudo pass:" | sudo -S systemctl start cups.socket && dunstify "Cups.socket started."
+		notify-send "Starting cups.socket..."
+		pass-asd "Sudo pass:" | sudo -S systemctl start cups.socket && notify-send "Cups.socket started."
 	fi
 }
 
@@ -20,17 +20,17 @@ handle_cups_socket
 if ! pgrep -f "system-config-printer" > /dev/null; then
 	system-config-printer &>/dev/null
 else
-	dunstify "system-config-printer is running."
+	notify-send "system-config-printer is running."
 	exit 1
 fi
 
 # Prompt to stop cups.socket
 opt=$(echo -e "Yes\nNo" | wmenu -p "Stop cups.socket?")
 case $opt in
-    Yes)
-        pass-asd "Sudo pass:" | sudo -S systemctl stop cups.socket && dunstify "Cups.socket stopped."
-        ;;
-    No|*)
-        dunstify "Okay, leaving cups.socket running."
-        ;;
+	Yes)
+		pass-asd "Sudo pass:" | sudo -S systemctl stop cups.socket && notify-send "Cups.socket stopped."
+		;;
+	No|*)
+		notify-send "Okay, leaving cups.socket running."
+		;;
 esac

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Lock file to ensure only one instance runs
-LOCK_FILE="$HOME/.clipboard_manager.lock"
-
 # Directory to store clipboard history
 HISTORY_FILE="$HOME/.clipboard_history"
 
@@ -30,7 +27,7 @@ select_clipboard() {
     selected=\$(tac \"$HOME/.clipboard_history\" | fzf -m --preview \"echo {}\" --preview-window=up:20%:wrap)
 	 if [ -n \"\$selected\" ]; then
 		 echo \"\$selected\" | \"\$COPY_COMMAND\";
-		 dunstify \"Copied\" -t 1000 -u low
+		 notify-send \"Copied\" -t 1000 -u low
 	 fi
     " & disown
 }
@@ -45,40 +42,33 @@ stop_monitoring() {
 	rm -rf $LOCK_FILE; pkill -f clip-asd
 }
 
-# Monitor clipboard in the background
 monitor_clipboard() {
-	# Previous clipboard content (initially empty)
-	prev_clipboard=""
-
-	# Check if the lock file exists. If it does, exit.
-	if [ -f "$LOCK_FILE" ]; then
-		dunstify "Clipboard manager is already running in the background."
-		exit 1
-	fi
-
-	# Create the lock file to prevent other instances
-	touch "$LOCK_FILE"
-
-	 # Infinite loop to monitor clipboard changes
-	 while true; do
-		 # Get current clipboard content
-		 current_clipboard=$($CLIP_COMMAND)
-
-		  # If clipboard content has changed, save it to history
-		  if [ "$current_clipboard" != "$prev_clipboard" ]; then
-			  save_clipboard
-			  prev_clipboard="$current_clipboard"
-		  fi
-
-		  # Sleep for a short time to prevent high CPU usage
-		  sleep 1
-	  done
-  }
+	wl-copy < /dev/null
+    # Initialize the previous clipboard content to an empty string
+    prev_clipboard=""
+    notify-send "Clipping..." -t 99999 -r 1065 -u low
+    # Infinite loop until new clipboard content is detected
+    while true; do
+        # Get current clipboard content
+        current_clipboard=$($CLIP_COMMAND)
+        # If the clipboard content has changed, save it and update the previous clipboard
+        if [ "$current_clipboard" != "$prev_clipboard" ]; then
+            # Save the new content to the history file
+            save_clipboard
+            prev_clipboard="$current_clipboard"
+            # Notify that a new entry has been added to the clipboard history
+            notify-send "New clipboard entry added!" -t 1000 -r 1065 -u normal
+            # Break the loop after detecting the new entry
+            break
+        fi
+        # Sleep to avoid high CPU usage
+        sleep 0.2
+    done
+}
 
 case $1 in
 	sel) select_clipboard ;;
-	clear) clear_history && dunstify -t 1000 -r 9611 "Clipboard Cleared" ;;
-	#stop) stop_monitoring ;;
-	run) monitor_clipboard & dunstify -t 1000 -r 9611 "Clip-asd Running" ;;
-	*) dunstify "usage: sel, clear, run";exit 1 ;;
+	clear) clear_history && notify-send -t 1000 -r 9611 "Clipboard Cleared" ;;
+	*) monitor_clipboard ;;
+	#*) notify-send "usage: sel, clear";exit 1 ;;
 esac

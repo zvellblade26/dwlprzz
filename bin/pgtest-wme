@@ -4,10 +4,9 @@
 pkill wmenu; pkill wmenu-run
 
 NOTIF_ID=7287                    # Notification ID
-INTERFACE="wlp3s0"               # Adjust Wi-Fi interface if needed
 
 
-notify() { dunstify "$1" -r "$NOTIF_ID" -t "${3:-3000}" -u "${2:-low}"; }
+notify() { notify-send "$1" -r "$NOTIF_ID" -t "${3:-3000}" -u "${2:-low}"; }
 
 check_internet() {
 	notify "Checking ..." "normal" 5000
@@ -37,4 +36,11 @@ wifi_menu() {
 	esac
 }
 
-wifi_menu
+case $1 in
+	Ping) check_internet ;;
+	TUI) nmtui_wifi & disown ;;
+	Restart) 
+		pass-asd "Sudo pass:" | sudo -S systemctl restart NetworkManager && 
+		notify "Wi-Fi Restarted" || notify "Restart Failed" "critical" ;;
+	*) wifi_menu ;;
+esac

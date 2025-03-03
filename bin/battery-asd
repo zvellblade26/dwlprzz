@@ -1,39 +1,45 @@
 #!/bin/bash
 
 # Customizable thresholds
-CRITICAL_THRESHOLD=30
-LOW_THRESHOLD=60
+CRITICAL_THRESHOLD=20
+LOW_THRESHOLD=50
 HIGH_THRESHOLD=90
 
 # Notification function
 notify_battery_status() {
 	local urgency=$1
 	local timeout=$2
-	dunstify -t "$timeout" -u "$urgency" "Battery Percentage $batt%" "Battery Not Charging"
+	local idd=$3
+	notify-send -t "$timeout" -u "$urgency" -r "$idd" "Battery Percentage $batt%"
 }
 
 while true; do
 	# Get battery status and percentage
-	batt=$(acpi -b | head -n 1 | grep -oP '\d+(?=%)')
+	#batt=$(acpi -b | head -n 1 | grep -oP '\d+(?=%)')
+	batt="$(cat /sys/class/power_supply/BAT0/capacity)"
 
-	if [[ ! "$(cat /sys/class/power_supply/AC/online)" -gt 0 ]]; then
+	if [[ "$(cat /sys/class/power_supply/AC/online)" -eq 0 ]]; then
 		if [[ "$batt" -lt "$HIGH_THRESHOLD" ]]; then
 			if [[ "$batt" -lt "$LOW_THRESHOLD" ]]; then
 				if [[ "$batt" -lt "$CRITICAL_THRESHOLD" ]]; then
-					notify_battery_status critical 100
+					bstat-asd
+					notify_battery_status critical 180 14069
 					sleep 0.2  # Short sleep for critical battery
 				else
-					notify_battery_status normal 1000
+					bstat-asd
+					notify_battery_status normal 1000 14069
 					sleep 20  # Moderate sleep for low battery
 					continue
 				fi
 			else
-				notify_battery_status low 1000
+				bstat-asd
+				notify_battery_status low 1000 14069
 				sleep 60  # Longer sleep for higher battery levels
 				continue
 			fi
 			continue
 		fi
 	fi
+	bstat-asd
 	sleep 60  # Default sleep for non-discharge or sufficient battery
 done

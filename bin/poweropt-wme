@@ -25,8 +25,7 @@ main() {
 			process_checker() {
 				pidof swaylock >/dev/null
 			}
-			dunstify "   Locking ..." -r 1011 -u low -t 2000 &
-			sleep 1
+			notify-send "   Locking ..." -r 1011 -u low -t 2000 &
 			moon
 			faillock --user "$(whoami)" --reset
 			swaylock -F -C "$HOME/.config/swaylock/config" &
@@ -36,48 +35,49 @@ main() {
 			sun
 			;;
 		" Suspend")
-			#prt1=$(echo -e "[YES]\nNo" | wmenu -p "We're Suspending?")
-			#if [ "$prt1" = "[YES]" ]; then
-				foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
-				moon() {
-					for i in {15..1}; do
-						brightnessctl -q s \$i
-						sleep 0.01
-					done
-				}
-				sun() {
-					for i in {1..15}; do
-						brightnessctl -q s \$i
-						sleep 0.01
-					done
-				}
-				process_checker() {
-					pidof swaylock >/dev/null
-				}
-				notif() {
-					dunstify \"   Suspending in 5\" -r 1011 -u low; sleep 0.5
-					dunstify \"   Suspending in 4\" -r 1011 -u low; sleep 0.5
-					dunstify \"   Suspending in 3\" -r 1011 -u low; sleep 0.5
-					dunstify \"   Suspending in 2\" -r 1011 -u low; sleep 0.5
-					dunstify \"   Suspending in 1\" -r 1011 -u low; sleep 0.5
-					dunstify \"   Suspending ...\" -r 1011 -u low
-				}
-				notif &
-				notif_pid=$!;
-				cancel=false;
-				timeout=3;
-				start_time=\$(date +%s);
-				echo \"Press a to cancel\";
-				while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
-					read -t 0.1 -n 1 key;
-					if [ \"\$key\" = \"a\" ]; then
-						cancel=true;
-						kill \$notif_pid;
-						break;
-			fi;
-		done;
+			foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
+			moon() {
+				for i in {15..1}; do
+					brightnessctl -q s \$i
+					sleep 0.01
+				done
+			}
+			sun() {
+				for i in {1..15}; do
+					brightnessctl -q s \$i
+					sleep 0.01
+				done
+			}
+			process_checker() {
+				pidof swaylock >/dev/null
+			}
+			notif() {
+				notify-send \"   Suspending in 5\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Suspending in 4\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Suspending in 3\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Suspending in 2\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Suspending in 1\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Suspending ...\" -r 1011 -u low
+			}
+			notif &
+			notif_pid=$!;
+			cancel=false;
+			timeout=3;
+			start_time=\$(date +%s);
+			echo \"Press a to cancel\";
+			while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
+				read -t 0.1 -n 1 key;
+				if [ \"\$key\" = \"a\" ]; then
+					cancel=true;
+					kill \$notif_pid;
+					break;
+				elif [ \"\$key\" = \"s\" ]; then
+					cancel=false;
+					break;
+				fi;
+			done;
 		if \$cancel; then
-			dunstify \"Suspend cancelled.\" -r 1011 -t 1000; exit 1
+			notify-send \"Suspend cancelled.\" -r 1011 -t 1000; exit 1
 		else
 			moon
 			faillock --user "$(whoami)" --reset
@@ -89,13 +89,8 @@ main() {
 			sun
 			fi
 			"
-		#else
-		#	dunstify "Suspend cancelled." -r 1011 -t 1000; exit 1
-		#fi
-		;;
-	" Shutdown")
-		#prt1=$(echo -e "[YES]\nNo" | wmenu -p "We're shutting down?")
-		#if [ "$prt1" = "[YES]" ]; then
+			;;
+		" Shutdown")
 			foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
 			moon() {
 				for i in {15..1}; do
@@ -113,12 +108,12 @@ main() {
 				pidof swaylock >/dev/null
 			}
 			notif() {
-				dunstify \"   Shutting down in 5\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Shutting down in 4\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Shutting down in 3\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Shutting down in 2\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Shutting down in 1\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Shutting down ...\" -r 1011 -u low
+				notify-send \"   Shutting down in 5\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Shutting down in 4\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Shutting down in 3\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Shutting down in 2\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Shutting down in 1\" -r 1011 -u low; sleep 0.5
+				notify-send \"   Shutting down ...\" -r 1011 -u low
 			}
 			notif &
 			notif_pid=$!;
@@ -132,129 +127,125 @@ main() {
 					cancel=true;
 					kill \$notif_pid;
 					break;
+				elif [ \"\$key\" = \"s\" ]; then
+					cancel=false;
+					break;
 		fi;
 	done;
 	if \$cancel; then
-		dunstify \"Shutdown cancelled.\" -r 1011 -t 1000; exit 1
+		notify-send \"Shutdown cancelled.\" -r 1011 -t 1000; exit 1
 	else
 		moon
 		shutdown now
 		fi
 		"
-	#else
-	#	dunstify "Shutdown cancelled." -r 1011 -t 1000; exit 1
-	#	fi
 		;;
 	" Reboot")
-		#prt1=$(echo -e "[YES]\nNo" | wmenu -p "We're rebooting?")
-		#if [ "$prt1" = "[YES]" ]; then
-			foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
-			moon() {
-				for i in {15..1}; do
-					brightnessctl -q s \$i
-					sleep 0.01
-				done
-			}
-			sun() {
-				for i in {1..15}; do
-					brightnessctl -q s \$i
-					sleep 0.01
-				done
-			}
-			process_checker() {
-				pidof swaylock >/dev/null
-			}
-			notif() {
-				dunstify \"   Rebooting in 5\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Rebooting in 4\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Rebooting in 3\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Rebooting in 2\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Rebooting in 1\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Rebooting ...\" -r 1011 -u low
-			}
-			notif &
-			notif_pid=$!;
-			cancel=false;
-			timeout=3;
-			start_time=\$(date +%s);
-			echo \"Press a to cancel\";
-			while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
-				read -t 0.1 -n 1 key;
-				if [ \"\$key\" = \"a\" ]; then
-					cancel=true;
-					kill \$notif_pid;
-					break;
+		foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
+		moon() {
+			for i in {15..1}; do
+				brightnessctl -q s \$i
+				sleep 0.01
+			done
+		}
+		sun() {
+			for i in {1..15}; do
+				brightnessctl -q s \$i
+				sleep 0.01
+			done
+		}
+		process_checker() {
+			pidof swaylock >/dev/null
+		}
+		notif() {
+			notify-send \"   Rebooting in 5\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Rebooting in 4\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Rebooting in 3\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Rebooting in 2\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Rebooting in 1\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Rebooting ...\" -r 1011 -u low
+		}
+		notif &
+		notif_pid=$!;
+		cancel=false;
+		timeout=3;
+		start_time=\$(date +%s);
+		echo \"Press a to cancel\";
+		while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
+			read -t 0.1 -n 1 key;
+			if [ \"\$key\" = \"a\" ]; then
+				cancel=true;
+				kill \$notif_pid;
+				break;
+			elif [ \"\$key\" = \"s\" ]; then
+				cancel=false;
+				break;
 		fi;
 	done;
 	if \$cancel; then
-		dunstify \"Reboot cancelled.\" -r 1011 -t 1000; exit 1
+		notify-send \"Reboot cancelled.\" -r 1011 -t 1000; exit 1
 	else
 		moon
 		systemctl reboot
 		fi
 		"
-	#else
-	#	dunstify "Reboot cancelled." -r 1011 -t 1000; exit 1
-	#	fi
 		;;
 esac
 }
 case $1 in
 	suspend)
-		#prt1=$(echo -e "[YES]\nNo" | wmenu -p "We're Suspending?")
-		#if [ "$prt1" = "[YES]" ]; then
-			foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
-			moon() {
-				for i in {15..1}; do
-					brightnessctl -q s \$i
-					sleep 0.01
-				done
-			}
-			sun() {
-				for i in {1..15}; do
-					brightnessctl -q s \$i
-					sleep 0.01
-				done
-			}
-			process_checker() {
-				pidof swaylock >/dev/null
-			}
-			notif() {
-				dunstify \"   Suspending in 5\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Suspending in 4\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Suspending in 3\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Suspending in 2\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Suspending in 1\" -r 1011 -u low; sleep 0.5
-				dunstify \"   Suspending ...\" -r 1011 -u low
-			}
-			notif &
-			cancel=false;
-			timeout=3;
-			start_time=\$(date +%s);
-			echo \"Press a to cancel\";
-			while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
-				read -t 0.1 -n 1 key;
-				if [ \"\$key\" = \"a\" ]; then
-					cancel=true;
-					break;
+		foot -f "JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=25" -e bash -c "
+		moon() {
+			for i in {15..1}; do
+				brightnessctl -q s \$i
+				sleep 0.01
+			done
+		}
+		sun() {
+			for i in {1..15}; do
+				brightnessctl -q s \$i
+				sleep 0.01
+			done
+		}
+		process_checker() {
+			pidof swaylock >/dev/null
+		}
+		notif() {
+			notify-send \"   Suspending in 5\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Suspending in 4\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Suspending in 3\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Suspending in 2\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Suspending in 1\" -r 1011 -u low; sleep 0.5
+			notify-send \"   Suspending ...\" -r 1011 -u low
+		}
+		notif &
+		cancel=false;
+		timeout=3;
+		start_time=\$(date +%s);
+		echo \"Press a to cancel\";
+		while [ \$(( \$(date +%s) - start_time )) -lt \$timeout ]; do
+			read -t 0.1 -n 1 key;
+			if [ \"\$key\" = \"a\" ]; then
+				cancel=true;
+				break;
+			elif [ \"\$key\" = \"s\" ]; then
+				cancel=false;
+				break;
 				fi;
 			done;
-	if \$cancel; then
-		dunstify \"Suspend cancelled.\" -r 1011 -t 1000
-	else
-		moon
-		faillock --user \"\$(whoami)\" --reset
-		swaylock -F -C \"$HOME/.config/swaylock/config\" &
-		systemctl suspend
-		while process_checker; do
-			sleep 1
-		done
-		sun
+			if \$cancel; then
+				notify-send \"Suspend cancelled.\" -r 1011 -t 1000
+			else
+				moon
+				faillock --user \"\$(whoami)\" --reset
+				swaylock -F -C \"$HOME/.config/swaylock/config\" &
+				systemctl suspend
+				while process_checker; do
+					sleep 1
+				done
+				sun
 		fi
 		"
-	#else
-	#	dunstify "Suspend cancelled." -r 1011 -t 1000; exit 1
-	#	fi
 		;;
 	lock)
 		# Function to dim the brightness
@@ -275,8 +266,7 @@ case $1 in
 		process_checker() {
 			pidof swaylock >/dev/null
 		}
-		dunstify "   Locking ..." -r 1011 -u low -t 2000 &
-		sleep 1
+		notify-send "   Locking ..." -r 1011 -u low -t 2000 &
 		moon
 		faillock --user "$(whoami)" --reset
 		swaylock -F -C "$HOME/.config/swaylock/config" &

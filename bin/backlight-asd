@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Ensure brightnessctl is installed
-command -v brightnessctl >/dev/null 2>&1 || exit 1
-
 # Get current brightness
 current_brightness=$(brightnessctl -e4 -m | awk -F, '{print substr($4, 1, length($4)-1)}')
 
@@ -18,5 +15,5 @@ case $1 in
 esac
 
 new_brightness=$(brightnessctl -e4 -m | awk -F, '{print substr($4, 1, length($4)-1)}')
-dunstify -a "Backlight" -r 9994 -h int:value:"$new_brightness" "Brightness" \
+notify-send -a "Backlight" -r 9994 -h int:value:"$new_brightness" "Brightness" \
     "Currently at $new_brightness%" -t 1000

@@ -10,21 +10,21 @@ mkdir -p $screenshot_dir
 # Case for screenshot types
 case $1 in
 	ss)
-		file_name="SS $(date +%d-%m,%I:%M:%S).png"
+		file_name="SS $(date +%Y_%m_%d,%I:%M:%S).png"
 		# Run slurp and check if it was canceled
 		grim -g "$(slurp &)" "$screenshot_dir/$file_name"
 		if [[ $? -ne 0 ]]; then
-			dunstify 'Screenshot canceled' -t 1000 -u low
+			notify-send 'Screenshot canceled' -t 1000 -u low
 			exit 0
 		fi
 		wl-copy < "$screenshot_dir/$file_name"
-		dunstify 'Screenshot taken and clipped' -t 1000 -u low
+		notify-send 'Screenshot taken and clipped' -t 1000 -u low
 		;;
 	fss)
-		file_name="FSS $(date +%d-%m,%I:%M:%S).png"
+		file_name="FSS $(date +%Y_%m_%d,%I:%M:%S).png"
 		grim "$screenshot_dir/$file_name" &&
 		wl-copy < "$screenshot_dir/$file_name"
-		dunstify 'Screenshot taken and clipped' -t 1000 -u low
+		notify-send 'Screenshot taken and clipped' -t 1000 -u low
 		;;
 	*)
 		exit 1
@@ -39,13 +39,13 @@ if [[ "$menu" == "edit" ]]; then
 	if [[ -n "$recent_file" ]]; then
 		pinta "$screenshot_dir/$recent_file"
 	else
-		dunstify 'No screenshot found to edit' -t 1000 -u low
+		notify-send 'No screenshot found to edit' -t 1000 -u low
 	fi
 elif [[ "$menu" == "delete" ]]; then
 	# Find the most recent screenshot file
 	recent_file=$(ls -t "$screenshot_dir" | grep -E "^(SS|FSS) .*\.png$" | head -n 1)
 	if [[ -n "$recent_file" ]]; then
 		rm -r "$screenshot_dir/$recent_file"
-		dunstify "Deleted" -t 1000 -u low
+		notify-send "Deleted" -t 1000 -u low
 	fi
 fi

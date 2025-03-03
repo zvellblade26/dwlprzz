@@ -1,7 +1,7 @@
 #!/bin/bash
 case $1 in
 	"root")
-		pass-asd "Sudo pass for thunar:" | sudo -SE thunar & disown dunstify "thunar as ROOT, becareful" -u critical -t 3000 -r 19246; exit 0
+		pass-asd "Sudo pass for thunar:" | sudo -SE thunar & disown notify-send "thunar as ROOT, becareful" -u critical -t 3000 -r 19246; exit 0
 		;;
 	*)
 		thunar & disown

@@ -1,7 +1,3 @@
 #!/bin/bash
 
-if [[ ! "$(cat /sys/class/power_supply/AC/online)" -gt 0 ]]; then
-	echo "Discharging"
-else
-	echo "Charging"
-fi
+dunstify -r 123 -h int:value:50 "Volume: 50%" -t 2000

@@ -2,8 +2,11 @@
 
 case $1 in
 	time)
-		dunstify "$(date '+%A, %d %B %Y')" -r 96312 -t 2500
-		dunstify "$(date '+%I:%M:%S %p')" -r 96313 -t 2500
+		for i in {1..10}; do
+			notify-send "$(date '+%A, %d %B %Y		             %I:%M:%S %p')" -r 96312 -t 1500
+			notify-send -u low -t 1500 -r 96311 "$(cal -3)"
+			sleep 1
+		done
 		;;
 	*)
 		# CPU Usage
@@ -44,13 +47,21 @@ mem_details=$(echo "$mem_info" | awk '{print $2, $3}')
 # Package Updates
 upkg=$(pacman -Qu | grep -Fcv "[ignored]")
 
+# Battery
+batt="$(cat /sys/class/power_supply/BAT0/capacity)"
+
+if [[ "$(cat /sys/class/power_supply/AC/online)" -eq 0 ]]; then
+	BATTERY_STATUS="(On BATTERY)"
+else
+	BATTERY_STATUS="(Charging)"
+fi
+
 # WiFi Status
 wifi_name=$(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1 == "wlp3s0" { print ($2 == "connected" ? $3 : "N U L L") }')
-#wifi_status=$(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1 == "wlp3s0" { print ($2 == "connected" ? $3 : "❌❌") }')
-dunstify "~~>  $wifi_name  <~~" "WiFi" -r 96314 -t 2000
-dunstify "$cpu" "CPU" -r 96316 -t 2000
-dunstify "$mem $mem_details" "Memory Used" -r 96317 -t 2000
-dunstify "$upkg" "Packages to Update" -r 96318 -t 2000
-dunstify "$(acpi -b)" -r 96319 -t 2000
+notify-send "$wifi_name" "WiFi" -r 96314 -t 2000
+notify-send "$cpu" "CPU" -r 96316 -t 2000
+notify-send "$mem $mem_details" "Memory Used" -r 96317 -t 2000
+notify-send "$upkg" "Packages to Update" -r 96318 -t 2000
+notify-send "$batt% $BATTERY_STATUS" -r 96319 -t 2000
 ;;
 esac

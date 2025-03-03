@@ -1,0 +1,15 @@
+#!/bin/bash
+
+STATE_FILE="/tmp/toggle_vol_state"
+
+# Initialize state file if missing
+[[ -f "$STATE_FILE" ]] || echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q "\[MUTED\]" && echo "❌" || echo "")" > "$STATE_FILE"
+
+# Print state if no argument is given
+[[ "$1" == "tog" ]] || { cat "$STATE_FILE"; exit; }
+
+# Toggle and update state file correctly
+NEW_STATE=$(grep -q "❌" "$STATE_FILE" && echo "" || echo "❌")
+echo "$NEW_STATE" > "$STATE_FILE"
+
+cat "$STATE_FILE"

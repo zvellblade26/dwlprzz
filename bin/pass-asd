@@ -1,6 +1,5 @@
 #!/bin/bash
-# This script is the SUDO_ASKPASS variable, meaning that it will be used as a
-# password prompt if needed.
+
 user=$(whoami)
 faillock --user $user --reset;
 pass() {

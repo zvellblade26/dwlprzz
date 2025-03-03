@@ -29,7 +29,7 @@ refresh_cache() {
 # Check if cache exists, refresh if outdated or forced
 #if [[ ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
 if [[ ! -f "$CACHE_FILE" || ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
-    refresh_cache
+	refresh_cache
 fi
 
 # Display cached lists
@@ -38,3 +38,12 @@ grep -v '^===' "$CACHE_FILE"
 
 echo -e "\n=== AUR Packages ==="
 grep -v '^===' "$AUR_LIST_FILE"
+
+
+echo -n "Want to refresh?  Y/n:  "
+read -r ans
+if [[ "$ans" =~ ^[Yy]$ ]]; then
+	refresh_cache
+else
+	exit 0
+fi

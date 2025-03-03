@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
 # Constants
 NOTIFY_ARGS="-u low -t 2000 -r 1256"
 Ddsk="/dev/sdb3"
@@ -12,7 +15,7 @@ Pdir="$HOME/SamsungGalaxyA50"
 notify() {
 	local message=$1
 	local urgency=${2:-low}
-	dunstify "$message" -u "$urgency" -t 2000 -r 1256
+	notify-send "$message" -u "$urgency" -t 2000 -r 1256
 }
 
 # Function to mount a directory
