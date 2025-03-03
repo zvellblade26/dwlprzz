@@ -26,13 +26,19 @@
 struct menu *menu_create(menu_callback callback) {
 	struct menu *menu = calloc(1, sizeof(struct menu));
 	menu->strncmp = strncmp;
-	menu->font = "JetBrainsMonoNL NFM SemiBold SemiBold 13";
+	menu->font = "JetBrainsMonoNL NFP Bold Regular 12";
 	menu->normalbg = 0x191E38ff;
 	menu->normalfg = 0xfffffffa;
 	menu->promptbg = 0x1CB7EEff;
 	menu->promptfg = 0x000000fa;
 	menu->selectionbg = 0x1CB7EEff;
 	menu->selectionfg = 0x000000fa;
+	//menu->normalbg = 0x000000ff;
+	//menu->normalfg = 0xfffffffa;
+	//menu->promptbg = 0x949494ff;
+	//menu->promptfg = 0x000000fa;
+	//menu->selectionbg = 0x949494ff;
+	//menu->selectionfg = 0x000000fa;
 	menu->callback = callback;
 	menu->test_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	menu->test_cairo = cairo_create(menu->test_surface);
