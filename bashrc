@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#user=$(whoami)
 eval "$(zoxide init bash)"
 alias l='ls -aFh --color=always' # add colors and file type extensions
 function _zq() {
@@ -13,7 +12,11 @@ alias z='_zq'
 alias zi='function _zy(){ zi "$1" && l; }; _zy'
 alias zs="z $HOME/.local/bin"
 
+#fix disk
+#sudo ntfsfix /dev/sdb3
+
 export PATH=$PATH:"$HOME/.local/bin"
+
 iatest=$(expr index "$-" i)
 if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
@@ -21,6 +24,8 @@ if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 export EDITOR=nvim
 export VISUAL=nvim
 
+alias gal="swayimg -f -g -o reverse -s fit"
+alias ss="startw"
 alias sureset="faillock --user $USER --reset"
 alias sudo="sureset && sudo $@"
 alias smci="sureset && sudo make clean install"
@@ -28,7 +33,9 @@ alias smcu="sureset && sudo make clean uninstall"
 alias snbi="sureset && sudo ninja -C build install"
 alias snbu="sureset && sudo ninja -C build uninstall"
 alias grep="grep --color=auto"
-alias paci="sudo pacman -S"
+alias pacs="sudo pacman -S"
+alias pacr="sudo pacman -Rcnsu"
+alias pacqu="sudo pacman -Syy && sudo pacman -Qu"
 alias pac="sudo pacman"
 alias pgg="ping -c 3 8.8.8.8"
 alias v="nvim"
