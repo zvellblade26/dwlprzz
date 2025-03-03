@@ -13,9 +13,9 @@ vim.g.markdown_recommended_style = 0
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.tabstop = 3
-vim.opt.softtabstop = 3
-vim.opt.shiftwidth = 3
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 
 vim.opt.smartindent = false
