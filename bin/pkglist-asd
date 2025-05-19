@@ -45,5 +45,7 @@ read -r ans
 if [[ "$ans" =~ ^[Yy]$ ]]; then
 	refresh_cache
 else
+	echo "File's at .cache folder"
 	exit 0
 fi
+
