@@ -46,7 +46,7 @@ pac wev wl-clipboard wlroots0.18 wtype zip zoxide || { echo "wev wl-clipboard wl
 pac firefox || { echo "Firefox installation failed!"; exit 1; }
 
 # Creating Windows mounting Directories
-mkdir -p "/home/$user/DataBANK"  || { echo "Failed to create directories"; exit 1; }
+mkdir -p "/home/$user/mnt_dataBANK"  || { echo "Failed to create directories"; exit 1; }
 
 echo ""
 echo ""
