@@ -39,14 +39,14 @@ echo "#####   2. INSTALLING PACKAGES   #####"
 sleep 2;
 # Installing Packages
 pac base-devel brightnessctl dunst fastfetch foot fzf grim slurp || { echo "brightnessctl dunst fastfetch foot fzf grim slurp installation failed!"; exit 1; }
-pac libinput libnotify meson neovim ntfs-3g pinta swayimg || { echo "libinput libnotify meson neovim ntfs-3g pinta installation failed!"; exit 1; }
+pac libinput libnotify meson neovim ntfs-3g swayimg || { echo "libinput libnotify meson neovim ntfs-3g installation failed!"; exit 1; }
 pac pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber || { echo "pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber installation failed!"; exit 1; }
 pac swaylock thunar tumbler tllist unzip wayland-protocols acpi bat mpv yazi || { echo "swaylock thunar tumbler tllist unzip wayland-protocols installation failed!"; exit 1; }
-pac wev wl-clipboard wlroots wtype zip zoxide || { echo "wev wl-clipboard wlroots wtype zip zoxide installation failed!"; exit 1; }
-pac firefox libreoffice-fresh || { echo "Firefox and LibreOffice installation failed!"; exit 1; }
+pac wev wl-clipboard wlroots0.18 wtype zip zoxide || { echo "wev wl-clipboard wlroots0.18 wtype zip zoxide installation failed!"; exit 1; }
+pac firefox || { echo "Firefox installation failed!"; exit 1; }
 
 # Creating Windows mounting Directories
-mkdir -p "/home/$user/DATAd" "/home/$user/WINDOWS" "/home/$user/SamsungGalaxyA50"  || { echo "Failed to create directories"; exit 1; }
+mkdir -p "/home/$user/DataBANK"  || { echo "Failed to create directories"; exit 1; }
 
 echo ""
 echo ""
@@ -56,11 +56,11 @@ sleep 2;
 # List of packages to check
 packages_to_check=(
 	"base-devel" "brightnessctl" "dunst" "fastfetch" "foot" "fzf" "grim" "slurp"
-	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "pinta" "swayimg"
+	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "swayimg"
 	"pipewire" "pipewire-alsa" "pipewire-jack" "pipewire-pulse" "wireplumber"
 	"swaylock" "thunar" "tumbler" "tllist" "unzip" "wayland-protocols" "acpi" "bat" "mpv" "yazi"
-	"wev" "wl-clipboard" "wlroots" "wtype" "zip" "zoxide"
-	"firefox" "libreoffice-fresh"
+	"wev" "wl-clipboard" "wlroots0.18" "wtype" "zip" "zoxide"
+	"firefox"
 )
 # Function to check if a package is installed
 check_installed() {
