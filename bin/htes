@@ -1,3 +1,0 @@
-#!/bin/bash
-
-dunstify -r 123 -h int:value:50 "Volume: 50%" -t 2000

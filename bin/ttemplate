@@ -1,3 +1,0 @@
-#!/bin/bash
-user=$(whoami)
-faillock --user $user --reset &&

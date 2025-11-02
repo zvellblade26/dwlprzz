@@ -1,9 +1,0 @@
-#!/bin/bash
-
-dwlb -status all " |\
-^lm(bstat-asd && pgtest-wme Ping)^mm(pgtest-wme TUI)^rm(pgtest-wme Restart) $(sb-wifi) ^lm()^mm()^rm()\
-^bg(72F1B8)^fg(191321)^us(volume-asd up)^ds(volume-asd down)^lm(volume-asd mute && sb-vol_icon tog && bstat-asd) $(sb-vol_icon) ^bg()^fg()^lm()^us()^ds()\
-^lm(status-asd time)^mm(pkill -x status-asd; dunstctl close-all)^rm(status-asd) $(date '+%a, %d-%m') ^lm()^mm()^rm()\
-^bg(72F1B8)^fg(191321)^lm(status-asd time)^mm(pkill -x status-asd; dunstctl close-all)^rm(status-asd) $(date '+%I:%M') ^lm()^mm()^rm()^bg()^fg()\
-^us(backlight-asd up)^ds(backlight-asd down) $(sb-battery) ^us()^ds()\
-^bg(f1a272)^fg(191321)^lm(bstat-asd)^mm(firefox --new-tab \"https://web.whatsapp.com/\")^rm(firefox --new-tab \"https://www.youtube.com/\") 舍 ^bg()^fg()^lm()^mm()^rm()"

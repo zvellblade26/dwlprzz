@@ -1,3 +1,0 @@
-#!/bin/sh
-brightnessctl set 15 && rm -rf "$HOME/.clipboard_history";	battery-asd & disown
-dbus-run-session dwl -s "dwlb <&- & dunst <&- &"

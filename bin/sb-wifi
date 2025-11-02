@@ -1,3 +1,0 @@
-#!/bin/bash
-#echo " $(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1 == "wlp3s0" { print ($2 == "connected" ? $3 : "❌") }')"
-echo " $(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1 == "wlp3s0" { conn = ($2 == "connected" ? $3 : "❌"); print (length(conn) > 4 ? substr(conn, 1, 4) ".." : conn) }')"
