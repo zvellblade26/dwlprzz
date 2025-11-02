@@ -11,7 +11,7 @@ static bool hidden = false;
 // initially draw all bars at the bottom
 static bool bottom = false;
 // hide vacant tags
-static bool hide_vacant = true;
+static bool hide_vacant = false;
 // vertical pixel padding above and below text
 static uint32_t vertical_padding = 1;
 // allow in-line color commands in status text
@@ -25,30 +25,22 @@ static bool active_color_title = true;
 // scale
 static uint32_t buffer_scale = 1;
 // font
-static char *fontstr = "JetBrainsMonoNL NFP ExtraBold:style=ExtraBold:pixelsize=14";
+static char *fontstr = "Iosevka NFP SemiBold:style=SemiBold:pixelsize=14";
+//static char *fontstr = "JetBrainsMonoNL NFP SemiBold:style=SemiBold:pixelsize=13";
+//static char *fontstr = "JetBrainsMonoNL NFP ExtraBold:style=ExtraBold:pixelsize=14";
 // tag names
+//static char *tags_names[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 static char *tags_names[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 // set 16-bit colors for bar
 // use either pixman_color_t struct or HEX_COLOR macro for 8-bit colors
-static pixman_color_t active_fg_color = HEX_COLOR(0x191321ff);
-static pixman_color_t active_bg_color = HEX_COLOR(0x72F1B8ff);
-static pixman_color_t occupied_fg_color = HEX_COLOR(0x61E2FFff);
-static pixman_color_t occupied_bg_color = HEX_COLOR(0x191321ff);
-static pixman_color_t inactive_fg_color = HEX_COLOR(0x61E2FFff);
-static pixman_color_t inactive_bg_color = HEX_COLOR(0x191321ff);
-static pixman_color_t urgent_fg_color = HEX_COLOR(0x191321ff);
-static pixman_color_t urgent_bg_color = HEX_COLOR(0xFE4450ff);
+static pixman_color_t active_fg_color = HEX_COLOR(0xFF7E40ff);
+static pixman_color_t active_bg_color = HEX_COLOR(0xFF7E40ff);
+static pixman_color_t occupied_fg_color = HEX_COLOR(0x00A6FFff);
+static pixman_color_t occupied_bg_color = HEX_COLOR(0x00000000);
+static pixman_color_t inactive_fg_color = HEX_COLOR(0xFFF700ff);
+static pixman_color_t inactive_bg_color = HEX_COLOR(0x00000000);
+static pixman_color_t urgent_fg_color = HEX_COLOR(0xFF0000ff);
+static pixman_color_t urgent_bg_color = HEX_COLOR(0xFF0000ff);
 static pixman_color_t middle_bg_color = HEX_COLOR(0x000000ff);
-static pixman_color_t middle_bg_color_selected = HEX_COLOR(0x191321ff);
-
-//static pixman_color_t active_fg_color = HEX_COLOR(0x000000ff);
-//static pixman_color_t active_bg_color = HEX_COLOR(0xbe38e7ff);
-//static pixman_color_t occupied_fg_color = HEX_COLOR(0xffffffff);
-//static pixman_color_t occupied_bg_color = HEX_COLOR(0x000000ff);
-//static pixman_color_t inactive_fg_color = HEX_COLOR(0xffffffff);
-//static pixman_color_t inactive_bg_color = HEX_COLOR(0x000000ff);
-//static pixman_color_t urgent_fg_color = HEX_COLOR(0x000000ff);
-//static pixman_color_t urgent_bg_color = HEX_COLOR(0xfc4922ff);
-//static pixman_color_t middle_bg_color = HEX_COLOR(0x000000ff);
-//static pixman_color_t middle_bg_color_selected = HEX_COLOR(0x000000ff);
+static pixman_color_t middle_bg_color_selected = HEX_COLOR(0x00000000);
