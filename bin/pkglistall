@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+CACHE_FILE="$HOME/.cache/pacpkglist"
+AUR_LIST_FILE="$HOME/.cache/aurpkglist"
+
+# Refresh cache if needed
+refresh_cache() {
+    echo "Updating package lists..."
+    
+    # Repo packages
+    echo "=== Pacman Packages (repo) ===" > "$CACHE_FILE"
+    pacman -Qe | awk '{print $1}' | while read -r pkg; do
+        if pacman -Si "$pkg" >/dev/null 2>&1; then
+            echo "$pkg" >> "$CACHE_FILE"
+        fi
+    done
+
+    # AUR packages
+    echo "=== AUR Packages ===" > "$AUR_LIST_FILE"
+    pacman -Qe | awk '{print $1}' | while read -r pkg; do
+        if ! pacman -Si "$pkg" >/dev/null 2>&1; then
+            echo "$pkg" >> "$AUR_LIST_FILE"
+        fi
+    done
+
+    echo "Package lists updated."
+}
+
+# Check if cache exists, refresh if outdated or forced
+#if [[ ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
+if [[ ! -f "$CACHE_FILE" || ! -f "$AUR_LIST_FILE" || "$1" == "--refresh" ]]; then
+	refresh_cache
+	# Display cached lists
+	echo "=== Pacman Packages (repo) ==="
+	grep -v '^===' "$CACHE_FILE"
+
+	echo -e "\n=== AUR Packages ==="
+	grep -v '^===' "$AUR_LIST_FILE"
+	exit 0
+fi
+
+echo -n "existing files found, want to refresh?  Y/n:  "
+read -r ans
+if [[ "$ans" =~ ^[Yy]$ || "$ans" == "" ]]; then
+	refresh_cache
+	echo "File's at .cache folder (aurpkglist) (pkglist)"
+	exit 0
+else
+	echo "File's at .cache folder (aurpkglist) (pkglist)"
+	exit 0
+fi
+

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+ICON_CACHE="/tmp/bar_wifi"
+
+#no wifi name
+#while true; do
+#	if nmcli -t -f DEVICE,STATE device | grep -q '^wlp3s0:connected'; then
+#		if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1; then
+#			#if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1 || \
+#			#timeout 0.1 ping -q -c1 -W1 1.1.1.1 >/dev/null 2>&1; then
+#			echo "" > "$ICON_CACHE"   # Connected & online
+#		else
+#			echo "" > "$ICON_CACHE"  # Connected but no internet
+#		fi
+#	else
+#		echo "" > "$ICON_CACHE"      # Not connected
+#	fi
+#	sleep 2
+#done
+
+#with wifi name
+while true; do
+	# Get connected Wi-Fi device (if any)
+	DEVICE=$(nmcli -t -f DEVICE,TYPE,STATE device | awk -F: '$2=="wifi" && $3=="connected"{print $1; exit}')
+
+	if [ -n "$DEVICE" ]; then
+		SSID=$(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: -v dev="$DEVICE" '$1==dev {print $3}')
+		[ -z "$SSID" ] && SSID="(no name)"
+
+		if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1; then
+			ICON=""
+		else
+			ICON=""
+		fi
+		echo "$ICON $SSID" > "$ICON_CACHE"
+	else
+		echo "" > "$ICON_CACHE"
+	fi
+	pkill -37 someblocks; sleep 2
+done

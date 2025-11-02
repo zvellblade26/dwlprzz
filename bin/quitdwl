@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+menu=$(echo -e "Yes\nNo" | wmenu -p "quit dwl?")
+case $menu in
+	Yes)
+		#killall batteryaz;
+		#killall wifiaz;
+		pkill dwl
+		;;
+	No|*)
+		notify-send "Quit Canceled" -u low -r 1026 -t 1000
+		exit 1
+		;;
+esac

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Signal number to refresh the status bar module (e.g., 10)
+STATUS_SIGNAL=4
+
+change_volume() {
+    $1
+    if command -v pkill > /dev/null; then
+        # Ensure it targets 'someblocks' or 'dwmblocks' depending on your executable name
+        pkill -RTMIN+$STATUS_SIGNAL "slstatus" 
+    fi
+}
+
+case $1 in
+    up)		  change_volume "wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%+" ;;
+    down)   change_volume "wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%-" ;;
+    mute)   change_volume "wpctl set-mute @DEFAULT_SINK@ toggle" ;;
+	  check)  notify-send -a Volume -r 9993 "$(wpctl get-volume @DEFAULT_SINK@)" -t 1000 ;;
+esac
+
+vol="$(wpctl get-volume @DEFAULT_SINK@)" || { echo " N/A%"; exit 0; }
+
+# If muted, print  and exit.
+[ "$vol" != "${vol%\[MUTED\]}" ] && echo "  " && exit
+
+vol="${vol#Volume: }"
+
+split() {
+	# For ommiting the . without calling and external program.
+	IFS=$2
+	set -- $1
+	printf '%s' "$@"
+}
+
+vol="$(printf "%.0f" "$(split "$vol" ".")")"
+
+case 1 in
+	$((vol >= 101)) ) icon="!" ;;
+	$((vol >= 1)) ) icon="" ;;
+	#* ) icon="" ;;
+	* ) echo "  " && exit ;;
+esac
+
+echo "$icon $vol%"

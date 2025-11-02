@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+
+case $1 in
+    up)		  wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%+ ;;
+    down)   wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%- ;;
+    mute)   wpctl set-mute @DEFAULT_SINK@ toggle ;;
+esac
+
+info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+vol_raw=${info#*: }
+vol_number=${vol_raw%% *}
+vol_clean=${vol_number/./}
+vol=$((10#$vol_clean))
+
+#vol=$(awk '{print int($2 * 100)}' <<< "$vol_info")
+
+
+# unchanged except cleaned indentation
+if [ "$2" = "notif" ]; then
+	if grep -q "\[MUTED\]" <<< "$info"; then
+    notify-send -a Volume -r 9993 "Muted" -t 1000
+  else
+    notify-send -a Volume -r 9993 -h int:value:"$vol" "Volume: ${vol}%" -t 800
+  fi
+fi
+
+pkill -RTMIN+4 "slstatus"; exit 0

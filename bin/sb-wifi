@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#echo " $(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1 == "wlp3s0" { conn = ($2 == "connected" ? $3 : "❌"); print (length(conn) > 4 ? substr(conn, 1, 4) ".." : conn) }')"    # with wifi name on the bar
+nmcli -t -f DEVICE,STATE device | grep -q '^wlp3s0:connected' && { ping -q -c1 -W1 8.8.8.8 >/dev/null || ping -q -c1 -W1 1.1.1.1 >/dev/null; } && echo "" || echo "" # only icon on the bar
+
+# Check if Wi-Fi is connected    # quick ping
+#if nmcli -t -f DEVICE,STATE device | grep -q '^wlp3s0:connected'; then
+#    # Use timeout to limit ping to 0.3 seconds total
+#    if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1; then
+#    #if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1 || \
+#       #timeout 0.1 ping -q -c1 -W1 1.1.1.1 >/dev/null 2>&1; then
+#        echo ""   # Connected & online
+#    else
+#        echo ""   # Connected but no internet
+#    fi
+#else
+#    echo ""       # Not connected
+#fi
+
+
+#cat /tmp/bar_wifi

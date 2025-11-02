@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Send the "Super + 9" key combination (wtype command)
+wtype -M logo 9
+
+# Launch the Stirling PDF application in a new foot terminal
+foot -e bash -c "
+	librewolf --new-tab "http://localhost:8080/" & disown
+	cd '$HOME/.local/Programs/Stirling-PDF' &&
+	./gradlew bootRun
+	exec bash
+	" & disown

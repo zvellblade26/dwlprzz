@@ -1,0 +1,13 @@
+#!/bin/bash
+dwlb -status all "\
+$(slstatus -s)\
+^lm(sysstat time)^mm(pkill -x sysstat; dunstctl close-all)^rm(sysstat) ░░ $(date '+%a, %d-%m') ^lm()^mm()^rm()\
+^bg(72F1B8)^fg(72F1B8)^lm(sysstat time)^mm(pkill -x sysstat; dunstctl close-all)^rm(sysstat)$(date '+%I:%M')^lm()^mm()^rm()^bg()^fg()\
+  \
+^bg(FF903B)^fg(FF903B)^lm(bstat && pgtest Ping)^mm(pgtest TUI)^rm(pgtest Restart)$(cat /tmp/bar_wifi)^bg()^fg()^lm()^mm()^rm()\
+  \
+^bg(72F1B8)^fg(72F1B8)^us(volumeaz up && bstat)^ds(volumeaz down && bstat)^lm(volumeaz mute && bstat)^rm(volumeaz check)$(volumeaz)^bg()^fg()^rm()^lm()^us()^ds()\
+  \
+^bg(00FF01)^fg(00FF01)^us(backlightaz up)^ds(backlightaz down)$(sb-battery)^bg()^fg()^us()^ds()\
+  \
+^bg(FF7E40)^fg(FF7E40)^lm(bstat && notify-send \".\" -t 50)^mm(librewolf -P webappsaz --new-tab \"https://web.whatsapp.com/\")^rm(librewolf --new-tab \"https://www.youtube.com/\") 舍 ^bg()^fg()^lm()^mm()^rm()"

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+# Define bookmarks as an associative array
+declare -A bkmarks=(
+	["(WA) WhatsApp"]="https://web.whatsapp.com/"
+)
+
+# Prompt user with dmenu and capture selection
+selection=$(printf "%s\n" "${!bkmarks[@]}" | sort | wmenu -i -p "Webapps: ")
+
+# If a selection is made
+if [[ -n "$selection" && -v bkmarks["$selection"] ]]; then
+	# Launch URL using the minimal LibreWolf profile
+	librewolf -P webappsaz --new-tab "${bkmarks[$selection]}" &
+	# Optional: minimize or toggle desktop focus
+	wtype -M logo 2
+fi

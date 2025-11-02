@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -u
+
+user=$(whoami)
+# reset faillock for the current user (keep if you need it)
+faillock --user "$user" --reset
+
+pass() {
+    wmenu -P -p "$1" <&-
+}
+
+run=$(pass "$1" || true)
+
+# if empty or wmenu failed, exit non-zero and no notification here
+if [[ -z "${run:-}" ]]; then
+    exit 1
+fi
+
+# output the password to stdout (caller captures it)
+printf '%s' "$run"
+exit 0
+
+#user=$(whoami)
+#faillock --user $user --reset;
+#pass() {
+#	wmenu -P -p "$1" <&-
+#}
+#run=$(pass "$1")
+#if [[ -z "$run" ]]; then
+#	dunstify "Password input was empty." -u critical -t 3000 -r 0721 &
+#	exit 1
+#fi
+#echo "$run"
+#exit 0

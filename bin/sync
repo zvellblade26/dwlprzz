@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+sudo -v
+while true; do sudo -v; sleep 60; done &
+dir="$HOME/BACKUPS/"
+dir1="$dir/dotconfig"
+[ -d "$dir1" ] || mkdir -p "$dir1"
+echo "directories ready"
+cp -r $HOME/.config/{picom,alacritty,dunst,nvim,fastfetch,pavucontrol.ini,firefox-xtra-compact} "$dir1/" && echo "done config"
+rm "$dir1/nvim/lazy-lock.json" && echo "lazy-lock.json has been removed"
+cp "$HOME/.bashrc" "$dir/bashrc" && echo "done bashrc"
+cp "$HOME/.xinitrc" "$dir/xinitrc" && echo "done xinitrc"
+sudo cp -r "$HOME/suckless" "$dir" && echo "done SUCKLESS"
+sudo cp -r "$HOME/.local/bin" "$dir" && echo "Script Backed up"
+cd "$dir"
+sudo zip -mr "$(date +\(%d\)-%m,%I:%M).zip" "dotconfig"
+sudo zip -mr "$(date +\(%d\)-%m,%I:%M).zip" "suckless"
+sudo zip -mr "$(date +\(%d\)-%m,%I:%M).zip" "bin"
+sudo zip -mr "$(date +\(%d\)-%m,%I:%M).zip" bashrc xinitrc
+echo "Backup completed."

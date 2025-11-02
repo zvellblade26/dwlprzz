@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo " $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=(total-available)/1024/1024; printf "%.2f", used}' /proc/meminfo) GiB"
+mem=$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=(total-available)/1024/1024; printf "%.2f", used}' /proc/meminfo)

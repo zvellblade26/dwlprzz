@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# Minimal, silent 2-level Help Menu for wmenu — optimized for dwl keybinds
+
+FONT="Iosevka Nerd Font Propo Bold 12"
+PROMPT="Help Menu"
+
+declare -A MENUS
+
+MENUS["main"]="Keybinds
+Status Bar"
+
+MENUS["Keybinds"]="
+SUPER+Shift+Return : Terminal
+SUPER+Shift+E      : Thunar
+SUPER+Shift+M      : Btop (monitoring)
+SUPER+Shift+U      : Mounter
+SUPER+Shift+P      : PGTest (network script)
+SUPER+Shift+S      : Screenshot
+SUPER+Shift+Space  : Toggle float
+SUPER+Shift+Q      : Quit DWL
+SUPER+Shift+L      : Lock
+SUPER+Shift+S      : Area
+
+SUPER+F1           : Show this help menu
+SUPER+F2           : Virtualization menu
+SUPER+F3           : Webapps
+SUPER+F11          : Restart bar
+SUPER+F12          : Clipboard
+SUPER+j/k          : Focus next/prev
+SUPER+h/l          : Resize master
+SUPER+Return       : Zoom
+SUPER+q            : Close window
+SUPER+Ctrl+t/f     : Tiling/Floating
+SUPER+i            : Toggle split
+SUPER+Right/Left   : Brightness up/down
+SUPER+y            : Yazi
+SUPER+f            : Librewolf (browser)
+SUPER+o            : Office
+SUPER+Space        : Main menu
+SUPER+x            : Power menu
+SUPER+F4           : Suspend
+SUPER+a/s/d        : Status / time & date / Close all notif
+
+XF86Audio+         : Volume up/down/mute
+Print              : Fullscreen
+← Back"
+
+MENUS["Status Bar"]="─────────────── TIME & DATE ───────────────
+Left click         : Time & calendar
+Middle click       : Close notifications
+Right click        : Status overview
+
+─────────────── WIFI ───────────────
+Left click         : Ping
+Middle click       : Network TUI
+Right click        : Restart network
+
+─────────────── VOLUME ───────────────
+Left click         : Mute
+Middle click       : Check volume (real num)
+Scroll up/down     : Volume up/down
+
+─────────────── BATTERY ───────────────
+Left click         : Brightness lowest
+Scroll up/down     : Brightness up/down
+Right click        : Brightness highest
+
+─────────────── HOME ───────────────
+Left click         : Refresh bar
+Middle click       : WhatsApp Web
+Right click        : YouTube
+← Back"
+
+# ────────────────────────── MAIN LOOP ──────────────────────────
+menu="main"
+
+while true; do
+    selection=$(echo -e "${MENUS[$menu]}" | wmenu -i -f "$FONT" -p "$PROMPT" -l 25)
+    [[ -z "$selection" ]] && exit 0
+
+    case "$selection" in
+        "Keybinds"|"Status Bar") menu="$selection" ;;
+        "← Back") menu="main" ;;
+        *) ;;  # do nothing (silent)
+    esac
+done

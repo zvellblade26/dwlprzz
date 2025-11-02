@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+# Get sudo password
+if ! ps=$(passman "Virtualization | Sudo pass:"); then
+    notify-send "Failed to get password." -r 50612 -t 1500
+    exit 1
+fi
+
+# Build list: "Name - State"
+LIST=$(echo "$ps" | sudo -S virsh list --all | awk 'NR>2 && $2!="" {print $2" - "$3" "$4}')
+
+# Show selection menu
+SELECTED=$(echo "$LIST" | wmenu -p "Select VM:")
+
+# If cancelled or empty selection
+if [ -z "$SELECTED" ]; then
+    notify-send "VM Manager" "Cancelled selection." -r 50612 -t 1000
+    exit 1
+fi
+
+# Extract VM name and state directly from the selection
+VM=$(echo "$SELECTED" | awk '{print $1}')
+STATE=$(echo "$SELECTED" | awk -F' - ' '{print $2}')
+
+notify-send "Starting $VM..." -r 50612 -t 1500
+virt-manager --connect qemu:///system --show-domain-console "$VM" &
+echo "$ps" | sudo -S virsh start "$VM"
+
+# Handle based on state
+#if [[ "$STATE" == "shut off" ]]; then
+#    notify-send "Starting $VM..." -r 50612 -t 1500
+#		virt-manager --connect qemu:///system --show-domain-console "$VM" &
+#    echo "$ps" | sudo -S virsh start "$VM"
+#elif [[ "$STATE" == "running" ]]; then
+#    notify-send "$VM is already running." -r 50612 -t 1500
+#    virt-manager --connect qemu:///system --show-domain-console "$VM" &
+#else
+#    notify-send "Unknown state for $VM: $STATE" -r 50612 -t 1500
+#fi

@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+check_internet() {
+	if nmcli -t -f DEVICE,STATE device | grep -q '^wlp3s0:connected'; then
+		# Use timeout to limit ping to 0.3 seconds total
+		if timeout 0.1 ping -q -c1 -W1 8.8.8.8 >/dev/null 2>&1; then
+		notify-send " $(nmcli -t -f DEVICE,STATE,CONNECTION device | awk -F: '$1=="wlp3s0"{print $3}') " -u normal -t 2500
+	else
+		notify-send "❌ No Internet" -u critical -t 3000
+		fi
+	else
+		notify-send "❌ No Internet" -u critical -t 3000
+	fi
+	pkill -RTMIN+2 "slstatus"
+}
+
+nmtui_wifi() { 
+	foot -e bash -c "nmtui"
+}
+
+wifi_menu() {
+	local options="Ping\nTUI\nRestart"
+	local choice=$(echo -e "$options" | wmenu -i -p "Wi-Fi Menu:" | sed 's/^[^a-zA-Z]*//')
+	case "$choice" in
+		Ping) check_internet ;;
+		TUI) nmtui_wifi & disown ;;
+		Restart) 
+			if ! password=$(passman "Restarting Wi-Fi, sudo pass: "); then
+				notify-send "Failed to get password." -r 50612 -t 2500
+				exit 1
+			fi
+			echo "$password" | sudo -S systemctl restart NetworkManager && 
+				notify-send -t 3000 "Wi-Fi Restarted" || notify-send "Restart Failed" -u critical ;;
+		*) notify-send "Invalid selection" -u critical ;;
+	esac
+}
+
+case $1 in
+	Ping) check_internet ;;
+	TUI) nmtui_wifi & disown ;;
+	Restart) 
+		if ! password=$(passman "Restarting Wi-Fi, sudo pass: "); then
+			notify-send "Failed to get password." -r 50612 -t 2500
+			exit 1
+		fi
+		echo "$password" | sudo -S systemctl restart NetworkManager && 
+			notify-send -t 3000 "Wi-Fi Restarted" || notify-send "Restart Failed" -u critical ;;
+	*) wifi_menu ;;
+esac

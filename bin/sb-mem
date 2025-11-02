@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+#echo " $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=(total-available)/1024/1024; printf "%.2f", used}' /proc/meminfo) GiB"
+#mem=$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=(total-available)/1024/1024; printf "%.2f", used}' /proc/meminfo)
+#if (( mem >= "1.0" )); then
+#echo "░░ ^bg(ff4747)^fg(ff4747)  $mem GiB ^bg()^fg()"
+#fi
+#echo "░░ ^bg(7FF553)^fg(7FF553)  $mem GiB ^bg()^fg()"
+
+awk '
+    /MemTotal/ {total=$2} 
+    /MemAvailable/ {available=$2} 
+    END {
+        used = (total-available)/1024/1024;
+        
+        # Condition 1: High Usage (e.g., >= 1.0 GiB)
+        if (used >= 5.0) {
+            printf "░░ ^bg(ff4747)^fg(ff4747)  %.2f GiB ^bg()^fg()\n", used
+        } 
+        
+        # Condition 2: Moderate Usage (e.g., >= 0.5 GiB and < 1.0 GiB)
+        else if (used >= 2.0) {
+            printf "░░ ^bg(FFAC5E)^fg(FFAC5E)  %.2f GiB ^bg()^fg()\n", used
+        } 
+        
+        # Condition 3: Low Usage (e.g., < 0.5 GiB)
+        else {
+            printf "░░ ^bg(7FF553)^fg(7FF553)  %.2f GiB ^bg()^fg()\n", used
+        }
+    }' /proc/meminfo

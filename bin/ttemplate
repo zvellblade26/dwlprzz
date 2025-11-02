@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -u
+user=$(whoami)
+faillock --user $user --reset
+
+# Get sudo password
+if ! password=$(passman "your prompt: "); then
+    notify-send "Failed to get password." -r 50612 -t 2500
+    exit 1
+fi
+echo "$password" | sudo -S your_command
+
+
+while true; do
+....
+done

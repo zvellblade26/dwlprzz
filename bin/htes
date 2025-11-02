@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "^bg(72F1B8)^fg(72F1B8)^lm(pkill slstatus; sleep 1; slstatus -s | dwlb -status-stdin all & disown; notify-send \".\" -t 50)^mm(librewolf -P webappsaz --new-tab \"https://web.whatsapp.com/\")^rm(librewolf --new-tab \"https://www.youtube.com/\") 舍 ^bg()^fg()^lm()^mm()^rm()"

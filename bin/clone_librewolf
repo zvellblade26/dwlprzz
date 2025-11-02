@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+src="$1"
+dest="$2"
+
+# --- Failsafe: check arguments ---
+if [[ -z "$src" || -z "$dest" ]]; then
+    echo "❌ Missing arguments!"
+    echo "Usage: $0 <source_profile_path> <destination_profile_path>"
+    echo "Example:"
+    echo "  $0 ~/.librewolf/wxyz1234.default ~/.librewolf/abcd5678.webapp"
+    exit 1
+fi
+
+# --- Confirm source exists ---
+if [[ ! -d "$src" ]]; then
+    echo "❌ Source profile not found: $src"
+    exit 1
+fi
+
+# --- Ensure destination exists ---
+if [[ ! -d "$dest" ]]; then
+    echo "ℹ️ Destination folder not found, creating it..."
+    mkdir -p "$dest"
+fi
+
+# --- Copy data safely ---
+cp -r "$src"/* "$dest"/
+
+# --- Remove volatile files/folders ---
+rm -f "$dest"/{lock,.parentlock,pkcs11.txt,cert9.db,serviceworker.txt}
+rm -rf "$dest"/{serviceworker,startupCache,cache2}
+
+echo "✔ Copied profile from:"
+echo "   $src"
+echo "→  $dest"
+echo "✅ Safe clone completed."

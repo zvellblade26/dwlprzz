@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Killing all running instances
+pkill wmenu; pkill wmenu-run
+
+# Ensure the directory exists
+screenshot_dir="$HOME/Pictures"
+mkdir -p $screenshot_dir
+
+# Case for screenshot types
+case $1 in
+	ss)
+		file_name="SS $(date +%Y_%m_%d,%H:%M:%S).png"
+		# Run slurp and check if it was canceled
+		grim -g "$(slurp &)" "$screenshot_dir/$file_name"
+		if [[ $? -ne 0 ]]; then
+			notify-send 'Screenshot canceled' -t 1000 -u low
+			exit 0
+		fi
+		wl-copy --type image/png < "$screenshot_dir/$file_name"
+		notify-send 'Screenshot taken and clipped' -t 1000 -u low
+		;;
+	fss)
+		file_name="FSS $(date +%Y_%m_%d,%H:%M:%S).png"
+		grim "$screenshot_dir/$file_name" &&
+			wl-copy --type image/png < "$screenshot_dir/$file_name"
+		notify-send 'Screenshot taken and clipped' -t 1000 -u low
+		;;
+	*)
+		exit 1
+		;;
+esac
+
+# Menu for additional actions
+menu=$(echo -e "DONE\nedit\ndelete" | wmenu)
+if [[ "$menu" == "edit" ]]; then
+	# Find the most recent screenshot file
+	recent_file=$(ls -t "$screenshot_dir" | grep -E "^(SS|FSS) .*\.png$" | head -n 1)
+	if [[ -n "$recent_file" ]]; then
+		pinta "$screenshot_dir/$recent_file"
+	else
+		notify-send 'No screenshot found to edit' -t 1000 -u low
+	fi
+elif [[ "$menu" == "delete" ]]; then
+	# Find the most recent screenshot file
+	recent_file=$(ls -t "$screenshot_dir" | grep -E "^(SS|FSS) .*\.png$" | head -n 1)
+	if [[ -n "$recent_file" ]]; then
+		rm -r "$screenshot_dir/$recent_file"
+		notify-send "Deleted" -t 1000 -u low
+	fi
+fi

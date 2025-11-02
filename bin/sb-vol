@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Signal number to refresh the status bar module (e.g., 10)
+STATUS_SIGNAL=4
+
+change_volume() {
+    (
+        flock -n 9 || exit
+        $1
+        pkill -RTMIN+$STATUS_SIGNAL slstatus 2>/dev/null
+    ) 9>/tmp/sb-vol.lock
+}
+
+case $1 in
+    up)		  change_volume "wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%+" ;;
+    down)   change_volume "wpctl set-volume -l 2.0 @DEFAULT_SINK@ 5%-" ;;
+    mute)   change_volume "wpctl set-mute @DEFAULT_SINK@ toggle" ;;
+	  check)  notify-send -a Volume -r 9993 "$(wpctl get-volume @DEFAULT_SINK@)" -t 1000 ;;
+esac
+
+vol="$(wpctl get-volume @DEFAULT_SINK@)" || { echo " N/A%"; exit 0; }
+
+# If muted, print red icon
+if [ "$vol" != "${vol%\[MUTED\]}" ]; then
+    echo "^bg(FF4747)^fg(FF4747)^us(sb-vol up)^ds(sb-vol down)^lm(sb-vol mute)^rm(sb-vol check)  ^bg()^fg()^rm()^lm()^us()^ds()"
+    exit
+fi
+
+vol="${vol#Volume: }"
+split() {
+    IFS=$2
+    set -- $1
+    printf '%s' "$@"
+}
+vol="$(printf "%.0f" "$(split "$vol" ".")")"
+
+# Choose icon and color
+if (( vol >= 101 )); then
+	echo "^bg(ff4747)^fg(ff4747)^us(sb-vol up)^ds(sb-vol down)^lm(sb-vol mute)^rm(sb-vol check) ! $vol% ^bg()^fg()^rm()^lm()^us()^ds()"; exit
+elif (( vol >= 0 )); then
+	echo "^bg(7ff553)^fg(7ff553)^us(sb-vol up)^ds(sb-vol down)^lm(sb-vol mute)^rm(sb-vol check)  $vol% ^bg()^fg()^rm()^lm()^us()^ds()"; exit
+else
+	echo "^bg(7ff553)^fg(7ff553)^us(sb-vol up)^ds(sb-vol down)^lm(sb-vol mute)^rm(sb-vol check)  ^bg()^fg()^rm()^lm()^us()^ds()"; exit
+fi

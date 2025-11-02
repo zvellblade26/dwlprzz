@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Customizable thresholds
+CRITICAL_THRESHOLD=20
+LOW_THRESHOLD=50
+HIGH_THRESHOLD=90
+batt="$(cat /sys/class/power_supply/BAT0/capacity)"
+
+if [[ "$(cat /sys/class/power_supply/AC/online)" -eq 0 ]]; then
+		if [[ "$batt" -lt "$HIGH_THRESHOLD" ]]; then
+			if [[ "$batt" -lt "$LOW_THRESHOLD" ]]; then
+				if [[ "$batt" -lt "$CRITICAL_THRESHOLD" ]]; then
+					echo "^bg(ff4747)^fg(ff4747)^us(backlightaz up)^ds(backlightaz down)  $batt% ^bg()^fg()^us()^ds()"; exit
+				else
+					echo "^bg(FFAC5E)^fg(FFAC5E)^us(backlightaz up)^ds(backlightaz down)  $batt% ^bg()^fg()^us()^ds()"; exit
+				fi
+			else
+				echo "^bg(FFF95E)^fg(FFF95E)^us(backlightaz up)^ds(backlightaz down)  $batt% ^bg()^fg()^us()^ds()"; exit
+			fi
+		else
+			echo "^bg(72F1B8)^fg(72F1B8)^us(backlightaz up)^ds(backlightaz down)  $batt% ^bg()^fg()^us()^ds()"; exit
+		fi
+else
+	#BATTERY_STATUS=""
+	echo "^bg(00A6FF)^fg(00A6FF)^us(backlightaz up)^ds(backlightaz down) 󱐋 $batt% ^bg()^fg()^us()^ds()"; exit
+fi

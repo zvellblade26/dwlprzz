@@ -1,0 +1,80 @@
+#!/usr/bin/env zsh
+setopt no_nomatch
+
+# --- Bookmarks ---
+typeset -A bkmarks=(
+  ["WEB - YouTube"]="https://www.youtube.com/"
+  ["WEB - WhatsApp"]="https://web.whatsapp.com/"
+  ["WEB - ClassRoom"]="https://classroom.google.com/u/2/"
+  ["WEB - Keep"]="https://keep.google.com/"
+  ["WEB - ChatGPT"]="https://chat.openai.com/"
+  ["WEB - Gemini"]="https://gemini.google.com/app"
+  ["WEB - Grammar"]="https://quillbot.com/grammar-check"
+  ["WEB - Translator"]="https://quillbot.com/translate"
+  ["WEB - LMS UHN"]="https://lms.uhn.ac.id/login/index.php"
+  ["WEB - SISFO UHN"]="https://akademik.uhn.ac.id/?mnux=login&lgn=frm&lid=120&nme=Mahasiswa"
+  ["WEB - Nerd Fonts"]="https://www.nerdfonts.com/cheat-sheet"
+  ["WEB - HTML Color Codes"]="https://htmlcolorcodes.com/"
+  ["WEB - Git Repo"]="https://github.com/zvellblade26?tab=repositories"
+  ["WEB - StirlingPDF"]="http://localhost:8080/"
+  ["WEB - Gmail"]="https://mail.google.com/mail"
+  ["WEB - Find My Devices"]="https://www.google.com/android/find/"
+  ["WEB - Germany Deutsch für dich - Start"]="https://www.goethe.de/prj/dfd/d/dashboard"
+  ["WEB - Ytdownloader"]="https://v2.youconvert.net/ena/"
+  ["WEB - Tokopedia"]="https://www.tokopedia.com/"
+  ["WEB - Shopee"]="https://shopee.co.id/"
+  ["WEB - Calculator"]="https://www.desmos.com/scientific"
+)
+
+# --- Temp file cache ---
+temp_file="/tmp/apptmp"
+if [[ ! -f $temp_file ]]; then
+  {
+    ls --color=never -1 /usr/share/applications/ | sed -E 's/\.desktop$//'
+    ls --color=never -1 "$HOME/.local/bin/" 2>/dev/null
+    echo "rmtmp"
+  } > "$temp_file"
+fi
+
+# --- Combine menu entries ---
+menu_items=("${(@k)bkmarks}")
+menu="$(printf "%s\n" "${menu_items[@]}" && cat "$temp_file")"
+
+# --- Show menu ---
+selection=$(print -r -- "$menu" | wmenu -i)
+[[ -z $selection ]] && { notify-send -t 100 "No selection made."; exit 0 }
+
+# --- Logic handler ---
+if [[ -n ${bkmarks[$selection]} ]]; then
+  librewolf --new-tab "${bkmarks[$selection]}" &!
+  exit 0
+fi
+
+case $selection in
+  rmtmp)
+    rm -f "$temp_file"
+    ;;
+  [Tt]\ *)
+    query="${selection#* }"
+    librewolf --new-tab "https://translate.google.com/?sl=en&tl=id&text=${query// /+}&op=translate" &!
+    ;;
+  [Yy]\ *)
+    query="${selection#* }"
+    librewolf --new-tab "https://www.youtube.com/results?search_query=${query// /+}" &!
+    ;;
+  [Pp]ac\ *)
+    query="${selection#* }"
+    librewolf --new-tab "https://archlinux.org/packages/?q=${query// /+}" &!
+    ;;
+  [Yy]ay\ *)
+    query="${selection#* }"
+    librewolf --new-tab "https://aur.archlinux.org/packages?K=${query// /+}" &!
+    ;;
+  [DdGg]\ *)
+    query="${selection#* }"
+    librewolf --new-tab "https://duckduckgo.com/?q=${query// /+}" &!
+    ;;
+  *)
+    eval "$selection" &!
+    ;;
+esac

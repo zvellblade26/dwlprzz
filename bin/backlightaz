@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Get current brightness
+current_brightness=$(brightnessctl -e4 -m | awk -F, '{print substr($4, 1, length($4)-1)}')
+
+# Exit if brightness retrieval fails or brightness is below threshold for "down"
+[ -z "$current_brightness" ] || ! [ "$current_brightness" -ge 0 ] && exit 1
+[ "$1" = "down" ] && [ "$current_brightness" -le 30 ] && exit 1
+
+# Adjust brightness
+case $1 in
+    up) brightnessctl set 10%+ >/dev/null ;;
+    down) brightnessctl set 10%- >/dev/null ;;
+    *) exit 1 ;;
+esac
+
+# Get new brightness
+new_brightness=$(brightnessctl -e4 -m | awk -F, '{print substr($4, 1, length($4)-1)}')
+
+# Send clean notification (progress shown by system hint)
+notify-send -a "Brightness" -r 9994 -h int:value:"$new_brightness" \
+    "Brightness: $new_brightness%" -t 1000
