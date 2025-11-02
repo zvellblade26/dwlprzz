@@ -189,33 +189,18 @@ static void render_to_cairo(struct menu *menu, cairo_t *cairo) {
 void render_menu(struct menu *menu) {
 	struct wl_context *context = menu->context;
 
-	cairo_surface_t *recorder = cairo_recording_surface_create(
-			CAIRO_CONTENT_COLOR_ALPHA, NULL);
-	cairo_t *cairo = cairo_create(recorder);
-	cairo_set_antialias(cairo, CAIRO_ANTIALIAS_BEST);
-	cairo_font_options_t *fo = cairo_font_options_create();
-	cairo_set_font_options(cairo, fo);
-	cairo_font_options_destroy(fo);
-	cairo_save(cairo);
-	cairo_set_operator(cairo, CAIRO_OPERATOR_CLEAR);
-	cairo_paint(cairo);
-	cairo_restore(cairo);
-
-	render_to_cairo(menu, cairo);
-
 	int scale = context_get_scale(context);
 	struct pool_buffer *buffer = context_get_next_buffer(context, scale);
 	if (!buffer) {
-		goto cleanup;
+		return;
 	}
 
 	cairo_t *shm = buffer->cairo;
-	cairo_save(shm);
-	cairo_set_operator(shm, CAIRO_OPERATOR_CLEAR);
-	cairo_paint(shm);
-	cairo_restore(shm);
-	cairo_set_source_surface(shm, recorder, 0, 0);
-	cairo_paint(shm);
+	cairo_set_antialias(shm, CAIRO_ANTIALIAS_BEST);
+	cairo_font_options_t *fo = cairo_font_options_create();
+	cairo_set_font_options(shm, fo);
+	cairo_font_options_destroy(fo);
+	render_to_cairo(menu, shm);
 
 	struct wl_surface *surface = context_get_surface(context);
 	wl_surface_set_buffer_scale(surface, scale);
@@ -223,7 +208,5 @@ void render_menu(struct menu *menu) {
 	wl_surface_damage(surface, 0, 0, menu->width, menu->height);
 	wl_surface_commit(surface);
 
-cleanup:
-	cairo_destroy(cairo);
-	cairo_surface_destroy(recorder);
+	menu->rendered = true;
 }

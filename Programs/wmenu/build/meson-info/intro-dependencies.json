@@ -2,16 +2,11 @@
   {
     "name": "cairo",
     "type": "pkgconfig",
-    "version": "1.18.2",
+    "version": "1.18.4",
     "compile_args": [
       "-I/usr/include/cairo",
       "-I/usr/include/freetype2",
       "-I/usr/include/libpng16",
-      "-I/usr/include/harfbuzz",
-      "-I/usr/include/glib-2.0",
-      "-I/usr/lib/glib-2.0/include",
-      "-I/usr/include/sysprof-6",
-      "-pthread",
       "-I/usr/include/pixman-1"
     ],
     "link_args": [
@@ -29,27 +24,27 @@
   {
     "name": "pango",
     "type": "pkgconfig",
-    "version": "1.54.0",
+    "version": "1.57.0",
     "compile_args": [
       "-I/usr/include/pango-1.0",
+      "-I/usr/include/harfbuzz",
+      "-I/usr/include/glib-2.0",
+      "-I/usr/lib/glib-2.0/include",
       "-I/usr/include/libmount",
       "-I/usr/include/blkid",
       "-I/usr/include/fribidi",
       "-I/usr/include/cairo",
       "-I/usr/include/freetype2",
       "-I/usr/include/libpng16",
-      "-I/usr/include/harfbuzz",
-      "-I/usr/include/glib-2.0",
-      "-I/usr/lib/glib-2.0/include",
       "-I/usr/include/pixman-1",
       "-I/usr/include/sysprof-6",
       "-pthread"
     ],
     "link_args": [
       "/usr/lib/libpango-1.0.so",
+      "/usr/lib/libharfbuzz.so",
       "/usr/lib/libgobject-2.0.so",
-      "/usr/lib/libglib-2.0.so",
-      "/usr/lib/libharfbuzz.so"
+      "/usr/lib/libglib-2.0.so"
     ],
     "include_directories": [],
     "sources": [],
@@ -63,7 +58,7 @@
   {
     "name": "pangocairo",
     "type": "pkgconfig",
-    "version": "1.54.0",
+    "version": "1.57.0",
     "compile_args": [
       "-I/usr/include/pango-1.0",
       "-I/usr/include/cairo",
@@ -82,10 +77,10 @@
     "link_args": [
       "/usr/lib/libpangocairo-1.0.so",
       "/usr/lib/libpango-1.0.so",
-      "/usr/lib/libgobject-2.0.so",
-      "/usr/lib/libglib-2.0.so",
+      "/usr/lib/libcairo.so",
       "/usr/lib/libharfbuzz.so",
-      "/usr/lib/libcairo.so"
+      "/usr/lib/libgobject-2.0.so",
+      "/usr/lib/libglib-2.0.so"
     ],
     "include_directories": [],
     "sources": [],
@@ -99,10 +94,11 @@
   {
     "name": "wayland-client",
     "type": "pkgconfig",
-    "version": "1.23.1",
+    "version": "1.24.0",
     "compile_args": [],
     "link_args": [
-      "/usr/lib/libwayland-client.so"
+      "/usr/lib/libwayland-client.so",
+      "-lm"
     ],
     "include_directories": [],
     "sources": [],
@@ -116,7 +112,7 @@
   {
     "name": "wayland-protocols",
     "type": "pkgconfig",
-    "version": "1.38",
+    "version": "1.45",
     "compile_args": [],
     "link_args": [],
     "include_directories": [],
@@ -131,7 +127,7 @@
   {
     "name": "xkbcommon",
     "type": "pkgconfig",
-    "version": "1.7.0",
+    "version": "1.11.0",
     "compile_args": [],
     "link_args": [
       "/usr/lib/libxkbcommon.so"
@@ -148,7 +144,7 @@
   {
     "name": "wayland-scanner",
     "type": "pkgconfig",
-    "version": "1.23.1",
+    "version": "1.24.0",
     "compile_args": [],
     "link_args": [],
     "include_directories": [],
@@ -178,9 +174,9 @@
     ]
   },
   {
-    "name": "dep139739334664576",
+    "name": "dep55729945505057422777984035877081788926",
     "type": "internal",
-    "version": "0.1.9",
+    "version": "0.2.0",
     "compile_args": [],
     "link_args": [],
     "include_directories": [],

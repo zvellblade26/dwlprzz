@@ -1,5 +1,5 @@
 [
-  "/home/asd/Programs/wmenu/meson.build",
-  "/home/asd/Programs/wmenu/protocols/meson.build",
-  "/home/asd/Programs/wmenu/docs/meson.build"
+  "/home/kefsira/.local/programs/wmenu/meson.build",
+  "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
+  "/home/kefsira/.local/programs/wmenu/docs/meson.build"
 ]

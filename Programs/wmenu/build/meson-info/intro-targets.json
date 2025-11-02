@@ -3,9 +3,9 @@
     "name": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml_protocol_c",
     "id": "8998617@@__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml_protocol_c@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/xdg-shell-protocol.c"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-shell-protocol.c"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -34,9 +34,9 @@
     "name": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml_client_h",
     "id": "8998617@@__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml_client_h@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/xdg-shell-client-protocol.h"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-shell-client-protocol.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -65,9 +65,9 @@
     "name": "__usr_share_wayland_protocols_staging_xdg_activation_xdg_activation_v1_xml_protocol_c",
     "id": "8998617@@__usr_share_wayland_protocols_staging_xdg_activation_xdg_activation_v1_xml_protocol_c@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/xdg-activation-v1-protocol.c"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-activation-v1-protocol.c"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -96,9 +96,9 @@
     "name": "__usr_share_wayland_protocols_staging_xdg_activation_xdg_activation_v1_xml_client_h",
     "id": "8998617@@__usr_share_wayland_protocols_staging_xdg_activation_xdg_activation_v1_xml_client_h@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/xdg-activation-v1-client-protocol.h"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-activation-v1-client-protocol.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -127,9 +127,9 @@
     "name": "wlr_layer_shell_unstable_v1_xml_protocol_c",
     "id": "8998617@@wlr_layer_shell_unstable_v1_xml_protocol_c@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-protocol.c"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-protocol.c"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -143,7 +143,7 @@
         ],
         "parameters": [],
         "sources": [
-          "/home/asd/Programs/wmenu/protocols/wlr-layer-shell-unstable-v1.xml"
+          "/home/kefsira/.local/programs/wmenu/protocols/wlr-layer-shell-unstable-v1.xml"
         ],
         "generated_sources": []
       }
@@ -158,9 +158,9 @@
     "name": "wlr_layer_shell_unstable_v1_xml_client_h",
     "id": "8998617@@wlr_layer_shell_unstable_v1_xml_client_h@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-client-protocol.h"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-client-protocol.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -174,7 +174,7 @@
         ],
         "parameters": [],
         "sources": [
-          "/home/asd/Programs/wmenu/protocols/wlr-layer-shell-unstable-v1.xml"
+          "/home/kefsira/.local/programs/wmenu/protocols/wlr-layer-shell-unstable-v1.xml"
         ],
         "generated_sources": []
       }
@@ -189,21 +189,22 @@
     "name": "client_protos",
     "id": "8998617@@client_protos@sta",
     "type": "static library",
-    "defined_in": "/home/asd/Programs/wmenu/protocols/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/protocols/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/protocols/libclient_protos.a"
+      "/home/kefsira/.local/programs/wmenu/build/protocols/libclient_protos.a"
     ],
     "build_by_default": true,
     "target_sources": [
       {
         "language": "c",
+        "machine": "host",
         "compiler": [
           "cc"
         ],
         "parameters": [
-          "-I/home/asd/Programs/wmenu/build/protocols/libclient_protos.a.p",
-          "-I/home/asd/Programs/wmenu/build/protocols",
-          "-I/home/asd/Programs/wmenu/protocols",
+          "-I/home/kefsira/.local/programs/wmenu/build/protocols/libclient_protos.a.p",
+          "-I/home/kefsira/.local/programs/wmenu/build/protocols",
+          "-I/home/kefsira/.local/programs/wmenu/protocols",
           "-fdiagnostics-color=always",
           "-D_FILE_OFFSET_BITS=64",
           "-Wall",
@@ -213,7 +214,7 @@
           "-std=c11",
           "-O0",
           "-g",
-          "-DVERSION=\"0.1.9\"",
+          "-DVERSION=\"0.2.0\"",
           "-Wno-missing-field-initializers",
           "-Wno-unused-parameter",
           "-Wundef",
@@ -222,9 +223,9 @@
         ],
         "sources": [],
         "generated_sources": [
-          "/home/asd/Programs/wmenu/build/protocols/xdg-shell-protocol.c",
-          "/home/asd/Programs/wmenu/build/protocols/xdg-activation-v1-protocol.c",
-          "/home/asd/Programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-protocol.c"
+          "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-shell-protocol.c",
+          "/home/kefsira/.local/programs/wmenu/build/protocols/xdg-activation-v1-protocol.c",
+          "/home/kefsira/.local/programs/wmenu/build/protocols/wlr-layer-shell-unstable-v1-protocol.c"
         ],
         "unity_sources": []
       },
@@ -249,34 +250,35 @@
     "name": "wmenu",
     "id": "wmenu@exe",
     "type": "executable",
-    "defined_in": "/home/asd/Programs/wmenu/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/wmenu"
+      "/home/kefsira/.local/programs/wmenu/build/wmenu"
     ],
     "build_by_default": true,
     "target_sources": [
       {
         "language": "c",
+        "machine": "host",
         "compiler": [
           "cc"
         ],
         "parameters": [
-          "-I/home/asd/Programs/wmenu/build/wmenu.p",
-          "-I/home/asd/Programs/wmenu/build",
-          "-I/home/asd/Programs/wmenu",
-          "-I/home/asd/Programs/wmenu/build/protocols",
+          "-I/home/kefsira/.local/programs/wmenu/build/wmenu.p",
+          "-I/home/kefsira/.local/programs/wmenu/build",
+          "-I/home/kefsira/.local/programs/wmenu",
+          "-I/home/kefsira/.local/programs/wmenu/build/protocols",
           "-I/usr/include/cairo",
           "-I/usr/include/freetype2",
           "-I/usr/include/libpng16",
+          "-I/usr/include/pixman-1",
+          "-I/usr/include/pango-1.0",
           "-I/usr/include/harfbuzz",
           "-I/usr/include/glib-2.0",
           "-I/usr/lib/glib-2.0/include",
-          "-I/usr/include/sysprof-6",
-          "-I/usr/include/pixman-1",
-          "-I/usr/include/pango-1.0",
           "-I/usr/include/libmount",
           "-I/usr/include/blkid",
           "-I/usr/include/fribidi",
+          "-I/usr/include/sysprof-6",
           "-fdiagnostics-color=always",
           "-D_FILE_OFFSET_BITS=64",
           "-Wall",
@@ -286,7 +288,7 @@
           "-std=c11",
           "-O0",
           "-g",
-          "-DVERSION=\"0.1.9\"",
+          "-DVERSION=\"0.2.0\"",
           "-Wno-missing-field-initializers",
           "-Wno-unused-parameter",
           "-Wundef",
@@ -294,12 +296,12 @@
           "-pthread"
         ],
         "sources": [
-          "/home/asd/Programs/wmenu/menu.c",
-          "/home/asd/Programs/wmenu/pango.c",
-          "/home/asd/Programs/wmenu/pool-buffer.c",
-          "/home/asd/Programs/wmenu/render.c",
-          "/home/asd/Programs/wmenu/wayland.c",
-          "/home/asd/Programs/wmenu/wmenu.c"
+          "/home/kefsira/.local/programs/wmenu/menu.c",
+          "/home/kefsira/.local/programs/wmenu/pango.c",
+          "/home/kefsira/.local/programs/wmenu/pool-buffer.c",
+          "/home/kefsira/.local/programs/wmenu/render.c",
+          "/home/kefsira/.local/programs/wmenu/wayland.c",
+          "/home/kefsira/.local/programs/wmenu/wmenu.c"
         ],
         "generated_sources": [],
         "unity_sources": []
@@ -316,12 +318,13 @@
           "protocols/libclient_protos.a",
           "/usr/lib/libcairo.so",
           "/usr/lib/libpango-1.0.so",
+          "/usr/lib/libharfbuzz.so",
           "/usr/lib/libgobject-2.0.so",
           "/usr/lib/libglib-2.0.so",
-          "/usr/lib/libharfbuzz.so",
           "/usr/lib/libpangocairo-1.0.so",
           "-lrt",
           "/usr/lib/libwayland-client.so",
+          "-lm",
           "/usr/lib/libxkbcommon.so",
           "-Wl,--end-group",
           "-Wl,--end-group"
@@ -350,34 +353,35 @@
     "name": "wmenu-run",
     "id": "wmenu-run@exe",
     "type": "executable",
-    "defined_in": "/home/asd/Programs/wmenu/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wmenu/meson.build",
     "filename": [
-      "/home/asd/Programs/wmenu/build/wmenu-run"
+      "/home/kefsira/.local/programs/wmenu/build/wmenu-run"
     ],
     "build_by_default": true,
     "target_sources": [
       {
         "language": "c",
+        "machine": "host",
         "compiler": [
           "cc"
         ],
         "parameters": [
-          "-I/home/asd/Programs/wmenu/build/wmenu-run.p",
-          "-I/home/asd/Programs/wmenu/build",
-          "-I/home/asd/Programs/wmenu",
-          "-I/home/asd/Programs/wmenu/build/protocols",
+          "-I/home/kefsira/.local/programs/wmenu/build/wmenu-run.p",
+          "-I/home/kefsira/.local/programs/wmenu/build",
+          "-I/home/kefsira/.local/programs/wmenu",
+          "-I/home/kefsira/.local/programs/wmenu/build/protocols",
           "-I/usr/include/cairo",
           "-I/usr/include/freetype2",
           "-I/usr/include/libpng16",
+          "-I/usr/include/pixman-1",
+          "-I/usr/include/pango-1.0",
           "-I/usr/include/harfbuzz",
           "-I/usr/include/glib-2.0",
           "-I/usr/lib/glib-2.0/include",
-          "-I/usr/include/sysprof-6",
-          "-I/usr/include/pixman-1",
-          "-I/usr/include/pango-1.0",
           "-I/usr/include/libmount",
           "-I/usr/include/blkid",
           "-I/usr/include/fribidi",
+          "-I/usr/include/sysprof-6",
           "-fdiagnostics-color=always",
           "-D_FILE_OFFSET_BITS=64",
           "-Wall",
@@ -387,7 +391,7 @@
           "-std=c11",
           "-O0",
           "-g",
-          "-DVERSION=\"0.1.9\"",
+          "-DVERSION=\"0.2.0\"",
           "-Wno-missing-field-initializers",
           "-Wno-unused-parameter",
           "-Wundef",
@@ -395,12 +399,12 @@
           "-pthread"
         ],
         "sources": [
-          "/home/asd/Programs/wmenu/menu.c",
-          "/home/asd/Programs/wmenu/pango.c",
-          "/home/asd/Programs/wmenu/pool-buffer.c",
-          "/home/asd/Programs/wmenu/render.c",
-          "/home/asd/Programs/wmenu/wayland.c",
-          "/home/asd/Programs/wmenu/wmenu-run.c"
+          "/home/kefsira/.local/programs/wmenu/menu.c",
+          "/home/kefsira/.local/programs/wmenu/pango.c",
+          "/home/kefsira/.local/programs/wmenu/pool-buffer.c",
+          "/home/kefsira/.local/programs/wmenu/render.c",
+          "/home/kefsira/.local/programs/wmenu/wayland.c",
+          "/home/kefsira/.local/programs/wmenu/wmenu-run.c"
         ],
         "generated_sources": [],
         "unity_sources": []
@@ -417,12 +421,13 @@
           "protocols/libclient_protos.a",
           "/usr/lib/libcairo.so",
           "/usr/lib/libpango-1.0.so",
+          "/usr/lib/libharfbuzz.so",
           "/usr/lib/libgobject-2.0.so",
           "/usr/lib/libglib-2.0.so",
-          "/usr/lib/libharfbuzz.so",
           "/usr/lib/libpangocairo-1.0.so",
           "-lrt",
           "/usr/lib/libwayland-client.so",
+          "-lm",
           "/usr/lib/libxkbcommon.so",
           "-Wl,--end-group",
           "-Wl,--end-group"

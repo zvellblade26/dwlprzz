@@ -64,6 +64,7 @@ struct menu {
 	int promptw;
 	int left_arrow;
 	int right_arrow;
+	bool rendered;
 
 	char input[BUFSIZ];
 	size_t cursor;
@@ -85,6 +86,7 @@ void menu_destroy(struct menu *menu);
 void menu_getopts(struct menu *menu, int argc, char *argv[]);
 void menu_add_item(struct menu *menu, char *text);
 void menu_sort_and_deduplicate(struct menu *menu);
+void menu_invalidate(struct menu *menu);
 void menu_render_items(struct menu *menu);
 void menu_paste(struct menu *menu, const char *text, ssize_t len);
 void menu_keypress(struct menu *menu, enum wl_keyboard_key_state key_state,

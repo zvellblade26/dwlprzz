@@ -1,16 +1,18 @@
 {
   "targets": {
-    "/home/asd/Programs/wmenu/build/wmenu": {
+    "/home/kefsira/.local/programs/wmenu/build/wmenu": {
       "destination": "{bindir}/wmenu",
       "tag": "runtime",
       "subproject": null,
-      "install_rpath": null
+      "install_rpath": null,
+      "build_rpaths": []
     },
-    "/home/asd/Programs/wmenu/build/wmenu-run": {
+    "/home/kefsira/.local/programs/wmenu/build/wmenu-run": {
       "destination": "{bindir}/wmenu-run",
       "tag": "runtime",
       "subproject": null,
-      "install_rpath": null
+      "install_rpath": null,
+      "build_rpaths": []
     }
   }
 }
