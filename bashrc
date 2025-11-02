@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 eval "$(zoxide init bash)"
-alias l='ls -aFh --color=always' # add colors and file type extensions
+alias l='ls -aFhC' # add colors and file type extensions
 function _zq() {
   if [ -n "$1" ]; then
     z "$1" && l
@@ -11,9 +11,6 @@ function _zq() {
 alias z='_zq'
 alias zi='function _zy(){ zi "$1" && l; }; _zy'
 alias zs="z $HOME/.local/bin"
-
-#fix disk
-#sudo ntfsfix /dev/sdb3
 
 export PATH=$PATH:"$HOME/.local/bin"
 
@@ -46,6 +43,8 @@ alias einitrc="v ~/.xinitrc"
 alias mthp="simple-mtpfs --device 1 ~/SamsungGalaxyA50/ && cd ~/SamsungGalaxyA50"
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias cat="bat"
+alias mdwl="cd ~/.local/programs/dwl-v0.7; cp config.def.h config.h; sudo make clean install; cd -"
+alias edwl="cd ~/.local/programs/dwl-v0.7; v config.def.h"
 
 
 alias cp='cp -rv'
@@ -100,7 +99,7 @@ extract() {
 		fi
 	done
 }
-
+PS1=' \[$(tput setaf 33)\]\w \[$(tput setaf 69)\]\[$(tput setaf 105)\]  \[$(tput setaf 148)\]'
 zf() {
 	z	"$(find "$USER" -type d \( -name "DATA:D" -or -name "DATA:C" \) -prune -o -type d -print | fzf)"
 }

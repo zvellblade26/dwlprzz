@@ -40,27 +40,22 @@ sleep 2;
 # Installing Packages
 pac base-devel brightnessctl dunst fastfetch foot fzf grim slurp || { echo "brightnessctl dunst fastfetch foot fzf grim slurp installation failed!"; exit 1; }
 pac libinput libnotify meson neovim ntfs-3g swayimg || { echo "libinput libnotify meson neovim ntfs-3g installation failed!"; exit 1; }
-pac pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber || { echo "pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber installation failed!"; exit 1; }
+pac pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber rtkit || { echo "pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber installation failed!"; exit 1; }
 pac swaylock thunar tumbler tllist unzip wayland-protocols acpi bat mpv yazi || { echo "swaylock thunar tumbler tllist unzip wayland-protocols installation failed!"; exit 1; }
-pac wev wl-clipboard wlroots0.18 wtype zip zoxide || { echo "wev wl-clipboard wlroots0.18 wtype zip zoxide installation failed!"; exit 1; }
-pac firefox || { echo "Firefox installation failed!"; exit 1; }
-
-# Creating Windows mounting Directories
-mkdir -p "/home/$user/mnt_dataBANK"  || { echo "Failed to create directories"; exit 1; }
+pac wev wl-clipboard wlroots0.18 wtype zip zoxide btop hyprpicker pass zsh || { echo "wev wl-clipboard wlroots0.18 wtype zip zoxide installation failed!"; exit 1; }
 
 echo ""
 echo ""
 echo ""
-echo "#####   4. CHECKING PACKAGES   #####"
+echo "#####   3. CHECKING PACKAGES   #####"
 sleep 2;
 # List of packages to check
 packages_to_check=(
 	"base-devel" "brightnessctl" "dunst" "fastfetch" "foot" "fzf" "grim" "slurp"
 	"libinput" "libnotify" "meson" "neovim" "ntfs-3g" "swayimg"
-	"pipewire" "pipewire-alsa" "pipewire-jack" "pipewire-pulse" "wireplumber"
+	"pipewire" "pipewire-alsa" "pipewire-jack" "pipewire-pulse" "wireplumber" "rtkit"
 	"swaylock" "thunar" "tumbler" "tllist" "unzip" "wayland-protocols" "acpi" "bat" "mpv" "yazi"
-	"wev" "wl-clipboard" "wlroots0.18" "wtype" "zip" "zoxide"
-	"firefox"
+	"wev" "wl-clipboard" "wlroots0.18" "wtype" "zip" "zoxide" "btop" "hyprpicker" "pass" "zsh"
 )
 # Function to check if a package is installed
 check_installed() {
@@ -94,11 +89,12 @@ echo "startw" >> "/home/$user/.bash_profile"
 echo ""
 echo ""
 echo ""
-echo "#####   5. Killing sudo   #####"
+echo "#####   4. Killing sudo   #####"
 sleep 2;
 # At the end of the script, kill the background process to stop the loop
 echo "killing sudo -v"
 kill $SUDO_LOOP_PID
+sudo -k
 echo "Done"
 
 echo ""

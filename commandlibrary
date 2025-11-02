@@ -1,0 +1,13 @@
+tag: drive, mount, read, write, ntfs
+# sudo mount -o rw -t ntfs 'partition' 'mount dir'
+# sudo mount -o rw -t ntfs /dev/sdb3 /mnt/dataBANK
+
+tag: drive, fix, ntfs
+# sudo ntfsfix /dev/sdb3
+
+tag: generate, gpg, keys, pass, manager
+# gpg --full-gen-key
+
+
+
+

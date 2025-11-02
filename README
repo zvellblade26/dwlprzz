@@ -1,17 +1,30 @@
 GIT CLONE
+---> ninja/meson
 :: wmenu -- https://codeberg.org/adnano/wmenu.git
-:: wbg -- https://codeberg.org/dnkl/wbg.git
+			custom: menu.c
+			$ meson setup build
+			$ ninja -C build
+			# ninja -C build install
 
-LINKS
-:: dwl -- https://codeberg.org/dwl/dwl/releases
+:: wbg -- https://codeberg.org/dnkl/wbg.git
+			custom: -
+			$ meson --buildtype=release build
+		 	$ ninja -C build
+		 	# sudo ninja -C build install
+
+---> normal
+:: dwl (just use existing, rarely updated) -- https://codeberg.org/dwl/dwl.git
+			custom: config.def.h, ipc(patch)
+
 :: dwlb -- https://github.com/kolunmi/dwlb
-:: wmenu -- https://codeberg.org/adnano/wmenu/
-:: wbg -- https://codeberg.org/dnkl/wbg
+			custom: config.def.h, dwlb.c(//custom - title color fix; hide ugly boxes above tags)
+
 :: Stirling PDF -- https://docs.stirlingpdf.com/Installation/Unix%20Installation
 
 run
 sudo sh -c "cat dwlprzz/winpar >> /etc/grub.d/40_custom"
 
+---------------------000000000000000-----------------------
 stirling PDF depencencies
 :: gradle
 :: jdk21-openjdk
@@ -22,6 +35,9 @@ stirling PDF depencencies
 :: unoconv
 :: unpaper
 
+
+
+---------------------000000000000000-----------------------
 CUPS Printing
 dependencies
 :: cups  - enable and start cups.socket
@@ -29,3 +45,42 @@ dependencies
 :: epson-inkjet-printer-201401w  -  aur
 :: system-config-printer
 :: usbutils
+
+
+
+---------------------000000000000000-----------------------
+Virtualization
+dependencies
+:: qemu (full variant)
+:: virt-manager
+:: dnsmasq
+:: bridge-utils
+:: virt-viewer
+
+HOW TO:
+--> Edit /etc/libvirt/libvirtd.conf (Change the following Lines)
+unix_sock_group = "libvirt"
+unix_sock_rw_perms = "0770"
+--> Then add your user and create group:
+sudo usermod -a -G libvirt $(whoami)
+newgrp libvirt
+--> Start QEMU libvirt service automatically:
+sudo systemctl enable --now libvirtd
+--> Reboot
+
+To list all groups on the system: 
+$ cat /etc/group
+
+check if active:
+# virsh net-list --all
+
+to activate
+# virsh net-start default
+
+
+
+
+
+---------------------000000000000000-----------------------
+BLURED WALLPAPER with GIMP
+mask y coordinate : 20 (start) - 30 (middle) - 150 (end)
