@@ -1,84 +1,55 @@
 [global]
-#separator_color= frame
-separator_color = "#11111b"
-separator_height = 2
-width = (0, 800)
-height = 250
+font = JetBrainsMonoNL NFM SemiBold 11
 origin = top-right
-#origin = bottom-right
-#offset = 10x30
-offset = 20x17
+offset = (20, 17)
 gap_size = 3
-font = JetBrainsMonoNL NFM SemiBold
-#font = SF Pro Display
-#padding = 8
-padding = 15
+width = (0, 800)
+height = (0, 250)
+padding = 6
 horizontal_padding = 15
-frame_width = 3
-
-indicate_hidden = yes
-shrink = no
+frame_width = 2
 corner_radius = 10
-sort = yes
-idle_threshold = 120
 
+separator_color = "#11111b"
+separator_height = 1
+sort = yes
+markup = full
+alignment = center
+vertical_alignment = center
+format = "<span font='11' weight='medium'>%s</span>\n%b"
 progress_bar = true
-progress_bar_height = 10
+progress_bar_height = 4
 progress_bar_frame_width = 1
+progress_bar_corner_radius = 0
 progress_bar_min_width = 150
 progress_bar_max_width = 400
-progress_bar_corner_radius = 3
 
-line_height = 0
-markup = full
-format = "<span weight='regular' font='15'>%s</span>\n%b"
-alignment = left
-vertical_alignment = center
-show_age_threshold = 60
-word_wrap = yes
-ellipsize = middle
-ignore_newline = no
-stack_duplicates = true
-hide_duplicate_count = false
-show_indicators = yes
-icon_position = left
-min_icon_size = 50
-max_icon_size = 60
-icon_path = /home/asd/.local/share/icons/dunst/
-sticky_history = yes
-history_length = 20
-always_run_script = true
-title = Dunst
-class = Dunst
-ignore_dbusclose = false
-force_xwayland = false
-force_xinerama = false
-mouse_left_click = do_action, close_current
-mouse_middle_click = do_action, close_current
+mouse_left_click = close_current
+mouse_middle_click = close_current
 mouse_right_click = close_all
 
 [urgency_low]
-background = "#241B2F" 
-foreground = "#72F1B8" 
+background = "#241B2F"
+foreground = "#72F1B8"
 frame_color = "#72F1B8"
-timeout = 5
+timeout = 3
 
 [urgency_normal]
-background = "#241B2F" 
-foreground = "#61E2FF" 
+background = "#241B2F"
+foreground = "#61E2FF"
 frame_color = "#61E2FF"
-timeout = 5
+timeout = 3
 
 [urgency_critical]
-background = "#241B2F" 
-foreground = "#FE4450" 
+background = "#241B2F"
+foreground = "#FE4450"
 frame_color = "#FE4450"
-timeout = 10
+timeout = 6
 
 [volume]
 appname = "Volume"
-highlight = "#cba6f7"
+highlight = "#09FF00"
 
-[backlight]
-appname = "Backlight"
-highlight = "#eba0ac"
+[brightness]
+appname = "Brightness"
+highlight = "#00FFD9"
