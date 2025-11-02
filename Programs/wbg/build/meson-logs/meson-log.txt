@@ -1,19 +1,19 @@
-Build started at 2024-12-05T11:41:56.334856
+Build started at 2025-10-10T09:35:54.150169
 Main binary: /usr/bin/python
 Build Options: -Dbuildtype=release
 Python system: Linux
 The Meson build system
-Version: 1.6.0
-Source dir: /home/asd/Programs/wbg
-Build dir: /home/asd/Programs/wbg/build
+Version: 1.9.1
+Source dir: /home/kefsira/.local/programs/wbg
+Build dir: /home/kefsira/.local/programs/wbg/build
 Build type: native build
 Project name: wbg
-Project version: 1.2.0
+Project version: 1.3.0
 -----------
 Detecting compiler via: `cc --version` -> 0
 stdout:
-cc (GCC) 14.2.1 20240910
-Copyright (C) 2024 Free Software Foundation, Inc.
+cc (GCC) 15.2.1 20250813
+Copyright (C) 2025 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 -----------
@@ -22,15 +22,15 @@ Running command: -cpp -x c -E -dM -
 -----------
 Detecting linker via: `cc -Wl,--version` -> 0
 stdout:
-GNU ld (GNU Binutils) 2.43.0
-Copyright (C) 2024 Free Software Foundation, Inc.
+GNU ld (GNU Binutils) 2.45.0
+Copyright (C) 2025 Free Software Foundation, Inc.
 This program is free software; you may redistribute it under the terms of
 the GNU General Public License version 3 or (at your option) a later version.
 This program has absolutely no warranty.
 -----------
 stderr:
-collect2 version 14.2.1 20240910
-/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccl1Pt8I.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+collect2 version 15.2.1 20250813
+/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgwHZkf.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
 -----------
 Sanity testing C compiler: cc
 Is cross compiler: False.
@@ -41,14 +41,16 @@ Sanity check compile stdout:
 Sanity check compile stderr:
 
 -----
-Running test binary command:  /home/asd/Programs/wbg/build/meson-private/sanitycheckc.exe
-C compiler for the host machine: cc (gcc 14.2.1 "cc (GCC) 14.2.1 20240910")
-C linker for the host machine: cc ld.bfd 2.43.0
+Running test binary command:  /home/kefsira/.local/programs/wbg/build/meson-private/sanitycheckc.exe
+-----------
+Sanity check: `/home/kefsira/.local/programs/wbg/build/meson-private/sanitycheckc.exe` -> 0
+C compiler for the host machine: cc (gcc 15.2.1 "cc (GCC) 15.2.1 20250813")
+C linker for the host machine: cc ld.bfd 2.45.0
 -----------
 Detecting archiver via: `gcc-ar --version` -> 0
 stdout:
-GNU ar (GNU Binutils) 2.43.0
-Copyright (C) 2024 Free Software Foundation, Inc.
+GNU ar (GNU Binutils) 2.45.0
+Copyright (C) 2025 Free Software Foundation, Inc.
 This program is free software; you may redistribute it under the terms of
 the GNU General Public License version 3 or (at your option) any later version.
 This program has absolutely no warranty.
@@ -56,8 +58,8 @@ This program has absolutely no warranty.
 -----------
 Detecting compiler via: `cc --version` -> 0
 stdout:
-cc (GCC) 14.2.1 20240910
-Copyright (C) 2024 Free Software Foundation, Inc.
+cc (GCC) 15.2.1 20250813
+Copyright (C) 2025 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 -----------
@@ -66,15 +68,15 @@ Running command: -cpp -x c -E -dM -
 -----------
 Detecting linker via: `cc -Wl,--version` -> 0
 stdout:
-GNU ld (GNU Binutils) 2.43.0
-Copyright (C) 2024 Free Software Foundation, Inc.
+GNU ld (GNU Binutils) 2.45.0
+Copyright (C) 2025 Free Software Foundation, Inc.
 This program is free software; you may redistribute it under the terms of
 the GNU General Public License version 3 or (at your option) a later version.
 This program has absolutely no warranty.
 -----------
 stderr:
-collect2 version 14.2.1 20240910
-/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc4cAtsE.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+collect2 version 15.2.1 20250813
+/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxncc8o.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
 -----------
 Sanity testing C compiler: cc
 Is cross compiler: False.
@@ -85,14 +87,16 @@ Sanity check compile stdout:
 Sanity check compile stderr:
 
 -----
-Running test binary command:  /home/asd/Programs/wbg/build/meson-private/sanitycheckc.exe
-C compiler for the build machine: cc (gcc 14.2.1 "cc (GCC) 14.2.1 20240910")
-C linker for the build machine: cc ld.bfd 2.43.0
+Running test binary command:  /home/kefsira/.local/programs/wbg/build/meson-private/sanitycheckc.exe
+-----------
+Sanity check: `/home/kefsira/.local/programs/wbg/build/meson-private/sanitycheckc.exe` -> 0
+C compiler for the build machine: cc (gcc 15.2.1 "cc (GCC) 15.2.1 20250813")
+C linker for the build machine: cc ld.bfd 2.45.0
 -----------
 Detecting archiver via: `gcc-ar --version` -> 0
 stdout:
-GNU ar (GNU Binutils) 2.43.0
-Copyright (C) 2024 Free Software Foundation, Inc.
+GNU ar (GNU Binutils) 2.45.0
+Copyright (C) 2025 Free Software Foundation, Inc.
 This program is free software; you may redistribute it under the terms of
 the GNU General Public License version 3 or (at your option) any later version.
 This program has absolutely no warranty.
@@ -104,32 +108,32 @@ Host machine cpu: x86_64
 Target machine cpu family: x86_64
 Target machine cpu: x86_64
 Running compile:
-Working directory:  /home/asd/Programs/wbg/build/meson-private/tmpllfozbf_
+Working directory:  /home/kefsira/.local/programs/wbg/build/meson-private/tmp_ud7bzql
 Code:
 extern int i;
 int i;
 
 -----------
-Command line: `cc /home/asd/Programs/wbg/build/meson-private/tmpllfozbf_/testfile.c -o /home/asd/Programs/wbg/build/meson-private/tmpllfozbf_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fmacro-prefix-map=/foo=` -> 0
+Command line: `cc /home/kefsira/.local/programs/wbg/build/meson-private/tmp_ud7bzql/testfile.c -o /home/kefsira/.local/programs/wbg/build/meson-private/tmp_ud7bzql/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fmacro-prefix-map=/foo=` -> 0
 Compiler for C supports arguments -fmacro-prefix-map=/foo=: YES 
 Running compile:
-Working directory:  /home/asd/Programs/wbg/build/meson-private/tmpk9vwm6x0
+Working directory:  /home/kefsira/.local/programs/wbg/build/meson-private/tmpjx81m4ko
 Code:
 int main(void) { return 0; }
 
 -----------
-Command line: `cc /home/asd/Programs/wbg/build/meson-private/tmpk9vwm6x0/testfile.c -o /home/asd/Programs/wbg/build/meson-private/tmpk9vwm6x0/output.exe -D_FILE_OFFSET_BITS=64 -O0 -lm -Wl,--allow-shlib-undefined` -> 0
+Command line: `cc /home/kefsira/.local/programs/wbg/build/meson-private/tmpjx81m4ko/testfile.c -o /home/kefsira/.local/programs/wbg/build/meson-private/tmpjx81m4ko/output.exe -D_FILE_OFFSET_BITS=64 -O0 -lm -Wl,--allow-shlib-undefined` -> 0
 Library m found: YES
 Pkg-config binary missing from cross or native file, or env var undefined.
 Trying a default Pkg-config fallback at pkg-config
-Found pkg-config: YES (/usr/bin/pkg-config) 2.3.0
+Found pkg-config: YES (/usr/bin/pkg-config) 2.5.1
 Determining dependency 'pixman-1' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion pixman-1` -> 0
 stdout:
-0.44.2
+0.46.4
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -154,7 +158,7 @@ stdout:
 -lpixman-1
 -----------
 Running compile:
-Working directory:  /home/asd/Programs/wbg/build/meson-private/tmp8ayiapdu
+Working directory:  /home/kefsira/.local/programs/wbg/build/meson-private/tmpvxfcxcb0
 Code:
 
         #include<stddef.h>
@@ -164,7 +168,7 @@ Code:
             return 0;
         }
 -----------
-Command line: `cc /home/asd/Programs/wbg/build/meson-private/tmp8ayiapdu/testfile.c -o /home/asd/Programs/wbg/build/meson-private/tmp8ayiapdu/output.exe -D_FILE_OFFSET_BITS=64 -O0` -> 0
+Command line: `cc /home/kefsira/.local/programs/wbg/build/meson-private/tmpvxfcxcb0/testfile.c -o /home/kefsira/.local/programs/wbg/build/meson-private/tmpvxfcxcb0/output.exe -D_FILE_OFFSET_BITS=64 -O0` -> 0
 Program stdout:
 
 8
@@ -173,17 +177,17 @@ Program stderr:
 
 
 Running compile:
-Working directory:  /home/asd/Programs/wbg/build/meson-private/tmp7b3upe6v
+Working directory:  /home/kefsira/.local/programs/wbg/build/meson-private/tmplcrym04q
 Code:
 
 -----------
-Command line: `cc /home/asd/Programs/wbg/build/meson-private/tmp7b3upe6v/testfile.c -o /home/asd/Programs/wbg/build/meson-private/tmp7b3upe6v/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs` -> 0
+Command line: `cc /home/kefsira/.local/programs/wbg/build/meson-private/tmplcrym04q/testfile.c -o /home/kefsira/.local/programs/wbg/build/meson-private/tmplcrym04q/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs` -> 0
 stdout:
-install: /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/
-programs: =/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../x86_64-pc-linux-gnu/bin/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../x86_64-pc-linux-gnu/bin/
-libraries: =/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../x86_64-pc-linux-gnu/lib/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../x86_64-pc-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/x86_64-pc-linux-gnu/14.2.1/:/lib/../lib/:/usr/lib/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/
+install: /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/
+programs: =/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/bin/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/bin/
+libraries: =/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/lib/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/x86_64-pc-linux-gnu/15.2.1/:/lib/../lib/:/usr/lib/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
 -----------
-Run-time dependency pixman-1 found: YES 0.44.2
+Run-time dependency pixman-1 found: YES 0.46.4
 Library nanosvg skipped: feature system-nanosvg disabled
 Library nanosvgrast skipped: feature system-nanosvg disabled
 Determining dependency 'libpng' with pkg-config executable '/usr/bin/pkg-config'
@@ -192,7 +196,7 @@ env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion libpng` -> 0
 stdout:
-1.6.44
+1.6.50
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -216,14 +220,14 @@ Called: `/usr/bin/pkg-config --libs libpng` -> 0
 stdout:
 -lpng16
 -----------
-Run-time dependency libpng found: YES 1.6.44
+Run-time dependency libpng found: YES 1.6.50
 Determining dependency 'libjpeg' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion libjpeg` -> 0
 stdout:
-3.0.4
+3.1.2
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -244,14 +248,14 @@ Called: `/usr/bin/pkg-config --libs libjpeg` -> 0
 stdout:
 -ljpeg
 -----------
-Run-time dependency libjpeg found: YES 3.0.4
+Run-time dependency libjpeg found: YES 3.1.2
 Determining dependency 'libwebp' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion libwebp` -> 0
 stdout:
-1.4.0
+1.6.0
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -275,7 +279,7 @@ Called: `/usr/bin/pkg-config --libs libwebp` -> 0
 stdout:
 -lwebp
 -----------
-Run-time dependency libwebp found: YES 1.4.0
+Run-time dependency libwebp found: YES 1.6.0
 Determining dependency 'libjxl' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -341,7 +345,7 @@ env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion wayland-protocols` -> 0
 stdout:
-1.38
+1.45
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -356,14 +360,14 @@ env[PKG_CONFIG_PATH]:
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --libs wayland-protocols` -> 0
-Run-time dependency wayland-protocols found: YES 1.38
+Run-time dependency wayland-protocols found: YES 1.45
 Determining dependency 'wayland-client' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion wayland-client` -> 0
 stdout:
-1.23.1
+1.24.0
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -375,16 +379,23 @@ env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --libs wayland-client` -> 0
 stdout:
--L/usr/lib -lwayland-client
+-L/usr/lib -lwayland-client -lm
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --libs wayland-client` -> 0
 stdout:
--lwayland-client
+-lwayland-client -lm
 -----------
-Run-time dependency wayland-client found: YES 1.23.1
+Running compile:
+Working directory:  /home/kefsira/.local/programs/wbg/build/meson-private/tmp6713s0qb
+Code:
+int main(void) { return 0; }
+
+-----------
+Command line: `cc /home/kefsira/.local/programs/wbg/build/meson-private/tmp6713s0qb/testfile.c -o /home/kefsira/.local/programs/wbg/build/meson-private/tmp6713s0qb/output.exe -D_FILE_OFFSET_BITS=64 -O0 -lm -Wl,--allow-shlib-undefined` -> 0
+Run-time dependency wayland-client found: YES 1.24.0
 Determining dependency 'tllist' with pkg-config executable '/usr/bin/pkg-config'
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -421,7 +432,7 @@ env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --modversion wayland-scanner` -> 0
 stdout:
-1.23.1
+1.24.0
 -----------
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
@@ -436,7 +447,7 @@ env[PKG_CONFIG_PATH]:
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
 Called: `/usr/bin/pkg-config --libs wayland-scanner` -> 0
-Build-time dependency wayland-scanner found: YES 1.23.1
+Build-time dependency wayland-scanner found: YES 1.24.0
 env[PKG_CONFIG_PATH]: 
 env[PKG_CONFIG]: /usr/bin/pkg-config
 -----------
@@ -449,7 +460,7 @@ Program /usr/bin/wayland-scanner found: YES (/usr/bin/wayland-scanner)
 Program env found: YES (/usr/bin/env)
 Build targets in project: 6
 
-wbg 1.2.0
+wbg 1.3.0
 
     PNG support    : YES
     JPEG support   : YES

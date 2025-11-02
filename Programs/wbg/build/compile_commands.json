@@ -1,72 +1,72 @@
 [
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o -MF wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o.d -o wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o -c wlr-layer-shell-unstable-v1.c",
     "file": "wlr-layer-shell-unstable-v1.c",
     "output": "wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/meson-generated_.._xdg-shell.c.o -MF wbg.p/meson-generated_.._xdg-shell.c.o.d -o wbg.p/meson-generated_.._xdg-shell.c.o -c xdg-shell.c",
     "file": "xdg-shell.c",
     "output": "wbg.p/meson-generated_.._xdg-shell.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/main.c.o -MF wbg.p/main.c.o.d -o wbg.p/main.c.o -c ../main.c",
     "file": "../main.c",
     "output": "wbg.p/main.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/log.c.o -MF wbg.p/log.c.o.d -o wbg.p/log.c.o -c ../log.c",
     "file": "../log.c",
     "output": "wbg.p/log.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/shm.c.o -MF wbg.p/shm.c.o.d -o wbg.p/shm.c.o -c ../shm.c",
     "file": "../shm.c",
     "output": "wbg.p/shm.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/png.c.o -MF wbg.p/png.c.o.d -o wbg.p/png.c.o -c ../png.c",
     "file": "../png.c",
     "output": "wbg.p/png.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/jpg.c.o -MF wbg.p/jpg.c.o.d -o wbg.p/jpg.c.o -c ../jpg.c",
     "file": "../jpg.c",
     "output": "wbg.p/jpg.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/jxl.c.o -MF wbg.p/jxl.c.o.d -o wbg.p/jxl.c.o -c ../jxl.c",
     "file": "../jxl.c",
     "output": "wbg.p/jxl.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/webp.c.o -MF wbg.p/webp.c.o.d -o wbg.p/webp.c.o -c ../webp.c",
     "file": "../webp.c",
     "output": "wbg.p/webp.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/svg.c.o -MF wbg.p/svg.c.o.d -o wbg.p/svg.c.o -c ../svg.c",
     "file": "../svg.c",
     "output": "wbg.p/svg.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/nanosvg.c.o -MF wbg.p/nanosvg.c.o.d -o wbg.p/nanosvg.c.o -c ../nanosvg.c",
     "file": "../nanosvg.c",
     "output": "wbg.p/nanosvg.c.o"
   },
   {
-    "directory": "/home/asd/Programs/wbg/build",
+    "directory": "/home/kefsira/.local/programs/wbg/build",
     "command": "cc -Iwbg.p -I. -I.. -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/webp -fdiagnostics-color=always -DNDEBUG -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Werror -std=c18 -O3 -D_POSIX_C_SOURCE=200809L -D_GNU_SOURCE -fmacro-prefix-map=../= -DWBG_HAVE_PNG=1 -DWBG_HAVE_JPG=1 -DWBG_HAVE_WEBP=1 -DWBG_HAVE_SVG=1 -DWBG_HAVE_JXL=1 -DWBG_HAVE_JXL_THREADS=1 -DHWY_SHARED_DEFINE -MD -MQ wbg.p/nanosvgrast.c.o -MF wbg.p/nanosvgrast.c.o.d -o wbg.p/nanosvgrast.c.o -c ../nanosvgrast.c",
     "file": "../nanosvgrast.c",
     "output": "wbg.p/nanosvgrast.c.o"

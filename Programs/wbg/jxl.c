@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <sys/mman.h>
+
 #include <jxl/decode.h>
 #include <jxl/codestream_header.h>
 #if defined(WBG_HAVE_JXL_THREADS)
@@ -19,8 +21,8 @@ jxl_load(FILE *fp, const char *path)
     pixman_image_t *pix = NULL;
     pixman_format_code_t format = PIXMAN_x8b8g8r8;
     bool ok = false;
-    uint8_t *file_data = NULL;
-    uint8_t *image = NULL;
+    uint8_t *file_data = MAP_FAILED;
+    uint8_t *image = MAP_FAILED;
     size_t file_size, image_size = 0;
     int width = 0, height = 0, stride = 0;
 
@@ -40,20 +42,16 @@ jxl_load(FILE *fp, const char *path)
         LOG_ERRNO("%s: failed to seek to end of file", path);
         return NULL;
     }
+
     file_size = ftell(fp);
     if (fseek(fp, 0, SEEK_SET) < 0) {
         LOG_ERRNO("%s: failed to seek to beginning of file", path);
         return NULL;
     }
 
-    if (!(file_data = malloc(file_size)))
+    file_data = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, fileno(fp), 0);
+    if (file_data == MAP_FAILED)
         goto err;
-    clearerr(fp);
-    if (fread(file_data, sizeof(*file_data), file_size, fp) != file_size
-            && ferror(fp)) {
-        LOG_ERRNO("%s: failed to read", path);
-        goto err;
-    }
 
     if (JxlSignatureCheck(file_data, file_size) == JXL_SIG_INVALID) {
         LOG_DBG("%s: not a jpegxl image", path);
@@ -96,7 +94,8 @@ jxl_load(FILE *fp, const char *path)
             LOG_DBG("%s: %dx%d@%hhubpp, %d channels, %d alpha bits", path, width, height,
                     info.bits_per_sample, info.num_color_channels, info.alpha_bits);
 
-            if (!(image = malloc(image_size)))
+            image = mmap(NULL, image_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+            if (image == MAP_FAILED)
                 goto err;
 
 #if defined(WBG_HAVE_JXL_THREADS)
@@ -157,9 +156,14 @@ jxl_load(FILE *fp, const char *path)
     ok = pix != NULL;
 
 err:
-    if (!ok)
-        free(image);
-    free(file_data);
+    if (!ok) {
+        if (image != MAP_FAILED)
+            munmap(image, image_size);
+    }
+
+    if (file_data != MAP_FAILED)
+        munmap(file_data, file_size);
+
 #if defined(WBG_HAVE_JXL_THREADS)
     JxlResizableParallelRunnerDestroy(runner);
 #endif

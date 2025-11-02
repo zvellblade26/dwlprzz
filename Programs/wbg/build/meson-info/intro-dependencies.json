@@ -2,7 +2,7 @@
   {
     "name": "pixman-1",
     "type": "pkgconfig",
-    "version": "0.44.2",
+    "version": "0.46.4",
     "compile_args": [
       "-I/usr/include/pixman-1"
     ],
@@ -21,7 +21,7 @@
   {
     "name": "libpng",
     "type": "pkgconfig",
-    "version": "1.6.44",
+    "version": "1.6.50",
     "compile_args": [
       "-I/usr/include/libpng16"
     ],
@@ -40,7 +40,7 @@
   {
     "name": "libjpeg",
     "type": "pkgconfig",
-    "version": "3.0.4",
+    "version": "3.1.2",
     "compile_args": [],
     "link_args": [
       "/usr/lib/libjpeg.so"
@@ -57,7 +57,7 @@
   {
     "name": "libwebp",
     "type": "pkgconfig",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "compile_args": [
       "-I/usr/include/webp"
     ],
@@ -112,7 +112,7 @@
   {
     "name": "wayland-protocols",
     "type": "pkgconfig",
-    "version": "1.38",
+    "version": "1.45",
     "compile_args": [],
     "link_args": [],
     "include_directories": [],
@@ -127,10 +127,11 @@
   {
     "name": "wayland-client",
     "type": "pkgconfig",
-    "version": "1.23.1",
+    "version": "1.24.0",
     "compile_args": [],
     "link_args": [
-      "/usr/lib/libwayland-client.so"
+      "/usr/lib/libwayland-client.so",
+      "-lm"
     ],
     "include_directories": [],
     "sources": [],
@@ -159,7 +160,7 @@
   {
     "name": "wayland-scanner",
     "type": "pkgconfig",
-    "version": "1.23.1",
+    "version": "1.24.0",
     "compile_args": [],
     "link_args": [],
     "include_directories": [],
@@ -189,20 +190,20 @@
     ]
   },
   {
-    "name": "dep129715742396912",
+    "name": "dep296425884406662802312318114393303796024",
     "type": "internal",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "compile_args": [],
     "link_args": [],
     "include_directories": [
-      "/home/asd/Programs/wbg/.",
-      "/home/asd/Programs/wbg/build/."
+      "/home/kefsira/.local/programs/wbg/.",
+      "/home/kefsira/.local/programs/wbg/build/."
     ],
     "sources": [
-      "/home/asd/Programs/wbg/nanosvg.c",
-      "/home/asd/Programs/wbg/3rd-party/nanosvg/src/nanosvg.h",
-      "/home/asd/Programs/wbg/nanosvgrast.c",
-      "/home/asd/Programs/wbg/3rd-party/nanosvg/src/nanosvgrast.h"
+      "/home/kefsira/.local/programs/wbg/nanosvg.c",
+      "/home/kefsira/.local/programs/wbg/3rd-party/nanosvg/src/nanosvg.h",
+      "/home/kefsira/.local/programs/wbg/nanosvgrast.c",
+      "/home/kefsira/.local/programs/wbg/3rd-party/nanosvg/src/nanosvgrast.h"
     ],
     "extra_files": [],
     "dependencies": [

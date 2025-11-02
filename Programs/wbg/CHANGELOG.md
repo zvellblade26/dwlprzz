@@ -1,14 +1,26 @@
 # Changelog
 
 * [Unreleased](#unreleased)
-* [1.2.0](#1-2-)
+* [1.3.0](#1-3-0)
+* [1.2.0](#1-2-0)
 * [1.1.0](#1-1-0)
 
 
 ## Unreleased
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+### Contributors
 
-* Nanosvg updated to 93ce879dc4c04a3ef1758428ec80083c38610b1f
+
+## 1.3.0
+
+### Added
+
+* Nanosvg updated to ea6a6aca009422bba0dbad4c80df6e6ba0c82183
 * JPEG XL support ([#14][14])
 * Log output now respects the [`NO_COLOR`](http://no-color.org/)
   environment variable.
@@ -27,10 +39,8 @@
 ### Changed
 
 * "Centered maximized" is the default method now ([#13][13])
-
-
-### Deprecated
-### Removed
+* Decreased run-time memory usage, by unloading image data after
+  rendering.
 
 
 ### Fixed
@@ -40,10 +50,12 @@
 
 [11]: https://codeberg.org/dnkl/wbg/issues/11
 
-### Security
+
 ### Contributors
 
 * Leonardo Hernández Hernández
+* emrakyz
+* Sertonix
 
 
 ## 1.2.0

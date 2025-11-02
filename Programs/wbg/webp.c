@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <sys/mman.h>
+
 #include <webp/decode.h>
 
 #define LOG_MODULE "webp"
@@ -12,8 +14,8 @@
 pixman_image_t *
 webp_load(FILE *fp, const char *path)
 {
-    uint8_t *file_data = NULL;
-    uint8_t *image_data = NULL;
+    uint8_t *file_data = MAP_FAILED;
+    uint8_t *image_data = MAP_FAILED;
     size_t image_size;
     bool ok = false;
     pixman_image_t *pix = NULL;
@@ -24,33 +26,30 @@ webp_load(FILE *fp, const char *path)
         LOG_ERRNO("%s: failed to seek to end of file", path);
         return NULL;
     }
+
     image_size = ftell(fp);
     if (fseek(fp, 0, SEEK_SET) < 0) {
         LOG_ERRNO("%s: failed to seek to beginning of file", path);
         return NULL;
     }
 
-    if (!(file_data = WebPMalloc(image_size + 1))) {
+    file_data = mmap(NULL, image_size, PROT_READ, MAP_PRIVATE, fileno(fp), 0);
+    if (file_data == MAP_FAILED)
         goto out;
-    }
-
-    clearerr(fp);
-    if (fread(file_data, image_size, 1, fp) != image_size && ferror(fp)) {
-        LOG_ERRNO("%s: failed to read", path);
-        goto out;
-    }
-    file_data[image_size] = '\0';
 
     /* Verify it is a webp image */
-    if (!WebPGetInfo(file_data, image_size, NULL, NULL)) {
+    if (!WebPGetInfo(file_data, image_size, &width, &height)) {
         LOG_DBG("%s: not a WebP file", path);
         goto out;
     }
 
-    image_data = WebPDecodeRGBA(file_data, image_size, &width, &height);
-    if (image_data == NULL) {
+    image_data = mmap(NULL, width * height * 4, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (image_data == MAP_FAILED)
         goto out;
-    }
+
+    if (WebPDecodeRGBAInto(file_data, image_size, image_data, width * height * 4, width * 4) == NULL)
+        goto out;
+
     format = PIXMAN_x8b8g8r8;
     stride = stride_for_format_and_width(format, width);
 
@@ -76,7 +75,6 @@ webp_load(FILE *fp, const char *path)
         *abgr = (uint32_t)alpha << 24 | red << 16 | green << 8 | blue;
     }
 
-
     ok = NULL != (pix = pixman_image_create_bits_no_clear(
         format, width, height, (uint32_t *)image_data, stride));
 
@@ -86,9 +84,12 @@ webp_load(FILE *fp, const char *path)
     }
 
 out:
-    WebPFree(file_data);
-    if (!ok)
-        WebPFree(image_data);
+    if (file_data != MAP_FAILED)
+        munmap(file_data, image_size);
+    if (!ok) {
+        if (image_data != MAP_FAILED)
+            munmap(image_data, width * height * 4);
+    }
 
     return pix;
 }

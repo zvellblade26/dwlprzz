@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <sys/mman.h>
+
 #include <nanosvg/nanosvgrast.h>
 
 #define LOG_MODULE "svg"
@@ -16,18 +18,65 @@ struct NSVGrasterizer *rast = NULL;
 bool
 svg_load(FILE *fp, const char *path)
 {
-    svg_image = nsvgParseFromFile(path, "px", 96);
+    if (rast != NULL) {
+        nsvgDeleteRasterizer(rast);
+        rast = NULL;
+    }
+
+    if (svg_image != NULL) {
+        nsvgDelete(svg_image);
+        svg_image = NULL;
+    }
+
+    if (fseek(fp, 0, SEEK_END) < 0) {
+        LOG_ERRNO("%s: failed to seek to end of file", path);
+        return false;
+    }
+
+    long int image_size = ftell(fp);
+
+    if (fseek(fp, 0, SEEK_SET) < 0) {
+        LOG_ERRNO("%s: failed to seek to beginning of file", path);
+        return false;
+    }
+
+    /*
+     * nanosvg requires input to be NULL terminated, so can't mmap
+     * file directly :(
+     */
+    char *image_data = mmap(NULL, image_size + 1, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (image_data == MAP_FAILED) {
+        LOG_ERRNO("%s: failed to allocate image buffer", path);
+        return false;
+    }
+
+    clearerr(fp);
+    if (fread(image_data, 1, image_size, fp) != image_size) {
+        LOG_ERRNO_P("%s: failed to read", ferror(fp), path);
+        munmap(image_data, image_size + 1);
+        return false;
+    }
+
+    image_data[image_size] = '\0';
+
+    svg_image = nsvgParse(image_data, "px", 96);
+    munmap(image_data, image_size + 1);
+
     if (svg_image == NULL)
         return false;
+
     if (svg_image->width == 0 || svg_image->height == 0) {
         LOG_DBG("%s: width and/or heigth is zero, not a SVG?", path);
         nsvgDelete(svg_image);
         svg_image = NULL;
         return false;
     }
+
     rast = nsvgCreateRasterizer();
+
     if (rast == NULL)
         return false;
+
     return true;
 }
 
@@ -35,10 +84,11 @@ pixman_image_t *
 svg_render(const int width, const int height, bool stretch)
 {
     pixman_image_t *pix = NULL;
-    uint8_t *data = NULL;
+    uint8_t *data = MAP_FAILED;
     int stride = stride_for_format_and_width(PIXMAN_a8b8g8r8, width);
 
-    if (!(data = calloc(1, height * stride)))
+    data = mmap(NULL, height * stride, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (data == MAP_FAILED)
         return NULL;
 
     double sx = width / (double)svg_image->width;
@@ -54,7 +104,7 @@ svg_render(const int width, const int height, bool stretch)
         height, (uint32_t *)data, stride);
     if (pix == NULL) {
         LOG_ERR("failed to render svg image");
-        free(data);
+        munmap(data, height * stride);
         return NULL;
     }
 
@@ -87,10 +137,15 @@ svg_render(const int width, const int height, bool stretch)
 }
 
 void
-svg_free()
+svg_free(void)
 {
-    if (svg_image != NULL)
-        nsvgDelete(svg_image);
-    if (rast != NULL)
+    if (rast != NULL) {
         nsvgDeleteRasterizer(rast);
+        rast = NULL;
+    }
+
+    if (svg_image != NULL) {
+        nsvgDelete(svg_image);
+        svg_image = NULL;
+    }
 }

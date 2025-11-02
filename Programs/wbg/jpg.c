@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <setjmp.h>
 
+#include <sys/mman.h>
+
 #include <jpeglib.h>
 
 #define LOG_MODULE "jpg"
@@ -29,7 +31,7 @@ jpg_load(FILE *fp, const char *path)
     struct jpeg_decompress_struct cinfo = {0};
     struct my_error_mgr err_handler;
 
-    uint8_t *image_data = NULL;
+    uint8_t *image_data = MAP_FAILED;
     pixman_image_t *pix = NULL;
 
     if (fseek(fp, 0, SEEK_SET) < 0) {
@@ -65,8 +67,8 @@ jpg_load(FILE *fp, const char *path)
     LOG_DBG("width=%d, height=%d, stride=%d, components=%d",
             width, height, stride, cinfo.output_components);
 
-    image_data = malloc(height * stride);
-    if (image_data == NULL)
+    image_data = mmap(NULL, height * stride, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (image_data == MAP_FAILED)
         goto err;
 
     jpeg_start_decompress(&cinfo);
@@ -111,7 +113,8 @@ jpg_load(FILE *fp, const char *path)
 err:
     if (pix != NULL)
         pixman_image_unref(pix);
-    free(image_data);
+    if (image_data != MAP_FAILED)
+        munmap(image_data, height * stride);
     jpeg_destroy_decompress(&cinfo);
     return NULL;
 }

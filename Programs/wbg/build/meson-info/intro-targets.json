@@ -3,9 +3,9 @@
     "name": "external_wlr_layer_shell_unstable_v1_xml-client-header",
     "id": "external_wlr_layer_shell_unstable_v1_xml-client-header@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/wlr-layer-shell-unstable-v1.h"
+      "/home/kefsira/.local/programs/wbg/build/wlr-layer-shell-unstable-v1.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -19,7 +19,7 @@
         ],
         "parameters": [],
         "sources": [
-          "/home/asd/Programs/wbg/external/wlr-layer-shell-unstable-v1.xml"
+          "/home/kefsira/.local/programs/wbg/external/wlr-layer-shell-unstable-v1.xml"
         ],
         "generated_sources": []
       }
@@ -34,9 +34,9 @@
     "name": "external_wlr_layer_shell_unstable_v1_xml-private-code",
     "id": "external_wlr_layer_shell_unstable_v1_xml-private-code@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/wlr-layer-shell-unstable-v1.c"
+      "/home/kefsira/.local/programs/wbg/build/wlr-layer-shell-unstable-v1.c"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -50,7 +50,7 @@
         ],
         "parameters": [],
         "sources": [
-          "/home/asd/Programs/wbg/external/wlr-layer-shell-unstable-v1.xml"
+          "/home/kefsira/.local/programs/wbg/external/wlr-layer-shell-unstable-v1.xml"
         ],
         "generated_sources": []
       }
@@ -65,9 +65,9 @@
     "name": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml-client-header",
     "id": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml-client-header@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/xdg-shell.h"
+      "/home/kefsira/.local/programs/wbg/build/xdg-shell.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -96,9 +96,9 @@
     "name": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml-private-code",
     "id": "__usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml-private-code@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/xdg-shell.c"
+      "/home/kefsira/.local/programs/wbg/build/xdg-shell.c"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -127,9 +127,9 @@
     "name": "generate_version",
     "id": "generate_version@cus",
     "type": "custom",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/version.h"
+      "/home/kefsira/.local/programs/wbg/build/version.h"
     ],
     "build_by_default": false,
     "target_sources": [
@@ -138,8 +138,8 @@
         "compiler": [
           "/usr/bin/env",
           "LC_ALL=C",
-          "/home/asd/Programs/wbg/generate-version.sh",
-          "1.2.0",
+          "/home/kefsira/.local/programs/wbg/generate-version.sh",
+          "1.3.0",
           "@CURRENT_SOURCE_DIR@",
           "@OUTPUT@"
         ],
@@ -158,21 +158,22 @@
     "name": "wbg",
     "id": "wbg@exe",
     "type": "executable",
-    "defined_in": "/home/asd/Programs/wbg/meson.build",
+    "defined_in": "/home/kefsira/.local/programs/wbg/meson.build",
     "filename": [
-      "/home/asd/Programs/wbg/build/wbg"
+      "/home/kefsira/.local/programs/wbg/build/wbg"
     ],
     "build_by_default": true,
     "target_sources": [
       {
         "language": "c",
+        "machine": "host",
         "compiler": [
           "cc"
         ],
         "parameters": [
-          "-I/home/asd/Programs/wbg/build/wbg.p",
-          "-I/home/asd/Programs/wbg/build",
-          "-I/home/asd/Programs/wbg",
+          "-I/home/kefsira/.local/programs/wbg/build/wbg.p",
+          "-I/home/kefsira/.local/programs/wbg/build",
+          "-I/home/kefsira/.local/programs/wbg",
           "-I/usr/include/pixman-1",
           "-I/usr/include/libpng16",
           "-I/usr/include/webp",
@@ -196,20 +197,20 @@
           "-DHWY_SHARED_DEFINE"
         ],
         "sources": [
-          "/home/asd/Programs/wbg/main.c",
-          "/home/asd/Programs/wbg/log.c",
-          "/home/asd/Programs/wbg/shm.c",
-          "/home/asd/Programs/wbg/png.c",
-          "/home/asd/Programs/wbg/jpg.c",
-          "/home/asd/Programs/wbg/jxl.c",
-          "/home/asd/Programs/wbg/webp.c",
-          "/home/asd/Programs/wbg/svg.c",
-          "/home/asd/Programs/wbg/nanosvg.c",
-          "/home/asd/Programs/wbg/nanosvgrast.c"
+          "/home/kefsira/.local/programs/wbg/main.c",
+          "/home/kefsira/.local/programs/wbg/log.c",
+          "/home/kefsira/.local/programs/wbg/shm.c",
+          "/home/kefsira/.local/programs/wbg/png.c",
+          "/home/kefsira/.local/programs/wbg/jpg.c",
+          "/home/kefsira/.local/programs/wbg/jxl.c",
+          "/home/kefsira/.local/programs/wbg/webp.c",
+          "/home/kefsira/.local/programs/wbg/svg.c",
+          "/home/kefsira/.local/programs/wbg/nanosvg.c",
+          "/home/kefsira/.local/programs/wbg/nanosvgrast.c"
         ],
         "generated_sources": [
-          "/home/asd/Programs/wbg/build/wlr-layer-shell-unstable-v1.c",
-          "/home/asd/Programs/wbg/build/xdg-shell.c"
+          "/home/kefsira/.local/programs/wbg/build/wlr-layer-shell-unstable-v1.c",
+          "/home/kefsira/.local/programs/wbg/build/xdg-shell.c"
         ],
         "unity_sources": []
       },

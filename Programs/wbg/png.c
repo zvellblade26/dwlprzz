@@ -6,6 +6,8 @@
 #include <string.h>
 #include <assert.h>
 
+#include <sys/mman.h>
+
 #include <png.h>
 #include <pixman.h>
 
@@ -22,7 +24,7 @@ png_load(FILE *fp, const char *path)
     png_structp png_ptr = NULL;
     png_infop info_ptr = NULL;
     png_bytepp row_pointers = NULL;
-    uint8_t *image_data = NULL;
+    uint8_t *image_data = MAP_FAILED;
 
     if (fseek(fp, 0, SEEK_SET) < 0) {
         LOG_ERRNO("%s: failed to seek to beginning of file", path);
@@ -112,7 +114,10 @@ png_load(FILE *fp, const char *path)
 
     size_t row_bytes __attribute__((unused)) = png_get_rowbytes(png_ptr, info_ptr);
     int stride = stride_for_format_and_width(format, width);
-    image_data = malloc(height * stride);
+
+    image_data = mmap(NULL, height * stride, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (image_data == MAP_FAILED)
+        goto err;
 
     LOG_DBG("stride=%d, row-bytes=%zu", stride, row_bytes);
     assert(stride >= row_bytes);
@@ -153,8 +158,10 @@ png_load(FILE *fp, const char *path)
         format, width, height, (uint32_t *)image_data, stride);
 
 err:
-    if (pix == NULL)
-        free(image_data);
+    if (pix == NULL) {
+        if (image_data != MAP_FAILED)
+            munmap(image_data, height * stride);
+    }
     free(row_pointers);
     if (png_ptr != NULL)
         png_destroy_read_struct(&png_ptr, &info_ptr, NULL);

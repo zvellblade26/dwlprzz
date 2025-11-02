@@ -1,10 +1,11 @@
 {
   "targets": {
-    "/home/asd/Programs/wbg/build/wbg": {
+    "/home/kefsira/.local/programs/wbg/build/wbg": {
       "destination": "{bindir}/wbg",
       "tag": "runtime",
       "subproject": null,
-      "install_rpath": null
+      "install_rpath": null,
+      "build_rpaths": []
     }
   }
 }

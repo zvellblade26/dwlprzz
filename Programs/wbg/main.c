@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include <sys/signalfd.h>
+#include <sys/mman.h>
 
 #include <wayland-client.h>
 #include <wayland-cursor.h>
@@ -42,6 +43,10 @@
  #include "jxl.h"
 #endif
 
+/* Source image */
+static const char *image_path = NULL;
+static FILE *fp = NULL;
+
 /* Top-level globals */
 static struct wl_display *display;
 static struct wl_registry *registry;
@@ -50,9 +55,6 @@ static struct wl_shm *shm;
 static struct zwlr_layer_shell_v1 *layer_shell;
 
 static bool have_xrgb8888 = false;
-
-/* TODO: one per output */
-static pixman_image_t *image;
 
 struct output {
     struct wl_output *wl_output;
@@ -76,6 +78,38 @@ static tll(struct output) outputs;
 
 static bool stretch = false;
 
+static pixman_image_t *
+load_image(void)
+{
+    fseek(fp, 0, SEEK_SET);
+
+    pixman_image_t *image = NULL;
+
+#if defined(WBG_HAVE_JPG)
+    if (image == NULL)
+        image = jpg_load(fp, image_path);
+#endif
+#if defined(WBG_HAVE_PNG)
+    if (image == NULL)
+        image = png_load(fp, image_path);
+#endif
+#if defined(WBG_HAVE_WEBP)
+    if (image == NULL)
+        image = webp_load(fp, image_path);
+#endif
+#if defined(WBG_HAVE_JXL)
+    if (image == NULL)
+        image = jxl_load(fp, image_path);
+#endif
+    if (image == NULL) {
+        LOG_ERR("%s: failed to load", image_path);
+        return NULL;
+    }
+
+    return image;
+}
+
+
 static void
 render(struct output *output)
 {
@@ -83,24 +117,22 @@ render(struct output *output)
     const int height = output->render_height;
     const int scale = output->scale;
 
-    struct buffer *buf = shm_get_buffer(
-        shm, width * scale, height * scale, (uintptr_t)output);
+    pixman_image_t *src = NULL;
 
-    if (!buf)
-        return;
-
-    pixman_image_t *src = image;
 #if defined(WBG_HAVE_SVG)
     bool is_svg = false;
-#endif
-
-#if defined(WBG_HAVE_SVG)
-    if (!src) {
+    if (svg_load(fp, image_path)) {
         src = svg_render(width * scale, height * scale, stretch);
+        if (src == NULL)
+            return;
         is_svg = true;
     } else
 #endif
     {
+        src = load_image();
+        if (src == NULL)
+            return;
+
         double sx = (double)(width * scale) / pixman_image_get_width(src);
         double sy = (double)(height * scale) / pixman_image_get_height(src);
         double s = stretch ? fmax(sx, sy) : fmin(sx, sy);
@@ -115,20 +147,35 @@ render(struct output *output)
         pixman_image_set_filter(src, PIXMAN_FILTER_BEST, NULL, 0);
     }
 
+    struct buffer *buf = shm_get_buffer(
+        shm, width * scale, height * scale, (uintptr_t)output);
+
+    if (buf == NULL)
+        goto out;
+
     pixman_image_composite32(PIXMAN_OP_SRC, src, NULL, buf->pix,
                              0, 0, 0, 0, 0, 0, width * scale, height * scale);
-
-#if defined(WBG_HAVE_SVG)
-    if (is_svg) {
-        free(pixman_image_get_data(src));
-        pixman_image_unref(src);
-    }
-#endif
 
     wl_surface_set_buffer_scale(output->surf, scale);
     wl_surface_attach(output->surf, buf->wl_buf, 0, 0);
     wl_surface_damage_buffer(output->surf, 0, 0, width * scale, height * scale);
     wl_surface_commit(output->surf);
+
+out:
+    if (src != NULL) {
+        void *mem = pixman_image_get_data(src);
+        const int src_height = pixman_image_get_height(src);
+        const int src_stride = pixman_image_get_stride(src);
+
+        const size_t size = src_height * src_stride;
+        munmap(mem, size);
+        pixman_image_unref(src);
+    }
+
+#if defined(WBG_HAVE_SVG)
+    if (is_svg)
+        svg_free();
+#endif
 }
 
 static void
@@ -456,46 +503,18 @@ main(int argc, char *const *argv)
         fprintf(stderr, "Usage: %s [-s|--stretch] <image_path>\n", argv[0]);
         return EXIT_FAILURE;
     }
-    const char *image_path = argv[argc - 1];
+
+    image_path = argv[argc - 1];
     stretch = (argc == 3);
 
-    setlocale(LC_CTYPE, "");
     log_init(LOG_COLORIZE_AUTO, false, LOG_FACILITY_DAEMON, LOG_CLASS_WARNING);
 
     LOG_INFO("%s", WBG_VERSION);
 
-    image = NULL;
-
-    FILE *fp = fopen(image_path, "rb");
+    fp = fopen(image_path, "rb");
     if (fp == NULL) {
         LOG_ERRNO("%s: failed to open", image_path);
         fprintf(stderr, "\nUsage: %s [-s|--stretch] <image_path>\n", argv[0]);
-        return EXIT_FAILURE;
-    }
-
-#if defined(WBG_HAVE_JPG)
-    if (image == NULL)
-        image = jpg_load(fp, image_path);
-#endif
-#if defined(WBG_HAVE_PNG)
-    if (image == NULL)
-        image = png_load(fp, image_path);
-#endif
-#if defined(WBG_HAVE_WEBP)
-    if (image == NULL)
-        image = webp_load(fp, image_path);
-#endif
-#if defined(WBG_HAVE_JXL)
-    if (image == NULL)
-        image = jxl_load(fp, image_path);
-#endif
-    if (image == NULL
-#if defined(WBG_HAVE_SVG)
-        && !svg_load(fp, image_path)
-#endif
-    ) {
-        LOG_ERR("%s: failed to load", image_path);
-        fclose(fp);
         return EXIT_FAILURE;
     }
 
@@ -623,10 +642,6 @@ out:
         wl_registry_destroy(registry);
     if (display != NULL)
         wl_display_disconnect(display);
-    if (image != NULL) {
-        free(pixman_image_get_data(image));
-        pixman_image_unref(image);
-    }
 #if defined(WBG_HAVE_SVG)
     svg_free();
 #endif

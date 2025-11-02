@@ -28,8 +28,8 @@ rule CUSTOM_COMMAND
  restat = 1
 
 rule REGENERATE_BUILD
- command = /usr/bin/meson --internal regenerate /home/asd/Programs/wbg .
- description = Regenerating build files.
+ command = /usr/bin/meson --internal regenerate /home/kefsira/.local/programs/wbg .
+ description = Regenerating build files
  generator = 1
 
 # Phony build target, always out of date
@@ -55,7 +55,7 @@ build xdg-shell.c: CUSTOM_COMMAND //usr/share/wayland-protocols/stable/xdg-shell
  description = Generating$ __usr_share_wayland_protocols_stable_xdg_shell_xdg_shell_xml-private-code$ with$ a$ custom$ command
 
 build version.h: CUSTOM_COMMAND  | ../generate-version.sh /usr/bin/env PHONY
- COMMAND = /usr/bin/env LC_ALL=C ../generate-version.sh 1.2.0 ../ version.h
+ COMMAND = /usr/bin/env LC_ALL=C ../generate-version.sh 1.3.0 ../ version.h
  description = Generating$ generate_version$ with$ a$ custom$ command
 
 build wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o: c_COMPILER wlr-layer-shell-unstable-v1.c || version.h wlr-layer-shell-unstable-v1.h xdg-shell.h
@@ -125,16 +125,16 @@ build wbg: c_LINKER wbg.p/meson-generated_.._wlr-layer-shell-unstable-v1.c.o wbg
 
 build test: phony meson-internal__test
 
-build meson-internal__test: CUSTOM_COMMAND all PHONY
+build meson-internal__test: CUSTOM_COMMAND all meson-test-prereq PHONY
  COMMAND = /usr/bin/meson test --no-rebuild --print-errorlogs
- DESC = Running$ all$ tests.
+ DESC = Running$ all$ tests
  pool = console
 
 build benchmark: phony meson-internal__benchmark
 
-build meson-internal__benchmark: CUSTOM_COMMAND all PHONY
+build meson-internal__benchmark: CUSTOM_COMMAND all meson-benchmark-prereq PHONY
  COMMAND = /usr/bin/meson test --benchmark --logbase benchmarklog --num-processes=1 --no-rebuild
- DESC = Running$ benchmark$ suite.
+ DESC = Running$ benchmark$ suite
  pool = console
 
 # Install rules
@@ -142,7 +142,7 @@ build meson-internal__benchmark: CUSTOM_COMMAND all PHONY
 build install: phony meson-internal__install
 
 build meson-internal__install: CUSTOM_COMMAND PHONY | all
- DESC = Installing$ files.
+ DESC = Installing$ files
  COMMAND = /usr/bin/meson install --no-rebuild
  pool = console
 
@@ -161,7 +161,7 @@ build meson-internal__uninstall: CUSTOM_COMMAND PHONY
  COMMAND = /usr/bin/meson --internal uninstall
  pool = console
 
-build all: phony meson-test-prereq meson-benchmark-prereq wbg
+build all: phony wbg
 
 build meson-test-prereq: phony 
 
@@ -172,20 +172,20 @@ build clean: phony meson-internal__clean
 build clean-ctlist: phony meson-internal__clean-ctlist
 
 build meson-internal__clean-ctlist: CUSTOM_COMMAND PHONY
- COMMAND = /usr/bin/meson --internal cleantrees /home/asd/Programs/wbg/build/meson-private/cleantrees.dat
+ COMMAND = /usr/bin/meson --internal cleantrees /home/kefsira/.local/programs/wbg/build/meson-private/cleantrees.dat
  description = Cleaning$ custom$ target$ directories
 
 build meson-internal__clean: CUSTOM_COMMAND PHONY | clean-ctlist
  COMMAND = /usr/bin/ninja -t clean
  description = Cleaning
 
-build build.ninja: REGENERATE_BUILD ../meson.build ../meson_options.txt meson-private/coredata.dat
+build build.ninja: REGENERATE_BUILD ../meson.build /home/kefsira/.local/programs/wbg/meson_options.txt meson-private/coredata.dat
  pool = console
 
 build reconfigure: REGENERATE_BUILD PHONY
  pool = console
 
-build ../meson.build ../meson_options.txt meson-private/coredata.dat: phony 
+build ../meson.build /home/kefsira/.local/programs/wbg/meson_options.txt meson-private/coredata.dat: phony 
 
 default all
 
