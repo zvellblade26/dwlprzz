@@ -8,8 +8,8 @@ static const int sloppyfocus               = 0;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
 static const unsigned int borderpx         = 0;  /* border pixel of windows */
 static const float rootcolor[]             = COLOR(0x000000ff);
-static const float bordercolor[]           = COLOR(0x444444ff);
-static const float focuscolor[]            = COLOR(0x005577ff);
+static const float bordercolor[]           = COLOR(0x808080ff);
+static const float focuscolor[]            = COLOR(0x72F1B8ff);
 static const float urgentcolor[]           = COLOR(0xff0000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You can also use glsl colors */
@@ -23,9 +23,9 @@ static int log_level = WLR_ERROR;
 /* NOTE: ALWAYS keep a rule declared even if you don't use rules (e.g leave at least one example) */
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   monitor */
-	{ "thunar",			 				    NULL,       0,				1,			     -1 },
-	{ "firefox",			 				 NULL,       1 << 1,       0,            -1 },
-	{ "mpv",									 NULL,       1 << 0,       0,            -1 },
+	{ "thunar",			 				    NULL,       0,				0,			     -1 },
+	{ "librewolf",			 				 NULL,       1 << 1,       0,            -1 },
+	{ "mpv",									 NULL,       0,       0,            -1 },
 	{ "system-config-printer",			 NULL,       1 << 8,       0,			     -1 },
 	{ "foot",								 NULL,       0,				0,            -1 },
 };
@@ -33,8 +33,10 @@ static const Rule rules[] = {
 /* layout(s) */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	//{ "[]=",      tile },
+	{ "[T]",      tile },
+	{ "[F]",      NULL },    /* no layout function means floating behavior */
+	//{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
@@ -120,35 +122,37 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* commands */
 static const char *termcmd[] = { "foot", NULL };
-static const char *office[]  = { "libreoffice", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier									key														function					argument */
 	{ MODKEY|SSHIFT,						XKB_KEY_Return,     					spawn,          		{.v = termcmd} },
-	{ MODKEY|SSHIFT,						XKB_KEY_E,										spawn,          		SHCMD("thunar-asd root") },
-	{ MODKEY|SSHIFT,						XKB_KEY_S,										spawn,						  SHCMD("screenshot-wme ss") },
-	{ MODKEY|SSHIFT,						XKB_KEY_M,										spawn,						  SHCMD("mounter-wme") },
-	{ MODKEY|SSHIFT,						XKB_KEY_P,										spawn,						  SHCMD("pgtest-wme") },
-	{ MODKEY|SSHIFT,            XKB_KEY_L,          					spawn,						  SHCMD("poweropt-wme lock") },
-	{ MODKEY,                   XKB_KEY_o,										spawn,          		{.v = office} },
-	{ MODKEY,                   XKB_KEY_space,      					spawn,          		SHCMD("pkill wmenu; pkill wmenu-run; mainwmenu-wme") },
-	{ MODKEY,                   XKB_KEY_e,										spawn,          		SHCMD("thunar-asd") },
+	{ MODKEY|SSHIFT,						XKB_KEY_S,										spawn,						  SHCMD("screenshotaz ss") },
+	{ MODKEY|SSHIFT,						XKB_KEY_U,										spawn,						  SHCMD("mounter") },
+	{ MODKEY|SSHIFT,						XKB_KEY_P,										spawn,						  SHCMD("pgtest") },
+	{ MODKEY|SSHIFT,            XKB_KEY_L,          					spawn,						  SHCMD("poweropt lock") },
+	{ MODKEY|SSHIFT,            XKB_KEY_M,										spawn,          		SHCMD("foot -e bash -c \"btop\" & disown") },
+	{ MODKEY|SSHIFT,            XKB_KEY_E,										spawn,          		SHCMD("thunar") },
+	{ MODKEY|SSHIFT,            XKB_KEY_I,										spawn,          		SHCMD("bstat") },
+	{ MODKEY,                   XKB_KEY_space,      					spawn,          		SHCMD("pkill wmenu; pkill wmenu-run; mainwmenu") },
 	{ MODKEY,                   XKB_KEY_y,										spawn,          		SHCMD("foot -f \"JetBrainsMonoNL Nerd Font Mono:weight=SemiBold:size=12\" -e bash -c \"yazi\" & disown") },
-	{ MODKEY,                   XKB_KEY_f,										spawn,          		SHCMD("firefox & disown; wtype -M logo 2") },
-	{ MODKEY,									  XKB_KEY_x,      							spawn,          		SHCMD("poweropt-wme") },
-	{ MODKEY,							   	  XKB_KEY_F4,      							spawn,          		SHCMD("poweropt-wme suspend") },
-  { MODKEY,										XKB_KEY_s,										spawn,          		SHCMD("status-asd") },
-  { MODKEY,										XKB_KEY_a,										spawn,          		SHCMD("status-asd time") },
-  { MODKEY,										XKB_KEY_d,										spawn,          		SHCMD("pkill status-asd; dunstctl close-all") },
-	{ MODKEY,									  XKB_KEY_Right,								spawn,          		SHCMD("backlight-asd up") },
-	{ MODKEY,				   				  XKB_KEY_Left,         				spawn,          		SHCMD("backlight-asd down") },
-	{ 0,											  XKB_KEY_F12,									spawn,							SHCMD("clip-asd & disown") },
-	{ 0,											  XKB_KEY_F11,									spawn,							SHCMD("pkill dwlb; dwlb & disown && bstat-asd") },
-	{ 0,											  XKB_KEY_Print,  							spawn,							SHCMD("screenshot-wme fss") },
-	{ 0,											  XKB_KEY_XF86AudioLowerVolume,	spawn,							SHCMD("volume-asd down") },
-	{ 0,											  XKB_KEY_XF86AudioRaiseVolume,	spawn,							SHCMD("volume-asd up") },
-	{ 0,												XKB_KEY_XF86AudioMute,				spawn,							SHCMD("volume-asd mute") },
+	{ MODKEY,                   XKB_KEY_f,										spawn,          		SHCMD("librewolf & disown; wtype -M logo 2") },
+	{ MODKEY,									  XKB_KEY_x,      							spawn,          		SHCMD("poweropt") },
+	{ MODKEY,							   	  XKB_KEY_F4,      							spawn,          		SHCMD("poweropt suspend") },
+  { MODKEY,										XKB_KEY_s,										spawn,          		SHCMD("sysstat") },
+  { MODKEY,										XKB_KEY_a,										spawn,          		SHCMD("sysstat time") },
+  { MODKEY,										XKB_KEY_d,										spawn,          		SHCMD("pkill sysstat; dunstctl close-all") },
+	{ MODKEY,									  XKB_KEY_Right,								spawn,          		SHCMD("backlightaz up") },
+	{ MODKEY,				   				  XKB_KEY_Left,         				spawn,          		SHCMD("backlightaz down") },
+	{ MODKEY,										XKB_KEY_F12,									spawn,							SHCMD("clipaz & disown") },
+	{ MODKEY,									  XKB_KEY_F11,									spawn,							SHCMD("pkill dwlb; dwlb & disown && bstat") },
+	{ 0,											  XKB_KEY_Print,  							spawn,							SHCMD("screenshotaz fss") },
+	{ 0,											  XKB_KEY_XF86AudioRaiseVolume,	spawn,							SHCMD("volumebz up notif") },
+	{ 0,											  XKB_KEY_XF86AudioLowerVolume,	spawn,							SHCMD("volumebz down notif") },
+	{ 0,												XKB_KEY_XF86AudioMute,				spawn,							SHCMD("volumebz mute notif") },
+	{ MODKEY,										XKB_KEY_F1,      							spawn,          		SHCMD("keybind") },
+	{ MODKEY,										XKB_KEY_F2,      							spawn,          		SHCMD("virtz") },
+	{ MODKEY,										XKB_KEY_F3,      							spawn,          		SHCMD("webappsaz") },
 
 	{ MODKEY,                   XKB_KEY_b,										togglebar,      		{0} },
 	{ MODKEY,                   XKB_KEY_j,										focusstack,     		{.i = +1} },
@@ -160,8 +164,8 @@ static const Key keys[] = {
 	{ MODKEY,                   XKB_KEY_Return,     					zoom,           		{0} },
 	{ MODKEY,                   XKB_KEY_Tab,        					view,           		{0} },
 	{ MODKEY,										XKB_KEY_q,										killclient,     		{0} },
-	{ MODKEY|CCTRL,							XKB_KEY_m,          					setlayout,      		{.v = &layouts[0]} },
-	{ MODKEY|CCTRL,      				XKB_KEY_f,          					setlayout,      		{.v = &layouts[2]} },
+	{ MODKEY|CCTRL,							XKB_KEY_t,          					setlayout,      		{.v = &layouts[0]} },
+	{ MODKEY|CCTRL,      				XKB_KEY_m,          					setlayout,      		{.v = &layouts[2]} },
 	{ MODKEY|SSHIFT,						XKB_KEY_space,      					togglefloating, 		{0} },
 	{ MODKEY,                   XKB_KEY_e,          					togglefullscreen,    {0} },
 	{ MODKEY,                   XKB_KEY_0,          					view,						{.ui = ~0} },
@@ -175,7 +179,7 @@ static const Key keys[] = {
 	TAGKEYS(          			  	XKB_KEY_7, 			 							XKB_KEY_ampersand,   6),
 	TAGKEYS(          			  	XKB_KEY_8, 			 							XKB_KEY_asterisk,    7),
 	TAGKEYS(          			  	XKB_KEY_9, 			 							XKB_KEY_parenleft,   8),
-	{ MODKEY|SSHIFT,						XKB_KEY_Q,         				spawn,					SHCMD("quit-wme") },
+	{ MODKEY|SSHIFT,						XKB_KEY_Q,										spawn,					SHCMD("quitdwl") },
 	//{ MODKEY|SSHIFT,						XKB_KEY_Q,         				quit,						{0} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
