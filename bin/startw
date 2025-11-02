@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 brightnessctl set 15 && rm -rf "$HOME/.clipboard_history";
-dwl -s "dwlb <&- & dunst <&- & wbg ~/Pictures/Wallpapers/sunset-over-the-mountain-minimal-n9-1366x768dark.png <&- & ~/.local/bin/batteryaz <&- & ~/.local/bin/wifiaz <&- &" & disown
+dwl -s "dwlb <&- & dunst <&- & wbg ~/Pictures/Wallpapers/sunset-over-the-mountain-minimal-n9-1366x768dark.png <&- & ~/.local/bin/batteryaz <&- &" & disown
 sleep 2; slstatus -s | dwlb -status-stdin all & disown; sleep 1; pkill -RTMIN+4 "slstatus" && exit 0
 
 #sleep 2; someblocks -p | dwlb -status-stdin all &
