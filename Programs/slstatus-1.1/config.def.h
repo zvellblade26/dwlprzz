@@ -7,7 +7,7 @@ const unsigned int interval = 1000;
 static const char unknown_str[] = "n/a";
 
 /* maximum command output length */
-#define CMDLEN 256
+#define CMDLEN 210
 
 /*
  * function            description                     argument (example)
@@ -68,12 +68,10 @@ static const struct arg args[] = {
 	/* function				format																																																																																																						argument									update interval (in s)					signal */
 	{ run_command,		" %s ",																																																																																																						"sb-mem",									2,				  										-1 },
 	{ wifi_essid,		  " ^bg(FF91C6)^fg(FF91C6)^lm(pgtest Ping)^mm(pgtest TUI)^rm(pgtest Restart)  %s ^bg()^fg()^lm()^mm()^rm() ",																																																			"wlp3s0",        					2,   		 												-1 },
-	{ run_command,		" %s ",																																																																																																						"sb-vol",									0,   		 												4 },
-	//{ run_command,		" ^bg(7FF553)^fg(7FF553)^us(sb-vol up)^ds(sb-vol down)^lm(sb-vol mute)^rm(sb-vol check) %s ^bg()^fg()^rm()^lm()^us()^ds() ",																																										"sb-vol",      						0,   		 												4 },
-	{ run_command,		" %s ",																																																																																																						"sb-battery",				   		0,   		 												5 },
-	//{ run_command,		" ^bg(00A6FF)^fg(00A6FF)^us(backlightaz up)^ds(backlightaz down) %s ^bg()^fg()^us()^ds() ",																																																											"sb-battery",				   		0,   		 												5 },
+	{ run_command,		" %s ",																																																																																																						"sb-vol",									0,															 4 },
+	{ run_command,		" %s ",																																																																																																						"sb-battery",				   		0,   		 												 5 },
 	{ datetime, 			"^fg(FFF700)^lm(sysstat time)^mm(pkill -x sysstat; dunstctl close-all)^rm(sysstat) %s ^fg()^lm()^mm()^rm()",																																																			"%a, %d-%m  %I:%M",				60,															-1 },
-	{ run_command,		" ^bg(72F1B8)^fg(72F1B8)^lm(notify-send \".\" -t 50)^mm(librewolf -P webappsaz --new-tab \"https://web.whatsapp.com/\")^rm(librewolf --new-tab \"https://www.youtube.com/\") 舍 ^bg()^fg()^lm()^mm()^rm()",				"",							 					0,   		 												0 },
+	{ run_command,		" ^bg(72F1B8)^fg(72F1B8)^lm(notify-send \".\" -t 50)^mm(librewolf -P webappsaz --new-tab \"https://web.whatsapp.com/\")^rm(librewolf --new-tab \"https://www.youtube.com/\") 舍 ^bg()^fg()^lm()^mm()^rm()",				"",							 					0,															 0 },
 };
 
 /* maximum output string length */
